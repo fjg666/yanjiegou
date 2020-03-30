@@ -1,0 +1,97 @@
+{extend name="Public:common" /}
+{block name="css"}
+<style>
+    .layui-upload-img { width: 90px; height: 90px; margin: 0; }
+    .pic-more { width:100%; left; margin: 10px 0px 0px 0px;}
+    .pic-more li { width:90px; float: left; margin-right: 5px;}
+    .pic-more li .layui-input { display: initial; }
+    .pic-more li a { position: absolute; top: 0; display: block; }
+    .pic-more li a i { font-size: 24px; background-color: #008800; }
+    .pic-more-upload-list .item_img img{ width: 90px; height: 90px;}
+    .pic-more-upload-list li{position: relative;}
+    .pic-more-upload-list li .operate{ color: #000; display: none;}
+    .pic-more-upload-list li .toleft{ position: absolute;top: 40px; left: 1px; cursor:pointer;}
+    .pic-more-upload-list li .toright{ position: absolute;top: 40px; right: 1px;cursor:pointer;}
+    .pic-more-upload-list li .close{position: absolute;top: 5px; right: 5px;cursor:pointer;}
+    .pic-more-upload-list li:hover .operate{ display: block;}
+</style>
+{/block}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>编辑版本</legend>
+        </fieldset>
+        <form class="layui-form" method="post" enctype="multipart/form-data">
+            <div class="layui-form-item">
+                <label class="layui-form-label">版本号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="version" lay-verify="required" autocomplete="off" placeholder="版本号" class="layui-input" value="{$data.version}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">版本类型</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="app_type" value="0" title="Android" {if condition="$data.app_type eq 0"}checked="checked"{/if}>
+                    <input type="radio" name="app_type" value="1" title="IOS" {if condition="$data.app_type eq 1"}checked="checked"{/if}>
+                </div>
+            </div>           
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">更新内容</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入内容" class="layui-textarea" name="content">{$data.content}</textarea>
+                </div>
+            </div>         
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">更新地址</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入地址" class="layui-textarea" name="link">{$data.link}</textarea>
+                </div>
+            </div>  
+            <input type="hidden" name="id" value="{$data.id}">
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">{:lang('submit')}</button>                   
+                </div>
+            </div>
+        </form>
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script>
+    layui.use(['form','upload','layedit','laydate','jquery','rate'], function () {
+        var form = layui.form,
+            upload = layui.upload,
+            layedit = layui.layedit,
+            laydate = layui.laydate,
+            $ = layui.jquery,
+            rate = layui.rate;
+        //自定义验证规则
+        form.verify({
+        });
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            // 提交到方法 默认为本身
+            var loading = layer.load(1, {shade: [0.1, '#fff']});
+            $.post("", data.field, function (res) {
+                layer.close(loading);
+                if (res.code > 0) {
+                    layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                        window.location.href="{:url('index')}"
+                    });
+                } else {
+                    layer.msg(res.msg, {time: 1800, icon: 2});
+                }
+            });
+        });
+    })
+ </script>
+{/block}

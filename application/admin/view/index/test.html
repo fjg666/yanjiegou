@@ -1,0 +1,249 @@
+{extend name="Public:common" /}
+{block name="css"}
+<style>
+    .layui-upload-img { width: 90px; height: 90px; margin: 0; }
+    .pic-more { width:100%; left; margin: 10px 0px 0px 0px;}
+    .pic-more li { width:90px; float: left; margin-right: 5px;}
+    .pic-more li .layui-input { display: initial; }
+    .pic-more li a { position: absolute; top: 0; display: block; }
+    .pic-more li a i { font-size: 24px; background-color: #008800; }
+    .pic-more-upload-list .item_img img{ width: 90px; height: 90px;}
+    .pic-more-upload-list li{position: relative;}
+    .pic-more-upload-list li .operate{ color: #000; display: none;}
+    .pic-more-upload-list li .toleft{ position: absolute;top: 40px; left: 1px; cursor:pointer;}
+    .pic-more-upload-list li .toright{ position: absolute;top: 40px; right: 1px;cursor:pointer;}
+    .pic-more-upload-list li .close{position: absolute;top: 5px; right: 5px;cursor:pointer;}
+    .pic-more-upload-list li:hover .operate{ display: block;}
+</style>
+<style type="text/css">
+.upload-picture{ width:120px; padding:9px; display:inline-block; border:1px solid #eee; cursor:pointer;}
+.upload-picture img{ width:120px; height:90px;}
+</style>
+{/block}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+        <form class="layui-form" method="post" enctype="multipart/form-data">
+            <div class="layui-form-item">
+				<label class="layui-form-label">图片</label>
+				<div class="layui-input-block">
+					<div class="upload-picture">
+						<img src="IMG/upload_200_150.jpg" width="200" height="150" class="preview-picture" onerror="javascript:this.src='IMG/upload_200_150.jpg';">
+					</div>
+					<input type="hidden" name="attachurl" value="">
+				</div>
+			</div>
+            <div class="layui-form-item" id="picslogo">
+                <div class="layui-form-label">商家logo</div>
+                <div class="layui-input-block" style="width: 70%;">
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn layui-btn-primary pull-left" id="slide-pclogo">选择商家logo</button>
+                        <div class="pic-more">
+                            <ul class="pic-more-upload-list" id="slide-pc-priviewlogo">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="layui-form-item" id="pics">
+                <div class="layui-form-label">相册图集</div>
+                <div class="layui-input-block" style="width: 70%;">
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn layui-btn-primary pull-left" id="slide-pc">选择多图</button>
+                        <div class="pic-more">
+                            <ul class="pic-more-upload-list" id="slide-pc-priview">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-container" style="margin-top: 15px;">
+                <div class="layui-btn-group">
+                    <a class="layui-btn alls">获取全部数据</a>
+                    <a class="layui-btn left">获取左边数据</a>
+                    <a class="layui-btn right">获取右边数据</a>
+                </div>
+                <span>问题反馈QQ群: 925487043</span>
+                <div id="root"></div>
+                <div id="root1"></div>
+            </div>
+            <div class="main">
+                <cascader id="demo1"></cascader>
+                <cascader id="demo2"></cascader>
+                <cascader id="demo3"></cascader>
+                <button class="layui-btn">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script type="text/javascript">
+var identity = 'ruler';
+var moduleid = '{$rowdata.moduleid}';
+var attachmark = '{$rowdata.attachmark}';
+var uploadApi = "{:url('upload/index/uploadimage')}";
+</script>
+<script>
+     layui.config({
+        base: '/static/admin/lib/layui/extend/'
+    }).use(['transfer','jquery','upload','layer','ajaxCascader'], function () {
+        var transfer = layui.transfer;
+            $ = layui.jquery;
+            cascader = layui.ajaxCascader;
+        //数据源=======================================================
+        var data1 = [{'id':'10001','name':'杜甫','sex':'男'},{'id':'10002','name':'李白','sex':'男'},{'id':'10003','name':'王勃','sex':'男'},{'id':'10004','name':'李清照','sex':'男'}];
+        var data2 = [{'id':'10005','name':'白居易','sex':'男'}];
+        //表格列
+        var cols = [{type: 'checkbox', fixed: 'left'},{field: 'id', title: 'ID', width: 80, sort: true},{field: 'name', title: '用户名'},{field: 'sex', title: '性别'}]
+        //表格配置文件
+        var tabConfig = {'page':true,'limits':[10,50,100],'height':400}
+
+        var tb1 = transfer.render({
+            elem: "#root", //指定元素
+            cols: cols, //表格列  支持layui数据表格所有配置
+            data: [data1,data2], //[左表数据,右表数据[非必填]]
+            tabConfig: tabConfig //表格配置项 支持layui数据表格所有配置
+        })
+
+        //transfer.get(参数1:初始化返回值,参数2:获取数据[all,left,right,l,r],参数:指定数据字段)
+        //获取数据
+        $('.alls').on('click',function() {
+            var data = transfer.get(tb1,'all');
+            layer.msg(data)
+        });
+        $('.left').on('click',function () {
+            var data = transfer.get(tb1,'left','id');
+            layer.msg(data)
+        });
+        $('.right').on('click',function () {
+            var data = transfer.get(tb1,'right','');
+            layer.msg(data)
+        });
+       
+       //图片上传---------------------------------------	
+		var upload = layui.upload;
+		upload.render({
+			elem: '.upload-picture',
+			url: uploadApi,
+			data: {
+				moduleid: moduleid,
+				attachmark: attachmark,
+				identity: identity,
+			},
+			field: 'upfile',
+			number: 1,
+			done: function(res, index, upload){ //上传后的回调
+				layer.msg(res.message);
+				if( res.status == 'success' ){
+					if(res.uploadInfo.attachthumb == ''){
+						$('input[name=attachurl]').val(res.uploadInfo.attachurl);
+						$('img','.upload-picture').attr('src',res.uploadInfo.attachurl);
+					}else{
+						$('input[name=attachurl]').val(res.uploadInfo.attachthumb);
+						$('img','.upload-picture').attr('src',res.uploadInfo.attachthumb);
+					}
+				}
+			}
+		});
+        //多图上传
+        upload.render({
+            elem: '#slide-pc',
+            url: "{:url('admin/common/upload')}",
+            size: 100000000000,
+            exts: 'jpg|png|jpeg|gif',
+            multiple: true,
+            before: function(obj) {
+                layer.msg('图片上传中...', {
+                    icon: 16,
+                    shade: 0.01,
+                    time: 0
+                })
+            },
+            done: function(res) {
+                layer.close(layer.msg());//关闭上传提示窗口
+                if(res.status == 0) {
+                    return layer.msg(res.message);
+                }
+                //$('#slide-pc-priview').append('<input type="hidden" name="pc_src[]" value="' + res.filepath + '" />');
+                $('#slide-pc-priview').append('<li class="item_img"><div class="operate"><i class="toleft layui-icon"></i><i class="toright layui-icon"></i><i  class="close layui-icon"></i></div><img src="/' + res.filepath + '" class="img" ><input type="hidden" name="headimg[]" value="' + res.filepath + '" /></li>');
+            }
+        });
+        //=================================多级联动=========================================
+         // Ajax传参模式
+            cascader.load({
+                elem:'#demo1'
+                ,width:250  //input框宽度
+                ,height:50  //input框高度                          
+                ,value:0  
+                ,getChildren:function(value,callback){  
+                    var data = [];                  
+                    $.ajax({                         
+                        url:'https://open.gog.cn/appz/region/getRegion/'+value,
+                        type:'get',
+                        success:function(res){
+                            data = res.data;
+                            for(var i in data){
+                                data[i].value = data[i].id;
+                                data[i].label = data[i].name;
+                                delete data[i].id;
+                                delete data[i].name;
+                                data[i].hasChild = true;
+                            }
+                            callback(data);
+                        }
+                    });
+                }      
+            });
+
+            // 直接赋值模式
+            cascader.load({
+                elem:'#demo2'                     
+                ,data:[
+                    {value:123,label:456,children:[
+                        {value:789,label:"子集"}
+                    ]},
+                    {value:240,label:"第一层"},
+                    {value:250,label:"第一层"},
+                    {value:260,label:"第一层"},
+                    {value:280,label:"第一层"},
+                ]
+            });
+
+            
+
+            // 其他可选参数
+            // width:250  //input框宽度
+            // height:50  //input框高度
+            // placeholder // input框提示词
+            // prop:{
+            //     value:"value",     // 选择器要获取的字段名称
+            //     label:"label",     // 显示时的名称
+            //     children:'children' // 子集的名称定义
+            // }
+            // time:250    // 下拉菜单显示出来的时间
+            // showlast:false  // 是否只显示选中的最后一级
+            // checkData:['100','200'] // 回显数据
+
+            $('.layui-btn').click(function(){
+                
+            })
+
+            // 监听选中的事件
+            cascader.on('click','#demo1',function(){
+                // 获取当前已选中的数据,可单独使用
+                console.log(cascader.getChooseData('#demo1'))
+            });
+    });
+    
+</script>
+
+{/block}

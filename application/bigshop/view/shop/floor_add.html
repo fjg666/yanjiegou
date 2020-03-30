@@ -1,0 +1,82 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>添加楼层</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane" lay-filter="form" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">楼层编号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="num" lay-verify="required" placeholder="{:lang('pleaseEnter')}楼层编号" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                用户名在4到25个字符之间。
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">楼层汉字编号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="hnum" lay-verify="required" placeholder="{:lang('pleaseEnter')}楼层汉字编号" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                用户名在4到25个字符之间。
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">楼层名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" placeholder="{:lang('pleaseEnter')}登录密码" lay-verify="required" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                密码必须大于6位，小于15位。
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">介绍</label>
+            <div class="layui-input-inline">
+                <textarea name="intro" id="" cols="30" rows="10"></textarea>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                密码必须大于6位，小于15位。
+            </div>
+        </div>
+        <!--提交-->
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">{:lang('submit')}</button>
+                <a href="{:url('floor')}" class="layui-btn layui-btn-primary">{:lang('back')}</a>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script>
+    layui.use(['form', 'layer','upload'], function () {
+        var form = layui.form, layer = layui.layer,$= layui.jquery,upload = layui.upload;
+        form.on('submit(submit)', function (data) {
+            loading =layer.load(1, {shade: [0.1,'#fff']});
+            $.post("{:url('')}", data.field, function (res) {
+                layer.close(loading);
+                if (res.code > 0) {
+                    layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                        location.href = "{:url('floor')}";
+                    });
+                } else {
+                    layer.msg(res.msg, {time: 1800, icon: 2});
+                }
+            });
+        });
+        
+    });
+</script>
+{/block}

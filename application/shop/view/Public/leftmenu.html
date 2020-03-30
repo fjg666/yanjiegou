@@ -1,0 +1,54 @@
+<div class="left-nav" style="top:0px;padding-top: 0px">
+    <div class="layui-card" style="background:linear-gradient(to top,rgba(111, 111, 111, 1), rgba(4, 94, 82, 1));text-align: center">
+        <div class="layui-card-body ">
+         <div class="layui-block">
+            <img style="width: 50%;border-radius: 50%;background:rgb(215, 228, 233)" src="{$Think.session.sinfo.shlogo}"/>
+         </div>
+         <div class="layui-block" style="line-height: 30px;height:30px;color:#FFF;font-size: 16px">{$Think.session.sinfo.shname}</div>
+         <div id="test-rate-dome9" class="layui-block"></div>
+        </div>
+    </div>
+    <div id="side-nav">
+        <ul id="nav">
+            {foreach name = "menus" item = "val"}
+            {if condition="array_key_exists('children',$val)"}
+              <li>
+                  <a href="javascript:;">
+                      <i class="fa {$val.icon}" lay-tips="{$val.title}"></i>
+                      <cite>{$val.title}</cite>
+                      <i class="iconfont nav_right">&#xe697;</i></a>
+                  <ul class="sub-menu">
+                      {foreach name = "val['children']" item = "vals"}
+                      <li>
+                          <a onclick="xadmin.add_tab('{$vals.title}','{$vals.href}')">
+                              <i class="iconfont">&#xe6a7;</i>
+                              <cite>{$vals.title}</cite></a>
+                      </li>
+                      {/foreach}
+                  </ul>
+              </li>
+              {else /}
+              <li>
+                  <a onclick="xadmin.add_tab('{$val.title}','{$val.href}')">
+                      <i class="fa {$val.icon}" lay-tips="{$val.title}"></i>
+                      <cite>{$val.title}</cite>
+                      <i class="iconfont nav_right">&#xe697;</i></a>
+                  
+              </li>
+            {/if}
+            {/foreach}
+        </ul>
+    </div>
+</div>
+<script>
+  layui.use(['rate'], function(){
+    var rate = layui.rate;
+
+//只读
+    rate.render({
+      elem: '#test-rate-dome9'
+      ,value: 4
+      ,readonly: true
+    });
+})    
+</script>

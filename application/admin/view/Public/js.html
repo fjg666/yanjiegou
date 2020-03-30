@@ -1,0 +1,45 @@
+<script type="text/javascript" src="JS/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="LIB/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="JS/xadmin.js"></script>
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+<script src="JS/html5.min.js"></script>
+<script src="JS/respond.min.js"></script>
+<![endif]-->
+<script>
+var identity = 'ruler';
+var attachmark = '{$attachmark}';
+var uploadApi = "{:url('upload/index/uploadimage')}";
+layui.use('layer',function(){
+    var $ = layui.jquery, layer = layui.layer;
+    $('#cache').click(function () {
+        document.cookie="skin=;expires="+new Date().toGMTString();
+        layer.confirm('确认要清除缓存？', {icon: 3}, function () {
+            $.post('{:url("clear")}',function (data) {
+                layer.msg(data.info, {icon: 6}, function (index) {
+                    layer.close(index);
+                    window.location.href = data.url;
+                });
+            });
+        });
+    });
+        //刷新当前
+    $(".refresh").on("click",function(){
+        if($(this).hasClass("refreshThis")){
+            $(this).removeClass("refreshThis");
+            $(".layui-tab-item.layui-show").find("iframe")[0].contentWindow.location.reload(true);
+            setTimeout(function(){
+                $(".refresh").addClass("refreshThis");
+            },000)
+        }else{
+            layer.msg("您点击的速度超过了服务器的响应速度，还是等两秒再刷新吧！");
+        }
+    })
+    $(".smenu:first").show();
+    $(".open_meun").on("click",function(){
+        $('.smenu').hide();
+        $('.son_menu'+$(this).data('id')).show();
+    })
+})
+
+</script>

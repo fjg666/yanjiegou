@@ -1,0 +1,67 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>资金账户列表</legend>
+                    </fieldset>    
+                    <table class="layui-table" id="list" lay-filter="list"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script>
+    layui.use(['table','form'], function() {
+        var table = layui.table,form = layui.form, $ = layui.jquery;
+        var tableIn = table.render({            
+            elem: '#list',
+            url: '{:url("bank")}',
+            method: 'post',
+            toolbar: '#topBtn',
+            page: false,
+            cols: [[
+                    {field: 'id', title: 'ID', width: 150},
+                    {field: 'type', title: '账户类型', width: 120},
+                    {field: 'bank_name', title: '银行类型', width: 250},
+                    {field: 'bank_user_name', title: '开户人', width: 150},
+                    {field: 'bank_address', title: '银行账户', width: 150},
+                    {field: 'bank_address', title: '开户地址', width: 300},
+                    {align: 'left', toolbar: '#action',title:'操作',width:200}
+                ]],
+            limit: 10 //每页默认显示的数量
+        });   
+        table.on('tool(list)', function(obj) {
+            var data = obj.data;
+            if (obj.event === 'del'){
+                layer.confirm('您确定要删除？', function(index){                  
+                    $.post("{:url('deleteBank')}",{id:data.id},function(res){                        
+                        if(res.code===1){
+                            layer.msg(res.msg,{time:1000,icon:1});
+                            tableIn.reload();
+                        }else{
+                            layer.msg('操作失败！',{time:1000,icon:2});
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+        
+    }); 
+    
+</script>
+
+<script type="text/html" id="topBtn">
+    <a href="javascript:;" onclick="xadmin.open('添加','{:url('addBank')}',600,500)"  class="layui-btn layui-btn-blue layui-btn-sm" id="add" >添加</a>
+</script>
+<script type="text/html" id="action">
+    <a href="javascript:;" onclick="xadmin.open('修改','{:url('editBank')}?id={{d.id}}',600,500)" class="layui-btn layui-btn-green layui-btn-sm" id="edit" >修改</a>
+    <a href="javascript:;" lay-event="del"  class="layui-btn layui-btn-danger layui-btn-sm"  >删除</a>
+</script>
+{/block}

@@ -1,0 +1,74 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+<form class="layui-form layui-form-pane" lay-filter="form" method="post">
+<table class="layui-table">
+   <!-- <tr>
+   	<td></td>
+   	<td></td>
+   	<td></td>
+   	<td></td>
+   	<td></td>
+   </tr> -->
+   <tr>
+   	 <td width="100px">发货方式</td>
+   	 <td colspan="4">
+   	    <input type="radio" value="1" name="send_type" checked title="需要物流">
+   	    <input type="radio" value="0" name="send_type" title="无需物流">   
+   	 </td>
+   </tr>
+   <tr>
+   	<td>快递公司</td>
+   	<td colspan="4">
+        <select name="expresscom" id="">
+           <option value="0">请选择</option>
+            {:get_status_option('','express_company')}
+        </select>
+   	</td>
+   </tr>
+   <tr>
+   	<td>快递号</td>
+   	<td colspan="4"><input type="text" name="expresssn"  class="layui-input"></td>
+   </tr>
+   <tr>
+   	<td>收货信息</td>
+   	<td colspan="4">{$info.address}--{$info.mobile}</td>
+   </tr>
+   <tr>
+   	<td colspan="5" style="text-align: center"> <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">确定发货</button></td>
+   </tr>
+   <input type="hidden" value="{$info.id}" name="id"/>
+</table>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script>
+layui.use(['form', 'layer'], function () {
+    var form = layui.form, layer = layui.layer,$= layui.jquery;
+    form.on('submit(submit)', function (data) {
+        loading =layer.load(1, {shade: [0.1,'#fff']});
+        $.post("{:url('')}", data.field, function (res) {
+        	var index = parent.layer.getFrameIndex(window.name);
+            layer.close(loading);
+            if (res.code > 0) {
+                layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                    parent.layer.close(index);
+                    window.parent.location.reload();
+                });
+            } else {
+                layer.msg(res.msg, {time: 1800, icon: 2});
+            }
+        });
+    });
+});
+</script>
+{/block}

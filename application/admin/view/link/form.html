@@ -1,0 +1,70 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body ">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>{$title}</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <label class="layui-form-label">链接名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" ng-model="field.name" lay-verify="required" placeholder="{:lang('pleaseEnter')}链接名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('link')}URL</label>
+            <div class="layui-input-inline">
+                <input type="text" name="url" ng-model="field.url" lay-verify="required" placeholder="{:lang('pleaseEnter')}链接URL" class="layui-input">
+            </div>
+        </div>
+       
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系站长</label>
+            <div class="layui-input-inline">
+                <input type="text" name="qq" ng-model="field.qq" placeholder="输入QQ或其他联系方式" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('order')}</label>
+            <div class="layui-input-inline">
+                <input type="text" name="sort" ng-model="field.sort" value="" placeholder="从小到大排序" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">{:lang('submit')}</button>
+                <a href="{:url('index')}" class="layui-btn layui-btn-primary">{:lang('back')}</a>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script>
+layui.use(['form', 'layer'], function () {
+    var form = layui.form, $ = layui.jquery;
+    form.on('submit(submit)', function (data) {
+        // 提交到方法 默认为本身
+        var loading = layer.load(1, {shade: [0.1, '#fff']});
+        $.post("", data.field, function (res) {
+            layer.close(loading);
+            if (res.code > 0) {
+                layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                    location.href = res.url;
+                });
+            } else {
+                layer.msg(res.msg, {time: 1800, icon: 2});
+            }
+        });
+    })
+});
+</script>
+{/block}

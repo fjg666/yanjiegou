@@ -1,0 +1,77 @@
+{extend name="Public:common" /}
+{block name="css"}
+<style>
+.layui-input-inline{width:50px;margin-left: 200px;}
+.aname{display: inline-block;width: 200px}
+.son{padding-left: 50px;display: inline-block;width: 200px}
+</style>
+{/block}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>邮费设置</legend>
+    </fieldset>
+    <form class="layui-form" method="post">
+    <div class="layui-collapse" lay-accordion="">
+      {foreach name = "arealist" item = "val"}
+      <div class="layui-colla-item">
+        <h2 class="layui-colla-title">
+           <span class="aname">{$val.area_name}</span> 
+           <input type="text" data-id="{$val.id}" class="layui-input-inline father" name="yf[{$val.id}]" value="{$val.yf_val_money}">
+        </h2>
+        <div class="layui-colla-content" id="son{$val.id}">
+           {foreach name = "val['son']" item = "vals"}
+           <p><span class="son">{$vals.area_name}</span> <input type="text" class="layui-input-inline" name="yf[{$vals.id}]" value="{$val.yfs_val_money}"></p>
+           {/foreach} 
+        </div>
+      </div>
+      {/foreach}
+    </div>
+     <div class="content-bottom">
+       <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">{:lang('submit')}</button>
+    </div> 
+    </form>
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script type="text/javascript">
+    layui.use(['form','jquery'], function () {
+        var form = layui.form,
+            $ = layui.jquery;
+        //自定义验证规则
+        form.verify({
+        });
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            console.log(data)
+            // 提交到方法 默认为本身
+            var loading = layer.load(1, {shade: [0.1, '#fff']});
+            $.post("", data.field, function (res) {
+                layer.close(loading);
+                if (res.code > 0) {
+                    layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                        location.href = '{:url('')}';
+                    });
+                } else {
+                    layer.msg(res.msg, {time: 1800, icon: 2});
+                }
+            });
+        });
+        
+    });
+    $("body").on("blur",".father",function(){
+        var id=$(this).data('id');
+        var vals=$(this).val();
+        $('#son'+id+' .layui-input-inline').val(vals);
+    });
+</script>
+
+{/block}

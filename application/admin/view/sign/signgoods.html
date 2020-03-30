@@ -1,0 +1,111 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+    <div class="layui-row">
+        <fieldset class="layui-elem-field layui-field-title">
+
+            <legend>设置签到商品</legend>
+        </fieldset>
+
+
+
+
+
+
+        <form class="layui-form" method="post">
+            <input type="hidden" name="ids" value="{$ids}">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">可中奖的人数</label>
+                <div class="layui-input-block">
+                    <input type="text" name="joinnum" required  lay-verify="required" placeholder="请输入可中奖的人数" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">简介</label>
+                <div class="layui-input-block">
+                    <textarea name="intro" placeholder="请输入简介" class="layui-textarea"></textarea>
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">开始时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="starttime" class="layui-input" id="starttime" placeholder="请选择开始时间">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">截止时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="stoptime" class="layui-input" id="stoptime" placeholder="请选择截止时间">
+                </div>
+            </div>
+
+
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">{:lang('submit')}</button>
+                    <a href="{:url('index')}" class="layui-btn layui-btn-primary">{:lang('back')}</a>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{/block}
+
+{block name="js"}
+
+
+<script>
+    layui.use(['form','upload','layedit','laydate','jquery','element'], function () {
+        var form = layui.form,upload = layui.upload,layedit = layui.layedit,laydate = layui.laydate,$ = layui.jquery;element = layui.element;
+
+
+        form.on('submit(submit)', function (data) {
+            // 提交到方法 默认为本身
+            var loading = layer.load(1, {shade: [0.1, '#fff']});
+            $.post("", data.field, function (res) {
+
+                layer.close(loading);
+
+                if (res.code > 0) {
+
+                    layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+
+                        location.href = res.url;
+
+                    });
+
+                } else {
+
+                    layer.msg(res.msg, {time: 1800, icon: 2});
+
+                }
+
+            });
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#starttime' //指定元素
+            ,type: 'datetime'
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#stoptime' //指定元素
+            ,type: 'datetime'
+        });
+
+    });
+</script>
+{/block}

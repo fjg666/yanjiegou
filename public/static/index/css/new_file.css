@@ -1,0 +1,392 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	 box-sizing:border-box; 
+}
+
+input {
+	border: none;
+	outline: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	color: #777777;
+}
+
+textarea {
+	outline: none;
+	resize: none;
+	border: none
+}
+html,body{
+width: 100%;
+	overflow-x: hidden
+}
+
+
+body .homepage {
+	background-color: #F8F8F8;
+	font-family: PingFangSC-Regular;
+	position: relative
+}
+
+body .homepage #cover {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	background: rgba(0, 0, 0, 0.4);
+	width: 100%;
+	height: 100%;
+	filter: alpha(opacity=60);
+	opacity: 0.6;
+	display: none;
+	z-Index: 999
+}
+
+
+body .homepage .logo {
+	background: #fff;
+	margin-top: 0.625rem;
+	height: 5.25rem;
+	color: #333333;
+	line-height: 5.25rem;
+	background-color: #ffff;
+	margin-bottom: 0.625rem;
+	position: relative;
+	font-weight: 400
+}
+
+body .homepage .logo .sj {
+	font-size: 1rem;
+	margin-left: 0.9375rem
+}
+
+body .homepage .logo .round {
+	position: absolute;
+	top: 0.6rem;
+	right: 1rem;
+	border: 1px solid #CCCCCC;
+	border-radius: 50%;
+	width: 3.75rem;
+	height: 3.75rem
+}
+
+body .homepage .logo .round .pics {
+	width: 100%;
+	border-radius: 50%;
+	display: block
+}
+
+body .homepage .info {
+	color: #333333;
+	font-weight: 400;
+	font-size: 1rem;
+	position: relative;
+	top: 0
+}
+
+body .homepage .info .name {
+	position: relative;
+	top: 0;
+	display: flex;
+		margin-left: .9375rem;
+	height: 3.0625rem;
+	line-height: 3.0625rem;
+	border-bottom: 0.0625rem solid #F8F8F8;
+}
+
+body .homepage .info .name input {
+	border: none;
+	outline: none;
+	-webkit-appearance: none
+}
+
+body .homepage .info .name .n5 {
+	display: inline-block;
+	color: #777777;
+	text-align: right;
+	font-size: .875rem;
+	margin-left: 0.8125rem;
+	position: absolute;
+	right: 2.5rem;
+}
+
+body .homepage .info .name .n1 {
+	color: #777777;
+	margin-left: 0.8125rem;
+	/*margin-left: 14.375rem*/
+}
+
+body .homepage .info .name .n6 {
+	    color: #777777;
+		position: absolute;
+		right: 2.5rem;
+	    display: inline;
+	    font-size: .875rem;
+}
+
+body .homepage .info .name .el-icon-arrow-right {
+	position: absolute;
+	top: 0.7rem;
+	right: 1rem;
+	height: 1.5rem
+}
+
+body .homepage .info .name .map {
+	position: absolute;
+	top: .7rem;
+	right: 1rem;
+	width: 1.125rem;
+	height: 1.25rem
+}
+
+body .homepage .info .name .kr {
+	text-align: right;
+	position: absolute;
+	right: 1rem;
+	font-size: .875rem;
+	height: 3.0625rem;
+	line-height: 3.0625rem
+}
+
+body .homepage .info .name .bt {
+	
+}
+
+body .homepage .info .name .address {
+	    font-size: .875rem;
+	    height: 3.0625rem;
+	    text-align: right;
+		position: absolute;
+		right: 1.5rem;
+	    line-height: 3.0625rem;
+}
+
+body .homepage .concat {
+	margin-top: .625rem;
+	background: #fff;
+	color: #333333;
+	font-weight: 400;
+	font-size: 1rem;
+
+}
+
+body .homepage .concat .person {
+		margin-left: .9375rem;
+	height: 3.0625rem;
+	line-height: 3.0625rem;
+	border-bottom: .0625rem solid #F8F8F8
+}
+
+body .homepage .concat .person .name {
+	margin-right: 6.875rem
+}
+
+body .homepage .concat .person .special {
+	color: #777777;
+	font-size: .9375rem;
+	/*margin-left: 14.6875rem*/
+}
+
+body .homepage .concat .person .new {
+	text-align: right;
+	position: absolute;
+	    right: 1.2rem;
+	font-size: .875rem;
+	height: 3.0625rem
+}
+
+body .homepage .concat .phone {
+	margin-left: .9375rem;
+	height: 3.0625rem;
+	line-height: 3.0625rem;
+	border-bottom: .0625rem solid #F8F8F8
+}
+
+body .homepage .concat .phone input {
+	position: absolute;
+	    right: 1.2rem;
+		text-align: right;
+	height: 3.0625rem;
+	border: none;
+	outline: none;
+	-webkit-appearance: none;
+	font-size: .875rem
+}
+
+body .homepage .concat .phone .num {
+	/*margin-right: 7.5rem*/
+}
+
+body .homepage .concat .phone .n3 {
+	color: #777777;
+	font-size: .9375rem
+}
+
+body .homepage .concat .phone .newphone {
+	width: 9rem
+}
+
+/*body .homepage .concat .phone .choose {*/
+/*	margin-left: 15.625rem;*/
+/*	color: #777777;*/
+/*	font-size: .9375rem*/
+/*}*/
+
+body .homepage .induce {
+	margin-top: .625rem;
+	height: 12.5rem;
+	background: #fff;
+	color: #333333;
+	font-weight: 400;
+	font-size: 1rem;
+	padding-left: .9375rem;
+	padding-right: 1.40625rem;
+	margin-bottom: .625rem
+}
+
+#secondcard,#idcard{
+	width: 1rem;
+}
+
+body .homepage .induce .jianjie {
+	/*padding-left: 1.2rem;*/
+	height: 3.0625rem;
+	line-height: 3.0625rem;
+	border-bottom: .0625rem solid #F8F8F8
+}
+
+body .homepage .induce .content {
+	margin-top: .9375rem;
+	color: #777777;
+	font-size: .8125rem;
+	line-height: 1.125rem;
+	width: 90%;
+	height: 6.25rem
+}
+
+body .homepage .zhizhao {
+	margin-top: .625rem;
+	padding-left: .9375rem;
+	background-color: #ffff;
+	color: #333333;
+	padding-bottom: 1rem;
+	font-weight: 400
+}
+
+body .homepage .zhizhao .name {
+	height: 3.0625rem;
+	line-height: 3.0625rem;
+	border-bottom: .0625rem solid #F8F8F8;
+	position: relative
+}
+
+body .homepage .zhizhao .name .sc {
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+	display: block;
+	font-size: .6875rem;
+	width: 5.125rem;
+	height: 1.375rem;
+	background-color: #EF0600;
+	border-radius: .9375rem;
+	color: white;
+	text-align: center;
+	line-height: 1.375rem
+}
+
+body .homepage .zhizhao .name .sc input {
+	position: absolute;
+	top: 0px;
+	left: 0px
+}
+
+body .homepage .zhizhao .pic {
+	padding-top: 1.25rem;
+	text-align: center;
+}
+
+body .homepage .zhizhao .pic img {
+	width: 13.3125rem;
+	height: 9.1875rem
+}
+
+body .homepage .zhizhao .pic p {
+	margin-top: 1.25rem;
+	margin-top: 1.25rem;
+	color: #777777;
+	font-size: .8125rem
+}
+
+body .homepage .zhizhao .imgs {
+	display: flex
+}
+
+body .homepage .zhizhao .imgs .firstidcard, .secondcard{
+	padding: 0.8rem;
+	flex: 1;
+}
+#firstpic,#lastpic{
+	width: 95%;
+}
+
+body .homepage .zhizhao .content {
+	color: #777777;
+	font-size: .8125rem;
+	margin-top: .625rem;
+	line-height: 1.25rem
+}
+
+body .homepage .tijiao {
+	height: 9.375rem;
+	width: 100%;
+	position: relative
+}
+
+body .homepage .tijiao .button {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 10rem;
+	height: 2.5rem;
+	background-color: #EF0600;
+	color: white;
+	border-radius: 1.25rem;
+	font-size: 1.0625rem;
+	border: 1px solid transparent;
+	outline: none
+}
+
+body .homepage .tijiao .button span {
+	margin-left: .625rem
+}
+
+body .homepage .addressmap {
+	margin: 1.25rem auto;
+	width: 15.75rem;
+	height: 15.75rem;
+	position: absolute;
+	top: 35%;
+	left: 2.9375rem;
+	z-Index: 9991
+}
+
+body .homepage .addressmap .container {
+	width: 15.75rem;
+	height: 14.75rem;
+	margin-bottom: 1.25rem
+}
+
+body .homepage .addressmap .cancel {
+	width: 6.25rem;
+	height: 1.875rem;
+	line-height: 1.875rem;
+	margin: 0 auto;
+	text-align: center;
+	border-radius: .625rem;
+	color: #777777;
+	font-size: .875rem;
+	background-color: white
+}
+

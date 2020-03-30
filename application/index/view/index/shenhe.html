@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.head{
+				line-height: 6rem;
+				width: 100%;
+				font-size: 2.3rem;
+				text-align: center;
+			}
+			.head img{
+				width: 3.125rem;
+				margin-top: 1.5rem;
+				margin-right: 1rem;
+			}
+			.head span:first-child{
+				position: absolute;
+				left: 1.5rem;
+			}
+			.coon,.conn,.con{
+				font-size: 2.3rem;
+				text-align: center;
+				margin-top: 6.25rem;
+				padding-left: 6.25rem;
+				padding-right: 6.25rem;
+			}
+			.coon img,.conn img,.con img{
+				width: 18.75rem;
+			}
+			.coon h6,.conn h6,.con h6{
+				font-size: 3rem;
+				margin-top: 3.125rem;
+				margin-bottom: 3.125rem;
+			}
+			.coon button{
+				margin-top: 3.125rem;
+				width: 100%;
+				padding-top:1rem;
+				padding-bottom:1rem;
+				font-size: 2.3rem;
+				border: 0;
+				background: #09BB07;
+				color: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<div class="head">
+				<!-- <span id="fh"><img src="/static/index/img/left.png" alt=""><span style="position: relative;top: -0.8rem;">关闭</span></span> -->
+				<h2>审核</h2>
+            </div>
+            {if condition="$status eq 1"}
+			<div class="con">
+				<p>
+					<img src="/static/index/img/biao.png" >
+				</p>
+				<h6>等待审核</h6>
+				<p style="color: #888888;">
+					您的资料已提交审核，我们将在1-3个工作日内进行审核，请您耐心等待
+				</p>
+            </div>
+            {/if}
+			<div class="conn" style="display: none;">
+				<p>
+					<img src="/static/index/img/tub.png" alt="">
+				</p>
+				<h6>审核成功</h6>
+				<p style="color: #888888;">
+					您提交的资料已经审核成功！请前往商家后台进行其他操作！
+				</p>
+            </div>
+            {if condition="$status eq 3"}
+			<div class="coon" >
+				<p>
+					<img src="/static/index/img/jing.png" alt="">
+				</p>
+				<h6>审核失败</h6>
+				<p style="color: #888888;">
+					您提交的资料审核失败!({$verify_reason})
+				</p>
+				<button id="fh">重新提交</button>
+            </div>
+            {/if}
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	let fanh = document.getElementById("fh")
+	fanh.onclick=function(){
+		window.location.href="{:url('index/edit')}"
+	}
+</script>

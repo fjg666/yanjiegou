@@ -1,0 +1,92 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+	<fieldset class="layui-elem-field layui-field-title">
+        <legend>图片规则列表</legend>
+    </fieldset>
+	<table class="layui-hide layui-table" lay-filter="modify"></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script type="text/html" id="topBtn">
+  <a href="{:url('add')}" lay-text="新增图片规则" class="layui-btn"><i class="layui-icon">&#xe654;</i>新增图片规则</a>
+  <button class="layui-btn cms-refresh"><i class="layui-icon">&#xe669;</i></button>
+</script>
+<script type="text/html" id="table-tpl-status">
+	<input type="checkbox" name="status" value="{{ d.id }}" {{ d.status == 9 ? 'checked' : '' }} title="已启用" lay-filter="table-status">
+</script>
+<script type="text/html" id="table-tpl-operation">
+	<a href="{:url('edit')}?id={{ d.id }}" lay-text="信息编辑" class="layui-btn layui-btn-normal layui-btn-sm" data-title="编辑信息" >编辑</a>
+	<a href="#" data-href="{:url('delete')}?id={{ d.id }}" class="layui-btn layui-btn-sm layui-bg-red layui-delete">删除</a>
+</script>
+<script type="text/javascript">
+var urlApiField = "{:url('field')}";
+
+layui.use(['table','util','form'],function(){
+	var table = layui.table,
+		form = layui.form,
+		util = layui.util;
+	var tableIns = table.render({
+		elem: '.layui-table',
+		url: "{:url('data')}", //数据接口
+		method: 'post',
+        toolbar: '#topBtn',
+		text: '暂无数据',
+		page: true, //开启分页
+		cols:[[ 
+			{ field: 'id', title: 'ID', width:10 },
+			{ field: 'moduleid', title: '模型编号', width:90 },			
+			{ field: 'modulename', title: '模型名称', width:90 },
+			{ field: 'moduleapp', title: '控制器名', width:90 },
+			{ field: 'uploadcatalog', title: '上传目录', width:90 },
+			{ field: 'uploadformatimage', title: '上传目录规则', width:400 },
+			{ field: 'compresswidth', title: '最大图宽', width:90 },
+			{ field: 'compressheight', title: '最大图高', width:90 },
+			{ field: 'markopenname', title: '水印位置', width:90 },
+			{ field: 'thumbname', title: '缩略图', width:90 },	
+			{ field: 'status', title: '状态', width:120,  templet:"#table-tpl-status" },
+			{ title: '操作', width:180,  templet:'#table-tpl-operation' },
+		]],
+	});
+	//监听编辑事件
+	table.on('edit(modify)', function(o){ 
+		$.post(urlApiField,{ 'id':o.data.id, 'fieldname':o.field, 'value':o.value },function(res){
+			if(res.status == 'error'){
+				layer.msg(res.message);
+			}
+		},'json');
+	});
+	//监听锁定操作
+    form.on('checkbox(table-status)', function(data){
+		var value = data.elem.checked == true ? 9 : 0 ;
+		$.post(urlApiField,{ 'id':data.value, 'fieldname':'status', 'value':value },function(res){
+			
+		},'json');
+	});
+	//删除事件
+	$('#qf-container').on('click','.layui-delete',function(e){
+		e.preventDefault();
+		var url = $(this).data('href');
+		layer.confirm('确定要删除么？', function(index){
+			$.post(url,function(res){
+				layer.msg(res.message);
+				if(res.status=='success'){
+					setTimeout(function(){
+						tableIns.reload();
+					},600);
+				}
+				return false;
+			},'json');
+		});
+	});
+});
+</script>
+{/block}

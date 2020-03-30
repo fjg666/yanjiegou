@@ -1,0 +1,169 @@
+2019-09-23 16:23:39 pid:1 Bad request for Register service. Request info(IP:127.0.0.1, Request Buffer:GET / HTTP/1.1). See http://doc2.workerman.net/register-auth-timeout.html
+2019-09-23 16:24:57 pid:1 Bad request for Register service. Request info(IP:127.0.0.1, Request Buffer:GET / HTTP/1.1). See http://doc2.workerman.net/register-auth-timeout.html
+2019-09-24 15:46:01 pid:1 Exception: You can't send(object) to client, you need to convert it to a string.  in D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Protocols\Websocket.php:236
+Stack trace:
+#0 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(344): Workerman\Protocols\Websocket::encode(Object(__PHP_Incomplete_Class), Object(Workerman\Connection\TcpConnection))
+#1 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(765): Workerman\Connection\TcpConnection->send(Object(__PHP_Incomplete_Class))
+#2 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(658): GatewayWorker\Gateway->onWorkerMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Events\Select.php(294): Workerman\Connection\TcpConnection->baseRead(Resource id #50)
+#4 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(2382): Workerman\Events\Select->loop()
+#5 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(276): Workerman\Worker->run()
+#6 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1353): GatewayWorker\Gateway->run()
+#7 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1296): Workerman\Worker::forkWorkersForWindows()
+#8 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#9 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\Applications\YourApp\start_gateway.php(63): Workerman\Worker::runAll()
+#10 {main}
+2019-09-24 15:46:01 pid:1 Worker process terminated
+2019-09-24 15:46:05 pid:1 Exception: You can't send(object) to client, you need to convert it to a string.  in D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Protocols\Websocket.php:236
+Stack trace:
+#0 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(344): Workerman\Protocols\Websocket::encode(Object(__PHP_Incomplete_Class), Object(Workerman\Connection\TcpConnection))
+#1 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(765): Workerman\Connection\TcpConnection->send(Object(__PHP_Incomplete_Class))
+#2 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(658): GatewayWorker\Gateway->onWorkerMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Events\Select.php(294): Workerman\Connection\TcpConnection->baseRead(Resource id #35)
+#4 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(2382): Workerman\Events\Select->loop()
+#5 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(276): Workerman\Worker->run()
+#6 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1353): GatewayWorker\Gateway->run()
+#7 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1296): Workerman\Worker::forkWorkersForWindows()
+#8 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#9 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\Applications\YourApp\start_gateway.php(63): Workerman\Worker::runAll()
+#10 {main}
+2019-09-24 15:46:05 pid:1 Worker process terminated
+2019-09-24 15:46:33 pid:1 Exception: You can't send(object) to client, you need to convert it to a string.  in D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Protocols\Websocket.php:236
+Stack trace:
+#0 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(344): Workerman\Protocols\Websocket::encode(Object(__PHP_Incomplete_Class), Object(Workerman\Connection\TcpConnection))
+#1 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(765): Workerman\Connection\TcpConnection->send(Object(__PHP_Incomplete_Class))
+#2 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(658): GatewayWorker\Gateway->onWorkerMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Events\Select.php(294): Workerman\Connection\TcpConnection->baseRead(Resource id #35)
+#4 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(2382): Workerman\Events\Select->loop()
+#5 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(276): Workerman\Worker->run()
+#6 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1353): GatewayWorker\Gateway->run()
+#7 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1296): Workerman\Worker::forkWorkersForWindows()
+#8 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#9 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\Applications\YourApp\start_gateway.php(63): Workerman\Worker::runAll()
+#10 {main}
+2019-09-24 15:46:33 pid:1 Worker process terminated
+2019-09-24 15:46:35 pid:1 Exception: You can't send(object) to client, you need to convert it to a string.  in D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Protocols\Websocket.php:236
+Stack trace:
+#0 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(344): Workerman\Protocols\Websocket::encode(Object(__PHP_Incomplete_Class), Object(Workerman\Connection\TcpConnection))
+#1 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(765): Workerman\Connection\TcpConnection->send(Object(__PHP_Incomplete_Class))
+#2 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(658): GatewayWorker\Gateway->onWorkerMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Events\Select.php(294): Workerman\Connection\TcpConnection->baseRead(Resource id #35)
+#4 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(2382): Workerman\Events\Select->loop()
+#5 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(276): Workerman\Worker->run()
+#6 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1353): GatewayWorker\Gateway->run()
+#7 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1296): Workerman\Worker::forkWorkersForWindows()
+#8 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#9 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\Applications\YourApp\start_gateway.php(63): Workerman\Worker::runAll()
+#10 {main}
+2019-09-24 15:46:35 pid:1 Worker process terminated
+2019-09-24 15:46:58 pid:1 Exception: You can't send(object) to client, you need to convert it to a string.  in D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Protocols\Websocket.php:236
+Stack trace:
+#0 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(344): Workerman\Protocols\Websocket::encode(Object(__PHP_Incomplete_Class), Object(Workerman\Connection\TcpConnection))
+#1 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(765): Workerman\Connection\TcpConnection->send(Object(__PHP_Incomplete_Class))
+#2 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(658): GatewayWorker\Gateway->onWorkerMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Events\Select.php(294): Workerman\Connection\TcpConnection->baseRead(Resource id #35)
+#4 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(2382): Workerman\Events\Select->loop()
+#5 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(276): Workerman\Worker->run()
+#6 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1353): GatewayWorker\Gateway->run()
+#7 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1296): Workerman\Worker::forkWorkersForWindows()
+#8 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#9 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\Applications\YourApp\start_gateway.php(63): Workerman\Worker::runAll()
+#10 {main}
+2019-09-24 15:46:58 pid:1 Worker process terminated
+2019-09-24 15:47:05 pid:1 Exception: You can't send(object) to client, you need to convert it to a string.  in D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Protocols\Websocket.php:236
+Stack trace:
+#0 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(344): Workerman\Protocols\Websocket::encode(Object(__PHP_Incomplete_Class), Object(Workerman\Connection\TcpConnection))
+#1 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(765): Workerman\Connection\TcpConnection->send(Object(__PHP_Incomplete_Class))
+#2 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(658): GatewayWorker\Gateway->onWorkerMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Events\Select.php(294): Workerman\Connection\TcpConnection->baseRead(Resource id #35)
+#4 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(2382): Workerman\Events\Select->loop()
+#5 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(276): Workerman\Worker->run()
+#6 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1353): GatewayWorker\Gateway->run()
+#7 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1296): Workerman\Worker::forkWorkersForWindows()
+#8 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#9 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\Applications\YourApp\start_gateway.php(63): Workerman\Worker::runAll()
+#10 {main}
+2019-09-24 15:47:05 pid:1 Worker process terminated
+2019-09-24 15:50:05 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2019-09-24 15:50:05 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2019-09-24 15:50:06 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2019-09-24 15:50:06 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2019-09-24 15:50:07 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2019-09-24 15:50:07 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2019-09-24 15:50:08 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2019-09-24 15:50:08 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2019-09-24 15:50:10 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2019-09-24 15:50:10 pid:1 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2019-09-24 15:51:29 pid:1 Exception: You can't send(object) to client, you need to convert it to a string.  in D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Protocols\Websocket.php:236
+Stack trace:
+#0 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(344): Workerman\Protocols\Websocket::encode(Object(__PHP_Incomplete_Class), Object(Workerman\Connection\TcpConnection))
+#1 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(765): Workerman\Connection\TcpConnection->send(Object(__PHP_Incomplete_Class))
+#2 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(658): GatewayWorker\Gateway->onWorkerMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Events\Select.php(294): Workerman\Connection\TcpConnection->baseRead(Resource id #35)
+#4 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(2382): Workerman\Events\Select->loop()
+#5 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(276): Workerman\Worker->run()
+#6 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1353): GatewayWorker\Gateway->run()
+#7 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1296): Workerman\Worker::forkWorkersForWindows()
+#8 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#9 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\Applications\YourApp\start_gateway.php(63): Workerman\Worker::runAll()
+#10 {main}
+2019-09-24 15:51:29 pid:1 Worker process terminated
+2019-09-24 17:43:14 pid:1 Exception: You can't send(array) to client, you need to convert it to a string.  in D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Protocols\Websocket.php:236
+Stack trace:
+#0 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(344): Workerman\Protocols\Websocket::encode(Array, Object(Workerman\Connection\TcpConnection))
+#1 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(765): Workerman\Connection\TcpConnection->send(Array)
+#2 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(658): GatewayWorker\Gateway->onWorkerMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Events\Select.php(294): Workerman\Connection\TcpConnection->baseRead(Resource id #103)
+#4 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(2382): Workerman\Events\Select->loop()
+#5 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(276): Workerman\Worker->run()
+#6 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1353): GatewayWorker\Gateway->run()
+#7 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1296): Workerman\Worker::forkWorkersForWindows()
+#8 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#9 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\Applications\YourApp\start_gateway.php(63): Workerman\Worker::runAll()
+#10 {main}
+2019-09-24 17:43:14 pid:1 Worker process terminated
+2019-09-24 17:57:48 pid:1 Exception: You can't send(array) to client, you need to convert it to a string.  in D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Protocols\Websocket.php:236
+Stack trace:
+#0 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(344): Workerman\Protocols\Websocket::encode(Array, Object(Workerman\Connection\TcpConnection))
+#1 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(765): Workerman\Connection\TcpConnection->send(Array)
+#2 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Connection\TcpConnection.php(658): GatewayWorker\Gateway->onWorkerMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Events\Select.php(294): Workerman\Connection\TcpConnection->baseRead(Resource id #63)
+#4 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(2382): Workerman\Events\Select->loop()
+#5 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\gateway-worker\src\Gateway.php(276): Workerman\Worker->run()
+#6 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1353): GatewayWorker\Gateway->run()
+#7 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(1296): Workerman\Worker::forkWorkersForWindows()
+#8 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#9 D:\phpstudy_pro\WWW\tp5\vendor\GatewayWorker\Applications\YourApp\start_gateway.php(63): Workerman\Worker::runAll()
+#10 {main}
+2019-09-24 17:57:48 pid:1 Worker process terminated
+2019-10-22 14:32:43 pid:17455 Workerman[start.php] start in DEBUG mode
+2019-10-22 14:38:11 pid:17455 Workerman[start.php] stopping ...
+2019-10-22 14:38:11 pid:17455 Workerman[start.php] has been stopped
+2019-10-22 14:38:15 pid:17741 Workerman[start.php] start in DAEMON mode
+2019-10-22 14:38:28 pid:17764 Workerman[start.php] status 
+2019-10-22 14:50:10 pid:18482 Workerman[start.php] status 
+2019-10-22 14:50:16 pid:18489 Workerman[start.php] stop 
+2019-10-22 14:50:16 pid:18489 Workerman[start.php] is stopping ...
+2019-10-22 14:50:16 pid:17743 Workerman[start.php] stopping ...
+2019-10-22 14:50:16 pid:17743 Workerman[start.php] has been stopped
+2019-10-22 14:50:16 pid:18489 Workerman[start.php] stop success
+2019-10-22 14:51:06 pid:18557 Workerman[start.php] start in DEBUG mode
+2019-10-22 14:51:46 pid:18557 Workerman[start.php] stopping ...
+2019-10-22 14:51:46 pid:18557 Workerman[start.php] has been stopped
+2019-10-22 14:51:47 pid:18600 Workerman[start.php] start in DEBUG mode
+2019-11-07 10:21:41 pid:12519 Workerman[start.php] start in DEBUG mode
+2019-11-07 10:29:35 pid:13318 Workerman[start.php] start in DEBUG mode
+2019-11-07 10:30:25 pid:13417 Workerman[start.php] start in DEBUG mode
+2019-11-07 10:30:50 pid:13610 Workerman[start.php] start in DEBUG mode
+2019-11-07 10:31:21 pid:13691 Workerman[start.php] start in DEBUG mode
+2019-11-07 10:31:40 pid:13745 Workerman[start.php] start in DEBUG mode
+2019-11-07 10:31:45 pid:13745 Workerman[start.php] stopping ...
+2019-11-07 10:31:45 pid:13745 Workerman[start.php] has been stopped
+2019-11-07 10:31:56 pid:13799 Workerman[start.php] start in DEBUG mode
+2019-11-07 10:32:55 pid:13799 Workerman[start.php] stopping ...
+2019-11-07 10:32:55 pid:13799 Workerman[start.php] has been stopped
+2019-11-07 10:33:21 pid:14005 Workerman[start.php] start in DAEMON mode
+2020-03-30 15:01:22 pid:18651 Workerman[start.php] start in DEBUG mode
+2020-03-30 15:02:16 pid:18651 Workerman[start.php] stopping ...
+2020-03-30 15:02:17 pid:18651 Workerman[start.php] has been stopped
+2020-03-30 15:02:30 pid:18658 Workerman[start.php] start in DEBUG mode

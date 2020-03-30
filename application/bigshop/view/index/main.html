@@ -1,0 +1,216 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-body ">
+          <blockquote class="layui-elem-quote">欢迎管理员：
+            <span class="x-red">{$Think.session.bsinfo.ursname}</span>！当前时间：<span id="clock" class="red"></span>
+        </div>
+      </div>
+    </div>
+    <div class="layui-col-md6">
+      <div class="layui-card">
+        <div class="layui-card-header">商品统计</div>
+        <div class="layui-card-body ">
+          <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog">
+            <li class="layui-col-md6 layui-col-xs6 " >
+              <a href="javascript:;" class="x-admin-backlog-body bkcolor_green">
+                <h3>启用商家</h3>
+                <p>
+                  <cite>{$data.shop.s0}</cite></p>
+              </a>
+            </li>
+            <li class="layui-col-md6 layui-col-xs6">
+              <a href="javascript:;" class="x-admin-backlog-body bkcolor_red">
+                <h3>禁用商家</h3>
+                <p>
+                  <cite>{$data.shop.s1}</cite></p>
+              </a>
+            </li>
+            <li class="layui-col-md6 layui-col-xs6">
+              <a href="javascript:;" class="x-admin-backlog-body bkcolor_blue">
+                <h3>出售商品</h3>
+                <p>
+                  <cite>{$data.goods.g1}</cite></p>
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="layui-col-md6">
+      <div class="layui-card">
+        <div class="layui-card-header">订单统计</div>
+        <div class="layui-card-body ">
+          <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog">
+            <li class="layui-col-md4 layui-col-xs6 " >
+              <a href="javascript:;" class="x-admin-backlog-body bkcolor_orange">
+                <h3>待付款</h3>
+                <p>
+                  <cite>{$data.order.or1}</cite></p>
+              </a>
+            </li>
+            <li class="layui-col-md4 layui-col-xs6">
+              <a href="javascript:;" class="x-admin-backlog-body bkcolor_qing">
+                <h3>待发货</h3>
+                <p>
+                  <cite>{$data.order.or2}</cite></p>
+              </a>
+            </li>
+            <li class="layui-col-md4 layui-col-xs6">
+              <a href="javascript:;" class="x-admin-backlog-body bkcolor_green">
+                <h3>待收货</h3>
+                <p>
+                  <cite>{$data.order.or3}</cite></p>
+              </a>
+            </li>
+            <li class="layui-col-md4 layui-col-xs6">
+              <a href="javascript:;" class="x-admin-backlog-body bkcolor_blue">
+                <h3>待评价</h3>
+                <p>
+                  <cite>{$data.order.or4}</cite></p>
+              </a>
+            </li>
+            <li class="layui-col-md4 layui-col-xs6">
+              <a href="javascript:;" class="x-admin-backlog-body bkcolor_red">
+                <h3>取消/拒收</h3>
+                <p>
+                  <cite>{$data.order.or8}</cite></p>
+              </a>
+            </li>
+            <li class="layui-col-md4 layui-col-xs6">
+              <a href="javascript:;" class="x-admin-backlog-body bkcolor_purple">
+                <h3>待退款（售后）</h3>
+                <p>
+                  <cite>{$data.order.or7}</cite></p>
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-body ">
+               
+                <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+                <div id="main" style="width: 100%;height:400px;"></div>
+               
+            </div>
+        </div>
+    </div>
+    
+    <style id="welcome_style"></style>
+    <div class="layui-col-md12">
+      <blockquote class="layui-elem-quote layui-quote-nm">本系统由沿街购技术团队提供技术支持。</blockquote></div>
+  </div>
+</div>
+</div>
+
+{/block}
+{block name="js"}
+<script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+          setInterval(function(){
+              $("#clock").html("");
+              var date=new Date();
+              var month,dates,hours,min,seconds;
+              month=(date.getMonth()+1);
+              dates=date.getDate();
+              hours=date.getHours();
+              min=date.getMinutes();
+              seconds=date.getSeconds();
+              if(month<10){
+                  month="0"+month;
+              }
+              if(dates<10){
+                  dates="0"+dates;
+              }
+              if(hours<10){
+                  hours="0"+hours;
+              }
+              if(min<10){
+                  min="0"+min;
+              }
+              if(seconds<10){
+                  seconds="0"+seconds;
+              }
+              week=new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+              var clocks=date.getFullYear()+"年"+month+"月"+dates+"日"+hours+":"+min+":"+seconds+" "+week[date.getDay()];
+              $("#clock").append(clocks);
+          },1000)
+      })
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '订单统计'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['交易额','订单数量']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: { show: true, feature: {saveAsImage: {},dataView: {show: true, readOnly: false}, magicType: {show: true, type: ['line', 'bar']}, } },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: [{$top}]
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name:'交易额',
+                    type:'line',
+                    stack: '交易额',
+                    color:'#DD4B39',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                    areaStyle: {normal: {}},
+                    data:[{$bottom1}]
+                },
+                {
+                    name:'订单数量',
+                    type:'line',
+                    stack: '订单数量',
+                    color:'#00CA6D',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                    areaStyle: {normal: {}},
+                    data:[{$bottom2}]
+                },
+            ]
+        };
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+        
+    </script>
+   
+    {/block}

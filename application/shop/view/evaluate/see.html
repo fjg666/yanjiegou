@@ -1,0 +1,93 @@
+{extend name="Public:common" /}
+{block name="content"}
+    <fieldset class="layui-elem-field">
+        <legend>{$comments['gtitle']} 【评论详情】</legend>
+        <div class="layui-field-box">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">评论者</label>
+                <div class="layui-input-block">
+                    <div class="layui-form-mid layui-word-aux">{$comments['umobile']}</div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">订单编号</label>
+                <div class="layui-input-block">
+                    <div class="layui-form-mid layui-word-aux">{$comments['ordersn']}</div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">订单金额</label>
+                <div class="layui-input-block">
+                    <div class="layui-form-mid layui-word-aux">{$comments['omoney']}</div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品名称</label>
+                <div class="layui-input-block">
+                    <div class="layui-form-mid layui-word-aux">{$comments['gtitle']}</div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">商家</label>
+                <div class="layui-input-block">
+                    <div class="layui-form-mid layui-word-aux">{$comments['sname']}</div>
+                </div>
+            </div>
+
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">物流服务</label>
+                <div class="layui-input-block">
+                    <div class="layui-form-mid layui-word-aux">{$comments['logistics']}</div>
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">服务态度</label>
+                <div class="layui-input-block">
+                    <div class="layui-form-mid layui-word-aux">{$comments['manner']}</div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">评论内容</label>
+                <div class="layui-input-block">
+                    <div class="layui-form-mid layui-word-aux">{$comments['content']}</div>
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">评论图片</label>
+                <div class="layui-input-block">
+                    <div class="layui-form-mid layui-word-aux">
+                        {empty name="imgsrc"}
+                        没有上传图片
+                        {else /}
+                        {volist name="imgsrc" id="vo"}
+                       <p style="margin-bottom: 10px;"> <a href="/{$vo}" target="_blank"><img src="/{$vo}" alt="" width="300"></a></p>
+                        {/volist}
+                        {/empty}
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </fieldset>
+{/block}

@@ -1,0 +1,58 @@
+{extend name="Public:common" /}
+{block name="css"}
+<style type="text/css">
+    .layui-table-body tr{height:50px;}
+    .layui-table-body td .laytable-cell-1-0-2{padding: 0;margin:0;height:50px;}
+</style>
+{/block}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>商品销售排行</legend>
+    </fieldset>
+    <div class="demoTable">
+        <div class="layui-inline">
+            <input class="layui-input" name="key" id="key" placeholder="{:lang('pleaseEnter')}关键字">
+        </div>
+        <button class="layui-btn" id="search" data-type="reload">{:lang('search')}</button>
+        <a href="{:url('index',['catid'=>input('catid')])}" class="layui-btn">显示全部</a>
+        <div style="clear: both;"></div>
+    </div>
+    <table class="layui-table" id="list" lay-filter="list" lay-skin="row"></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+
+<script type="text/html" id="title">
+   {{d.shopname}}{{# if(d.shopname){ }}<img src="/static/admin/images/image.gif" onmouseover="layer.tips('<img src={{d.shoplogo}}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();" >{{# } }}
+</script>
+
+<script>
+    layui.use(['table','form','util'], function() {
+        var table = layui.table, $ = layui.jquery,form = layui.form;util = layui.util;
+        var tableIn = table.render({
+            id: 'content',
+            elem: '#list',
+            url: '{:url("")}',
+            method: 'post',
+            toolbar: '#topBtn',
+            page: true,
+            cols: [[
+                {field: 'id', title: '商品编号', width: 150},
+                {field: 'shopname', title: '商铺名称',toolbar: '#title',},
+                {field: 'num', title: '总商品销售数量'},
+                {field: 'money', title: '总商品销售价格'},
+            ]],
+            limit: 10
+        });
+    });    
+</script>
+{/block}

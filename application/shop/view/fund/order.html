@@ -1,0 +1,159 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-tab layui-tab-brief" lay-filter="test1">
+                        <fieldset class="layui-elem-field layui-field-title">
+                            <legend>订单结算</legend>
+                        </fieldset>
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">结算信息</li>
+                            <li>未结算订单</li>
+                            <li>已结算订单</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <table class="layui-table" id="jsxx" lay-filter="jsxx"></table>
+                            </div>
+                            <div class="layui-tab-item">
+                                <table class="layui-table" id="lists" lay-filter="lists"></table>
+                            </div>
+                            <div class="layui-tab-item">
+                                <table class="layui-table" id="yjsd" lay-filter="yjsd"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script>
+    layui.use(['table', 'form', 'jquery', 'element'], function () {
+        var table = layui.table, form = layui.form, $ = layui.jquery, element = layui.element;
+        var tableIn = table.render({
+            id: 'user0',
+            elem: '#jsxx',
+            url: '{:url("settlements")}',
+            method: 'post',
+            page: true,
+            cols: [[
+                { field: 'settlementNo', title: '结算单号', width: 150 },
+                { field: 'settlementType', title: '类型', width: 100 },
+                { field: 'settlementMoney', title: '结算金额', width: 160 },
+                { field: 'backMoney', title: '返还金额', width: 120 },
+                { field: 'createTime', title: '创建时间', width: 120 },
+                { field: 'settlementStatus', title: '结算状态', width: 120 },
+                { field: 'settlementTime', title: '结算时间', width: 120 },
+                { field: 'remarks', title: '备注', width: 200 },
+            ]],
+            limit: 10 //每页默认显示的数量
+        });
+        var tableIn = table.render({
+            id: 'user1',
+            elem: '#lists',
+            url: '{:url("")}',
+            method: 'post',
+            toolbar: '#topBtn',
+            page: true,
+            cols: [[
+            	{type: "checkbox", fixed: true},
+                {field: 'id', title: '{:lang("id")}', width: 80},
+                { field: 'order_sn', title: '订单单号', width: 150 },
+                { field: 'add_time', title: '下单时间', width: 200 },
+                { field: 'pay_type', title: '支付方式', width: 160 },
+                { field: 'freight', title: '运费', width: 120 },
+                { field: 'money', title: '实付金额', width: 120 },
+                , { width: 160, align: 'center', toolbar: '#action', title: '操作' }
+            ]],
+            limit: 10 //每页默认显示的数量
+        });
+        var tableIn= table.render({
+            id: 'user2',
+            elem: '#yjsd',
+            url: '{:url("jsOrder")}',
+            method: 'post',
+            // toolbar: '#topBtn',
+            page: true,
+            cols: [[
+                { field: 'order_sn', title: '订单单号', width: 150 },
+                { field: 'add_time', title: '下单时间', width: 200 },
+                { field: 'pay_type', title: '支付方式', width: 160 },
+                { field: 'freight', title: '运费', width: 120 },
+                { field: 'money', title: '实付金额', width: 120 },
+                { field: 'settlementNo', title: '结算单号', width: 120 },
+                { field: 'settlementTime', title: '结算时间', width: 120 },
+            ]],
+            limit: 10 //每页默认显示的数量
+        });
+        //搜索
+        $('#search').on('click', function () {
+            var key = $('#key').val();
+            if ($.trim(key) === '') {
+                layer.msg('{:lang("pleaseEnter")}关键字！', { icon: 0 });
+                return;
+            }
+            tableIn.reload({ page: { page: 1 }, where: { key: key } });
+        });
+        table.on('tool(lists)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'sendOrder') {
+                $.post("{:url('setOrderjs')}", { id: data.id }, function (res) {
+                    if (res.code == 1) {
+                        layer.msg(res.msg, { time: 1000, icon: 1 }, function () {
+                            obj.del();
+                        });
+                    } else {
+                        layer.msg(res.msg, { time: 1000, icon: 2 });
+                    }
+
+                });
+
+            }
+        });
+          $('body').on('click','#mjs',function() {
+            var checkStatus = table.checkStatus('user1'); //content即为参数id设定的值
+            if(!checkStatus.isAll){
+                layer.msg("请选择要结算的订单", {time: 1000, icon: 2});
+                return false;
+            }
+            // console.log(checkStatus)
+            layer.confirm('确认结算订单？', {icon: 3}, function(index) {
+                layer.close(index);  
+                var ids = [];
+                $(checkStatus.data).each(function (i, o) {
+                    ids.push(o.id);
+                });
+                var loading = layer.load(1, {shade: [0.1, '#fff']});
+                $.post("{:url('allOrderjs')}", {ids: ids}, function (data) {
+                    if (data.code === 1) {
+                        layer.close(loading);
+                        layer.msg(data.msg, {time: 1000, icon: 1}); 
+                        table.reload("user1");                       
+                    } else {
+                        layer.msg(data.msg, {time: 1000, icon: 2});
+                    }
+                });
+             });
+        });
+        //触发事件
+        element.on('tab(test1)', function (data) {           
+            table.reload("user"+data.index);
+        });
+
+    });
+</script>
+<script type="text/html" id="action">
+    {{# if(d.settlementId ==0){ }}
+        <a  class="layui-btn layui-btn-xs" lay-event="sendOrder">申请结算</a>
+    {{# }}}     
+</script>
+<script type="text/html" id="topBtn">
+    <button type="button" class="layui-btn " id="mjs"><i class="layui-icon"></i>批量结算</button>   
+ </script>
+{/block}

@@ -1,0 +1,29 @@
+{extend name="Public:common" /}
+{block name="content"}
+<link rel="stylesheet" href="LIB/zTree/css/zTreeStyle.css" type="text/css">
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>商圈楼层</legend>
+        </fieldset>
+        <form class="layui-form" >
+            {volist name="floor" id="v" empty="暂无数据"}
+                    {$v.name}：
+                    {volist name="v.shop" id="vs" empty="暂无数据"}
+                         【{$vs.id}】{$vs.name}
+                    {/volist}
+                    <br/>
+            {/volist}
+        </form>
+    </div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+
+{/block}

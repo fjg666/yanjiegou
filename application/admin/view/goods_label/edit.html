@@ -1,0 +1,66 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>修改标签</legend>
+    </fieldset>
+    <form class="layui-form" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">标签</label>
+            <div class="layui-input-inline" id="box_tags">
+                <input type="text" data-required="1" min="0" max="0" errormsg="" title="标签" placeholder="请输入标签" lay-verify="defaul" class="tags layui-input" name="title" value="{$info.title}" />
+            </div>
+            <div class="layui-form-mid layui-word-aux red">*必填</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">颜色</label>
+            <div class="layui-input-inline" style="width: 120px;">
+              <input type="text" value="{$info.color}" name="color" placeholder="请选择颜色" class="layui-input" id="test-colorpicker-form-input">
+            </div>
+            <div class="layui-inline" style="left: -11px;">
+              <div id="test-colorpicker-dome3"></div>
+            </div>
+        </div>
+        <input type="hidden" name="id" value="{$info.id}">
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
+                <a href="{:url('index')}" class="layui-btn layui-btn-primary">返回列表</a>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script>
+    layui.use(['form','jquery','colorpicker'], function () {
+        var form = layui.form,$ = layui.jquery,colorpicker = layui.colorpicker;
+        //表单赋值
+        colorpicker.render({
+          elem: '#test-colorpicker-dome3'
+          ,color: '#1c97f5'
+          ,done: function(color){
+            $('#test-colorpicker-form-input').val(color);
+          }
+        });
+        form.on('submit(submit)', function (data) {
+            $.post("{:url('edit')}", data.field, function (res) {
+                if (res.code > 0) {
+                    layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                        window.location.href="{:url('index')}"
+                    });
+                } else {
+                    layer.msg(res.msg, {time: 1800, icon: 2});
+                }
+            });
+        });
+    });
+</script>{/block}

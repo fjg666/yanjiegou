@@ -1,0 +1,58 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>资金流动列表</legend>
+    </fieldset>
+    <div class="demoTable">
+        <div class="layui-inline">
+            <input class="layui-input" name="key" id="key" placeholder="{:lang('pleaseEnter')}关键字">
+        </div>
+        <button class="layui-btn" id="search" data-type="reload">搜索</button>
+        <a href="{:url('index')}" class="layui-btn">显示全部</a>
+    </div>
+    <table class="layui-table" id="list" lay-filter="list"></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script>
+    layui.use(['table','form'], function() {
+        var table = layui.table,form = layui.form, $ = layui.jquery;
+        var tableIn = table.render({
+            id: 'user',
+            elem: '#list',
+            url: '{:url("")}',
+            method: 'post',
+            page: true,
+            cols: [[
+                {field: 'addtime', title: '时间', width: 150},
+                {field: 'money', title: '金额', width: 120},
+                {field: 'type', title: '类型', width: 120},
+                {field: 'note', title: '申请备注', width: 300},
+
+            ]],
+            limit: 10 //每页默认显示的数量
+        });
+       
+        //搜索
+        $('#search').on('click', function() {
+            var key = $('#key').val();
+            if($.trim(key)==='') {
+                layer.msg('{:lang("pleaseEnter")}关键字！',{icon:0});
+                return;
+            }
+            tableIn.reload({ page: {page: 1},where: {key: key}});
+        });
+       
+    });
+</script>
+
+{/block}

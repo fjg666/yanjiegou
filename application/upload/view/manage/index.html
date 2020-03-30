@@ -1,0 +1,203 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>上传文件管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="renderer" content="webkit">
+<link rel="stylesheet" href="LIB/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="CSS/admin.css" media="all">
+<script type="text/javascript" src="JS/jquery.min.js"></script>
+<script type="text/javascript" src="LIB/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-card layui-form">
+	<div class="cms-header">
+		<div class="cms-inline refresh">
+			<button class="layui-btn table-reload-btn"><i class="layui-icon">&#xe669;</i></button>
+		</div>
+		<div class="cms-inline attachtype">
+			<input type="radio" name="attachtype" value="1" title="显示文件" lay-filter="attachtype">
+			<input type="radio" name="attachtype" value="2" title="显示图片" lay-filter="attachtype" checked>	
+		</div>
+		<div class="cms-inline all">
+			<input type="checkbox" name="attachmark" value="{$attachmark}" title="显示所有" lay-filter="attachmark">
+		</div>
+		<div class="cms-inline original">
+			<input type="checkbox" name="original" title="使用原图">
+		</div>
+	</div>
+	<div class="layui-card-body" id="qf-container">		
+		<table class="layui-hide layui-table" lay-filter="modify"></table>
+		<script type="text/html" id="table-tpl-attachurl"> 
+			<img style="display:inline-block; width:100%; height:100%;" src= "{{ d.attachurl }}" onerror="javascript:this.src='__STATIC__/images/nopic.jpg';">
+		</script>
+		<script type="text/html" id="table-tpl-attribute">
+			<input type="checkbox" name="attribute" lay-skin="switch" lay-text="是|否" lay-filter="table-attribute" value="{{ d.attachid }}" {{ d.attribute == 1 ? 'checked' : '' }}>
+		</script>
+		<script type="text/html" id="table-tpl-operation">
+			<a href="#" class="layui-btn layui-btn-normal layui-btn-sm layui-setcover" data-attachurl="{{d.attachurl}}" data-attachthumb="{{d.attachthumb}}">设为封面</a>
+			<a href="#" data-href="{:url('delete',['identity'=>$identity])}?attachid={{ d.attachid }}" class="layui-btn layui-btn-sm layui-bg-red layui-delete">删除</a>
+		</script>
+	</div>
+</div>
+<style type="text/css">
+.cms-header{ min-height:36px; padding:5px 15px 0px; text-align:right; border-bottom:1px solid #f6f6f6; color:#333; font-size:15px;}
+.cms-header .layui-btn{ height:36px; line-height:36px; padding:0 15px;}
+.cms-header .cms-inline{ display:inline-block; padding:0 10px;}
+</style>
+<script type="text/javascript">
+var attachmark = '{$attachmark}';
+var inputname = '{$inputname}';
+var previewname = '{$previewname}';
+var urlApiData = "{:url('data',['identity'=>$identity,'moduleid'=>$moduleid])}";
+var urlApiField = "{:url('field',['identity'=>$identity,'moduleid'=>$moduleid,'attachmark'=>$attachmark])}";
+
+layui.use(['table','form','util'],function(){
+	var table = layui.table,
+		form = layui.form,
+		util = layui.util;
+	var tableIns = table.render({
+		elem: '.layui-table',
+		height: 'full-80',
+		url: urlApiData, //数据接口
+		where:{
+			'attachmark': attachmark,
+		},
+		text: '暂无数据',
+		request: {
+			limitName:'pagesize'
+		},
+		response: {
+			statusName: 'status', //数据状态的字段名称，默认：code
+			statusCode: 0, 		//成功的状态码，默认：0
+			msgName: 'message', //状态信息的字段名称，默认：msg
+			countName: 'total', //数据总数的字段名称，默认：count
+			//dataName: 'rows', //数据列表的字段名称，默认：data
+		},
+		page: {
+			limits:[10],
+		}, //开启分页
+		limit: 10,	//每页显示条数
+		cols:[[ 
+			{ field: 'attachid', title: 'ID', width:60, fixed:'left' },
+			{ field: 'attachurl', title: '图片', width:60, templet:'#table-tpl-attachurl'},
+			{ field: 'attachdesc', title: '描述', edit:'text'},
+			{ field: 'sort', title: '排序', width:60, edit:'text'},
+			{ field: 'attribute', title: '推荐', width:90, templet:'#table-tpl-attribute'},
+			{ field: 'postdate', title: '上传时间', width:150, templet:function(d){
+				return util.toDateString(d.postdate*1000,'yyyy-MM-dd HH:mm');
+			}},
+			{ title: '操作', width:180, fixed:'right', templet:'#table-tpl-operation'},
+		]],
+	});
+	//表格重载
+	$('.table-reload-btn').click(function(){
+		var attachtype = $('input[name=attachtype]:checked').val();
+		if($('input[name=attachmark]').is(':checked')){
+			var attachmark = 0;
+		}else{
+			var attachmark = $('input[name=attachmark]').val();
+		}		
+		var data = $('form[name=searchform]').serializeArray();
+		tableIns.reload({
+			where: {
+				attachmark: attachmark,
+				attachtype: attachtype,
+			},
+			page: {
+				curr: 1 //重新从第 1 页开始
+			}
+		});
+		return false;
+	});
+	//监听编辑事件
+	table.on('edit(modify)', function(o){
+		$.post(urlApiField,{ 'attachid':o.data.attachid, 'fieldname':o.field, 'value':o.value },function(res){
+			if(res.status == 'error'){
+				layer.msg(res.message);
+			}
+		},'json');
+	});
+	//监听是否显示
+    form.on('switch(table-attribute)', function(data){
+		var value = data.elem.checked == true ? 1 : 0 ;
+		$.post(urlApiField, { 'attachid':data.value, 'fieldname':'attribute', 'value':value},function(res){
+			
+		},'json');
+	});
+	//监听显示所有
+	form.on('checkbox(attachmark)', function(data){
+		if(data.elem.checked){
+			var attachmark = 0;
+		}else{
+			var attachmark = data.value;
+		}
+		var attachtype = $('input[name=attachtype]:checked').val();
+		tableIns.reload({
+			where: {
+				attachmark: attachmark,
+				attachtype: attachtype,
+			},
+			page: {
+				curr: 1 //重新从第 1 页开始
+			}
+		});
+	});
+	//监听显示文件还是图片
+	form.on('radio(attachtype)', function(data){
+		var attachtype = data.value;
+		if($('input[name=attachmark]').is(':checked')){
+			var attachmark = 0;
+		}else{
+			var attachmark = $('input[name=attachmark]').val();
+		}
+		tableIns.reload({
+			where: {
+				attachmark: attachmark,
+				attachtype: attachtype,
+			},
+			page: {
+				curr: 1 //重新从第 1 页开始
+			}
+		});
+	});
+	//设为封面
+	$('#qf-container').on('click','.layui-setcover',function(e){
+		var attachurl = $(this).data('attachurl');
+		var attachthumb = $(this).data('attachthumb');
+		if($('input[name=original]').is(':checked')){
+			var pictureurl = attachurl;
+		}else{
+			var pictureurl = attachthumb;
+		}
+		if(pictureurl == ''){
+			pictureurl = attachurl;
+		}
+		$('.preview-picture',window.parent.document).attr('src',pictureurl);
+		$('input[name=attachurl]',window.parent.document).val(pictureurl);
+		//先得到当前iframe层的索引
+		var index = parent.layer.getFrameIndex(window.name);
+		parent.layer.close(index);
+	});	
+	//删除事件
+	$('#qf-container').on('click','.layui-delete',function(e){
+		e.preventDefault();
+		var url = $(this).data('href');
+		layer.confirm('确定要删除么？',function(index){
+			$.post(url,function(res){
+				layer.msg(res.message);
+				if(res.status=='success'){
+					setTimeout(function(){
+						tableIns.reload();
+					},600);
+				}
+				return false;
+			},'json');
+		});
+	});
+});
+</script>
+</body>
+</html>

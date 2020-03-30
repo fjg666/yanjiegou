@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en"style="overflow-x: hidden">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,maximum-scale=1,minimum-scale=1">
+	<link rel="stylesheet" type="text/css" href="/static/index/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/static/index/css/new_file.css">
+	<link rel="stylesheet" type="text/css" href="/static/index/css/mobileSelect.css">
+	<link rel="stylesheet" href="/static/admin/lib/layui/css/layui.css"  media="all">
+	<script src="/static/index/js/jquery.js" type="text/javascript"></script>	
+	<script src="/static/index/js/mobileSelect.js" type="text/javascript"></script>
+	<script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+	<script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+	  <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=9c214255a601d99a994d0256f23c227b&plugin=AMap.Geocoder"></script>
+		<script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+	</script>
+	<title>商家入驻</title>
+</head>
+
+<body style="overflow-x: hidden">
+	<form  action="#" id="form1" class="layui-form">
+		<div class='homepage'>
+			<div id="cover"></div>
+			
+			<div class="logo" style="background: #fff;">
+				<span class='sj'>商家logo</span>
+				<p class='round'>
+					<input type="file" style="display: none" accept="image/*" id="chooseImage" name="files">
+					<input type="hidden" name='shoplogo' value='' id='logopic'>
+					<img src="/static/index/img/adds.png" id="img" alt="" class='pics'>
+				</p>
+			</div>
+			<div class="info"style="background: #fff;">
+				<p class='name'>
+					<span class='bt'>商家名称</span>
+					<input type="text" value="" class='kr' name='name' placeholder="沿街购" >
+				</p>
+				<p class='name'>
+					<span class='bt'>所属行业</span>
+					<span class='n5' id='content'>请选择行业</span>
+					<input type="hidden" value='' name='type' id='industry' lay-verify="type" >
+					<img src="/static/index/img/right.png" alt="" class='el-icon-arrow-right' id="trigger5">
+				</p>
+				<p class='name'>
+					<span class='bt'>所在区域</span>
+					<span class='n5' id='newplace'>请选择区域</span>
+					<input type="hidden" value='' name='province' id='province'>	
+					<input type="hidden" value='' name='city' id='city'>
+					<input type="hidden" value='' name='area' id='area'>
+					<input type="hidden" value='' name='street' id='street'>
+					<img src="/static/index/img/right.png" alt="" class='el-icon-arrow-right' id="trigger4">
+				</p>
+				<p class='name'>
+					<span class='bt'>详细地址</span>
+					<input type="text" placeholder="请填写地址" class='address' id="address" name='address' value='' >
+				</p>
+				<p class='name'>
+					<span class='bt'>定位</span>
+					<span class='n6' id='status'>获取定位</span>
+					<img src="/static/index/img/map.png" alt="" class='map' id='map'>
+				</p>
+			</div>
+			<div class="concat "style="background: #fff;">
+				<p class='person'>
+					<span class='name'>联系人</span>					
+					<input type="text" value="" name="linkmen" class='new' name='contact' placeholder="请输入联系人">
+				</p>
+				<p class='phone'>
+					<span class='num'>联系电话</span>
+					<input type="number" placeholder="请输入联系电话" class='phonenumber' name='phone' value=''>
+				</p>
+				<p class='phone'>
+					<span class='num'>备用电话</span>
+					<input type="number" placeholder="选填" class='newphone' name='bphone' value=''>
+				</p>
+			</div>
+			<!-- 商家简介 -->
+			<div class="induce "style="background: #fff;">
+				<p class='jianjie'>商家简介</p>
+				<textarea 
+					class='content' name="intro" placeholder="请输入商家简介"></textarea>
+			</div>
+			<!-- 营业执照 -->
+			<div class="zhizhao yyzz "style="background: #fff;">
+				<div class="name">
+					<span>营业执照</span>
+					<div class='sc' id='change'>上传<input type="file" style="opacity: 0" accept="image/*" id='zhizhao'
+							name='zhizhao'></div>
+				</div>
+				<div class="pic">
+					<img src="/static/index/img/1.png" alt="" id='newpic'>
+					<input type="hidden" name='yyzz' id='picshow' value=''>
+					<p><span>温馨提示:</span>&nbsp;&nbsp;提示内容占位符提示内容占位符提示内容占位符</p>
+				</div>
+			</div>
+			<!-- 身份证营业执照 -->
+			<div class="zhizhao "style="background: #fff;">
+				<div class="name">
+					<span>身份证正反面照</span>
+					<div class='sc'>点击图片上传</div>
+				</div>
+				<div class="imgs">
+					<div class="firstidcard">
+						<input type="file" style="opacity: 0" accept="image/*" id='idcard' name='idpic'>
+						<input type="hidden" name='identity_photo[]' id='picturesid1' value=''>
+						<img src="/static/index/img/2.jpg" alt="" id='firstpic'>
+					</div>
+					<div class="secondcard">
+						<input type="file" style="opacity: 0" accept="image/*" id='secondcard' name='secondcard'>
+						<input type="hidden" name='identity_photo[]' id='second' value=''>
+						<img src="/static/index/img/3.jpg" alt="" id='lastpic' class='lastpic'>
+					</div>
+				</div>
+				<div class="content">
+					<p>温馨提示:</p>
+					<p>1、拍摄正面照时，请保持姓名,证件号码等信息清晰可见</p>
+					<p>2、拍摄反面照时，请确保签发机关，有效期清晰可见</p>
+					<p>3、请上传经营者、法定代表人或相关负责人信息</p>
+				</div>
+			</div>
+			<input type="hidden" name="openid" value="{$openid}">
+			<div class="tijiao">
+				
+				<button  class='button' lay-submit lay-filter="submit" >提交</button>
+				
+				
+			</div>
+			<input name="latitude" id="lat" readonly="true" type="hidden" step=0.0001 value="" size="70" />
+			<input name="longitude" id="lon" readonly="true" type="hidden" step=0.0001 value="" size="70" />
+			<!-- <div class="addressmap" id='addressmap'>
+				<div class="lat">
+					<input name="latitude" id="lat" readonly="true" type="hidden" step=0.0001 value="" size="70" />
+					<input name="longitude" id="lon" readonly="true" type="hidden" step=0.0001 value="" size="70" />
+				</div>
+				<div id="Container" class='container' style='display:none'></div>
+				<div class="cancel" id='cancel' style='display: none'>确定</div>
+			</div> -->
+		</div>
+	</form>
+	<!-- <script type="text/javascript" src="/static/index/js/bundle.js"></script> -->
+	<script type="text/javascript" src="/static/admin/lib/layui/layui.js"></script>
+	<script>	
+	layui.use(['form', 'layedit', 'laydate'], function(){
+		var form = layui.form
+		//监听提交
+			form.on('submit(submit)', function(data){				
+			$.ajax({
+		            url:"{:url('index/addapply')}",
+		            type:'post',
+		            data:data.field,
+		            dataType:"JSON",
+		            success:function(res){
+		                if(res.code > 0){
+			                     layer.msg(res.msg, {time: 1800, icon: 1}, function () {                       
+								window.location.href="{:url('index/index')}"
+								});
+		                }
+		                else{
+			                    layer.msg(res.msg, {time: 1800, icon: 2});
+		                }
+		            },	           
+		            
+		        });
+
+			return false;
+  		});
+	})	
+		 //城市选择
+		 function dataJson(data) {
+			 let UplinkData = data;
+			let mobileSelect5 = new MobileSelect({
+			 trigger: '#trigger4',
+				title: '地区选择',
+				wheels: [
+					{data : UplinkData}
+				],
+				position: [2,0],
+					transitionEnd:function(indexArr, data){
+				},
+			callback:function(indexArr, data){
+			 let place = {...data}
+			let provence = place[0].value
+		 let city = place[1].value
+		 let valige = place[2].value
+		 let street = place[3].value
+		 let newplace = document.getElementById('newplace')
+		 newplace.innerHTML = provence + city + valige 
+		 document.getElementById('province').value = provence 
+		 document.getElementById('city').value =  city 
+		 document.getElementById('area').value =  valige 
+		 document.getElementById('street').value = street
+		 document.getElementById('address').value = street
+		 }
+		 });
+
+	 }
+	</script>
+	<script>
+   let img = document.getElementById("img")
+   let mapimg = document.getElementById('map')
+   let zhizhao = document.getElementById('zhizhao')
+   let chooseImage = document.getElementById("chooseImage")
+   let idcard = document.getElementById('idcard')
+   let firstpic = document.getElementById('firstpic')
+   let lastpic = document.getElementById('lastpic')
+   let Container = document.getElementById('Container')
+   let cover = document.getElementById('cover')
+   let cancel = document.getElementById('cancel')
+   let secondcard = document.getElementById('secondcard')
+   let change = document.getElementById('change')
+   let shopcategory ={$shop_category};
+	  let mobileSelect5 = new MobileSelect({
+			 trigger: '#trigger5',
+		     title: '行业选择',
+		     wheels: [
+			    {data : shopcategory}
+	         ],
+	         position: [2],
+			transitionEnd:function(indexArr, data){
+		 },
+		callback:function(indexArr, data){
+			 let content = document.getElementById('content')
+			let contentdata = {...data}			
+		 content.innerHTML = contentdata[0].value
+		document.getElementById('industry').value = contentdata[0].id
+	 }
+	 })
+//营业执照上传
+     zhizhao.onchange = function(e) {
+			 let fr = new FileReader();
+		     fr.readAsDataURL(this.files[0]);
+             fr.onload = function(e) {
+			   let newpic = document.getElementById('newpic')
+		       newpic.src = fr.result;
+		    //    localStorage.setItem("zhizhao", fr.result);
+             $.ajax({
+			    url: 'http://svn.yanjiegou.com/api/base/base64imgupload',
+		        type: 'post',
+                data: {
+			      file: fr.result
+	            },
+                success: function(data) {
+			          document.getElementById('picshow').value = data.data.filepath	
+		       }
+		 })
+	   }
+	}
+	// 第一张身份证文件上传
+  firstpic.addEventListener('click', () => {
+			 idcard.click()
+
+		 })
+    idcard.onchange = function(e) {
+			 let fr = new FileReader();
+		     fr.readAsDataURL(this.files[0]);
+			 var size =this.files[0].size
+			 var objsize=size/1024
+			if(objsize >2028){
+				 layer.msg("身份证附件不能超过2M", {time: 1800, icon: 2})
+				return false;
+			}
+             fr.onload = function(e) {
+			 firstpic.src = fr.result;
+			 
+			//  console.log(fr)
+		    //  localStorage.setItem("firstidcard", fr.result);
+             $.ajax({
+			    url: 'http://svn.yanjiegou.com/api/base/base64imgupload',
+		        type: 'post',
+                data: {
+			    file: fr.result
+		        },
+               success: function(data) {
+			        document.getElementById('picturesid1').value = data.data.filepath
+		       }
+		    })
+	    }
+	}
+	//第二张身份证文件上传
+ lastpic.addEventListener('click', () => {
+			 secondcard.click()
+		 })
+ secondcard.onchange = function(e) {
+			 let fr = new FileReader();
+		 fr.readAsDataURL(this.files[0]);
+		 var size =this.files[0].size
+			 var objsize=size/1024
+			if(objsize >2028){
+				 layer.msg("身份证附件不能超过2M", {time: 1800, icon: 2})
+				return false;
+			}
+ fr.onload = function(e) {
+			 lastpic.src = fr.result;
+		//  localStorage.setItem("lastcard", fr.result);
+ $.ajax({
+			 url: 'http://svn.yanjiegou.com/api/base/base64imgupload',
+		 type: 'post',
+ data: {
+			 file: fr.result
+		 },
+ success: function(data) {
+			 document.getElementById('second').value = data.data.filepath
+
+		 }
+		 })
+		 }
+		 }
+		
+		//logo上传
+ img.addEventListener('click', () => {
+			 chooseImage.click()
+
+		 })
+chooseImage.onchange = function(e) {
+	 var fr = new FileReader();
+		 fr.readAsDataURL(this.files[0]);
+	 fr.onload = function(e) {
+			 img.src = fr.result;
+		// localStorage.setItem("basepic", fr.result);
+	$.ajax({
+			 url: 'http://svn.yanjiegou.com/api/base/base64imgupload',
+		 type: 'post',
+		data: {
+			 file:fr.result,
+	 },
+		success: function(data) {
+			  
+			 document.getElementById('logopic').value = data.data.filepath
+		 }
+		 })
+	   }
+	  }
+	//定位获取经纬度
+   var map = new AMap.Map("container", {
+           resizeEnable: true
+       });
+       
+       AMap.plugin("AMap.Geocoder",function(){
+       			  geocoder = new AMap.Geocoder({
+       				city: "", //城市设为北京，默认：“全国”
+       			  });
+       })
+       var marker = new AMap.Marker();
+       
+       function geoCode() {
+           var address  = newplace.innerHTML+document.getElementsByClassName("address")[0].value;
+		   console.log(address)
+           geocoder.getLocation(address, function(status, result) {
+			   console.log(address,status,result)
+               if (status === 'complete'&&result.geocodes.length) {
+                   var lng = result.geocodes[0].location.lng
+                   var lat = result.geocodes[0].location.lat
+				   document.getElementById('lat').value=lat
+				   document.getElementById('lon').value=lng
+				    console.log(lng,lat)
+					document.getElementsByClassName("n6")[0].innerHTML="定位成功"
+               }else{
+                   log.error('根据地址查询位置失败');
+               }
+           });
+       }
+	mapimg.onclick=geoCode
+ 
+	   
+	    
+	   	</script>
+	<script type="text/javascript" src="/static/index/data/area.json"></script>
+</body>
+
+</html>

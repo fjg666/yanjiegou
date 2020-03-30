@@ -1,0 +1,121 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-card">
+            <div class="layui-container ">
+                <div class="layui-fluid">
+                    <div class="layui-input-inline " >                   
+                        <cascader id="demo1"></cascader>                   
+                    </div>
+                    <button class="layui-btn btns">提交</button>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="layui-container" style="margin-top: 15px;">
+                    <div id="test1"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script>    
+    layui.config({
+        base: '/static/admin/lib/layui/extend/'
+    }).use(['transfer','jquery','upload','layer','ajaxCascader'], function () {
+        transfer = layui.transfer;
+        $ = layui.jquery;
+        cascader = layui.ajaxCascader;
+        var data={$list};
+        var value={$arr};         
+        var options={
+            elem:'#test1',
+            title:['未推荐','已推荐'],
+            showSearch:true,
+            data:data,
+            value:value,
+            onchange:function(obj,index){
+                var ids=[];
+                for(var i=0 in obj){
+                    ids +=obj[i]['value']+",";
+                }
+                $.post("{:url('shop')}",{data:ids,status:index}, function (res) {
+                    if (res.code) {
+                        layer.msg(res.msg, {time: 1800, icon: 1});
+                    } else {
+                        layer.msg(res.msg, {time: 1800, icon: 2});
+                    }
+                });   
+            }
+        };
+        transfer.render(options);      
+        // 直接赋值模式
+        cascader.load({
+            elem:'#demo1'                          
+            ,value:0  
+            ,getChildren:function(value,callback){  
+                var data = [];                  
+                $.ajax({                         
+                    url:'{:url("getcate")}?pid='+value,
+                    type:'get',
+                    success:function(res){
+                        data = res.data;
+                        for(var i in data){
+                            data[i].value = data[i].id;
+                            data[i].label = data[i].name;
+                            delete data[i].id;
+                            delete data[i].name;
+                            data[i].hasChild = true;
+                        }
+                        callback(data);
+                    }
+                });
+            }      
+        });
+        $(".btns").on('click',function(){    
+            var category=cascader.getChooseData('#demo1');                
+            $.ajax({                         
+                url:'{:url("recommend/getShopByCategory")}',
+                type:'post',
+                dataType:'json',
+                async: false,
+                data:{
+                    data:category.join(",")
+                },
+                success:function(res){
+                    if(res.code){                                          
+                        data=res.list;                       
+                        value=res.arr; 
+                        var options={
+                            elem:'#test1',
+                            title:['未推荐','已推荐'],
+                            showSearch:true,
+                            data:data,
+                            value:value,
+                            onchange:function(obj,index){
+                                var ids=[];
+                                for(var i=0 in obj){
+                                    ids +=obj[i]['value']+",";
+                                }
+                                $.post("{:url('shop')}",{data:ids,status:index}, function (res) {
+                                    if (res.code) {
+                                        layer.msg(res.msg, {time: 1800, icon: 1});
+                                    } else {
+                                        layer.msg(res.msg, {time: 1800, icon: 2});
+                                    }
+                                });   
+                            }
+                        };
+                        transfer.render(options)
+                    }else{
+                        layer.msg(res.msg, {time: 1800, icon: 2});
+                    }
+                }
+            });
+        });
+    });   
+  
+</script>
+{/block}

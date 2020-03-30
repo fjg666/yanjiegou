@@ -1,0 +1,182 @@
+{extend name="Public:common" /}
+{block name="css"}
+<style>
+.layui-card-header{border-bottom:solid 1px #EEE;}
+label{font-weight: bold;color:#009688;}
+.bottom,.bottoms{display: inline-block;width:200px;text-align: right;font-size: 14px}
+.bottoms{text-align: left;width:80px;}
+.green{color: #7BBC52;font-weight:bold;}
+.hui{color:#989898;}
+</style>
+{/block}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+    <div class="layui-card-header">订单状态</div>
+    <div class="layui-card-body">
+      <div class="log-box">
+        <div class="state">
+          {if $info['pay_type']==4}
+             <div class="icon">
+                <span class="icons {if condition="($info['status']>=1)"}icon13 {else}icon11 {/if}">
+                </span>
+            </div>
+            <div class="arrow {if condition="($info['status']>=1)"}arrow2{/if}">··················></div>
+          {else/}
+            <div class="icon">
+                <span class="icons {if condition="($info['status']>=1)"}icon13 {else}icon11 {/if}">
+                </span>
+            </div>
+            <div class="arrow {if condition="($info['status']>=1)"}arrow2{/if}">··················></div>
+            <div class="icon">
+                <span class="icons {if condition="($info['status'] neq 6) and ($info['status']>=2)"}icon23 {else}icon21{/if}">
+                </span>
+            </div>
+            <div class="arrow {if condition="($info['status'] neq 6) and ($info['status']>=2)"}arrow2{/if}">··················></div>
+          {/if}
+            <div class="icon">
+                <span class="icons {if condition="($info['status'] neq 6) and ($info['status']>=3)"}icon33 {else}icon31 {/if}"></span>
+            </div>
+            <div class="arrow {if condition="($info['status'] neq 6) and ($info['status']>=3)"}arrow2{/if}">··················></div>
+            <div class="icon">
+                <span class="icons {if condition="($info['status'] neq 6) and ($info['status']>=4)"}icon43 {else}icon41 {/if}">
+                </span>
+            </div>
+            <div class="arrow {if condition="($info['status'] neq 6) and ($info['status']>=4)"}arrow2{/if}">··················></div>
+            <div class="icon">
+               <span class="icons {if condition="($info['status'] neq 6) and ($info['status']>=5)"}icon53 {else}icon51 {/if}"></span>
+            </div>
+            {if condition="($info['status'] > 5)"}
+            <div class="arrow {if condition="($info['status']>=5)"}red{/if}">··················></div>
+            {/if}
+            {if condition="($info['status'] == 6)"}
+            <div class="icon">
+               <span class="icons {if condition="($info['status'] eq 6)"}icon63 {else}icon61 {/if}"></span>
+            </div>
+            {/if}
+            {if condition="($info['status'] == 7)"}
+            <div class="icon">
+               <span class="icons {if condition="($info['status'] eq 7)"}icon73 {else}icon71 {/if}"></span>
+            </div>
+            {/if}
+        </div>
+       <div class="state2">
+             <p class="{if($info['status']>=1)}green{else/}hui{/if}">下单<br/>{if condition="$info['add_time']"}{:date('Y-m-d H:i:s',$info['add_time'])}{/if}</p>
+          {if $info['pay_type']!=4}
+             <p class="{if ($info['status'] neq 6) and ($info['status']>=2)}green{else/}hui{/if}">等待支付<br/>{if condition="$info['paytime']"}{:date('Y-m-d H:i:s',$info['paytime'])}{/if}</p>
+          {/if}
+             <p class="{if ($info['status'] neq 6) and ($info['status']>=3)}green{else/}hui{/if}">商家发货<br/>{if condition="$info['sendtime']"}{:date('Y-m-d H:i:s',$info['sendtime'])}{/if}</p>
+             <p class="{if ($info['status'] neq 6) and ($info['status']>=4)}green{else/}hui{/if}">确认收货<br/>{if condition="$info['affirmtime']"}{:date('Y-m-d H:i:s',$info['affirmtime'])}{/if}</p>
+             <p class="{if ($info['status'] neq 6) and ($info['status']>=5)}green{else/}hui{/if}">订单结束<br/>{if condition="$info['overtime']"}{:date('Y-m-d H:i:s',$info['overtime'])}{/if}</p>
+             {if condition="($info['status'] == 6)"}
+                 <p class="red">取消<br/>{if condition="$info['canceltime']"}{:date('Y-m-d H:i:s',$info['canceltime'])}{/if}</p>
+             {/if}
+             {if condition="($info['status'] == 7)"}
+                 <p class="red">售后<br/>{if condition="$info['shtime']"}{:date('Y-m-d H:i:s',$info['shtime'])}{/if}</p>
+             {/if}
+       </div>
+       <div class="wst-clear"></div>
+      </div>
+    </div>
+    <div class="layui-card-header">订单信息</div>
+    <div class="layui-card-body">
+        <div class="layui-row" style="padding-left: 30px">
+            <div class="layui-col-md12">
+              <label class="green">订单号：</label>{$info.order_sn}
+            </div>
+            <div class="layui-col-md12">
+              <label class="green">支付方式：</label>{$info.pay_type}
+            </div>
+            <div class="layui-col-md12">
+             <label class="green">配送方式：</label>{$info.send_type}
+            </div>
+            <div class="layui-col-md12">
+             <label class="green">快递公司：</label>{:get_status($info.expresscom,'express_company')}
+            </div>
+            <div class="layui-col-md12">
+             <label class="green">单号：</label>{$info.expresssn}
+            </div>
+      </div>
+    </div>
+    <div class="layui-card-header">收货人信息</div>
+    <div class="layui-card-body">
+        <div class="layui-row" style="padding-left: 30px">
+            <div class="layui-col-md12">
+              <label class="green">联系人：</label>{$info.getusername}
+            </div>
+            <div class="layui-col-md12">
+              <label class="green">联系方式：</label>{$info.mobile}
+            </div>
+            <div class="layui-col-md12">
+             <label class="green">地址：</label>{$info.address}
+            </div>
+            <div class="layui-col-md12">
+              <label class="green">买家留言：</label>{$info.remark_member}
+            </div>
+      </div>
+    </div>
+    <div class="layui-card-header">商品清单</div>
+    <div class="layui-card-body">
+        <table class="layui-table">
+           <tr>
+               <th>商品</th>
+               <th>商品编号</th>
+               <th>单价</th>
+               <th>数量</th>
+               <th>总价</th>
+           </tr>
+           {volist name="goods" id="val"}
+           <tr>
+               <td><img src="{$val.headimg}" height="60px" width="60px">{$val.title}</td>
+               <td>{$val.id}</td>
+               <td>{$val.price}</td>
+               <td>{$val.num}</td>
+               <td>{$val.count}</td>
+           </tr>
+           {/volist}
+           <tr><td colspan="5" style="text-align: right">
+                <!--<label class="red bottom">商品总金额：</label><span class="bottoms">¥ {$info.counts}</span><br/>-->
+                <!--<label class="red bottom">运费：</label><span class="bottoms">¥ {$info.freight}</span><br/>-->
+                <!--<label class="red bottom">应付总金额：</label><span class="bottoms">¥ {$info.counts}</span><br/>-->
+                <!--<label class="red bottom">积分抵扣金额：</label><span class="bottoms">¥ -0.00</span><br/>-->
+                <!--<label class="red bottom">实付总金额：</label><span class="bottoms">¥ {$info.counts}</span><br/>-->
+                <!--<label class="red bottom">可获得积分：</label><span class="bottoms">0个</span>-->
+                
+                
+                <label class="red bottom">商品金额：</label><span class="bottoms">¥ {$info.oldmoney}</span><br/>
+                <label class="red bottom">运费：</label><span class="bottoms">¥ {$info.freight}</span><br/>
+                <label class="red bottom">优惠券：</label><span class="bottoms"> - ¥ {$info.couponprice}</span><br/>
+                <label class="red bottom">订单总金额：</label><span class="bottoms">¥ {$info.money}</span><br/>
+           </td></tr>
+        </table>
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script>
+layui.use(['form', 'layer'], function () {
+    var form = layui.form, layer = layui.layer,$= layui.jquery;
+    form.on('submit(submit)', function (data) {
+        loading =layer.load(1, {shade: [0.1,'#fff']});
+        $.post("{:url('')}", data.field, function (res) {
+            var index = parent.layer.getFrameIndex(window.name);
+            layer.close(loading);
+            if (res.code > 0) {
+                layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                    parent.layer.close(index);
+                    window.parent.location.reload();
+                });
+            } else {
+                layer.msg(res.msg, {time: 1800, icon: 2});
+            }
+        });
+    });
+});
+</script>
+{/block}

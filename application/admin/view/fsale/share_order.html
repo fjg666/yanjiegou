@@ -1,0 +1,126 @@
+{extend name="Public:common" /}
+{block name="css"}
+<style type="text/css">
+.layui-table tr td{
+    border;solid 1px #CCC
+}
+.layui-table tr td .layui-row{
+    border:solid 1px #EEE;
+}
+.layui-table tr td div img{
+    height:50px;
+    width:50px;
+    margin: 5px;
+}
+.red{margin-right: 20px}
+</style>
+{/block}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>{:lang('shareorder')}管理</legend>
+    </fieldset>
+    <div class="demoTable">
+        <div class="layui-inline">
+            <input class="layui-input" name="key" id="key" placeholder="{:lang('pleaseEnter')}关键字">
+        </div>
+        <button class="layui-btn" id="search" data-type="reload">{:lang('search')}</button>
+        <a href="{:url('type')}" class="layui-btn">显示全部</a>
+        <div style="clear: both;"></div>
+    </div>
+    <table class="layui-table">
+       <tr><th>商品信息</th><th>金额</th><th>订单状态</th><th>分销情况</th></tr>
+    </table>
+    <table class="layui-table">
+        <tr>
+            <td>
+                <div class="layui-row">
+                    <div class="layui-col-md2"><img src="/uploads/20190313/e1a73ec370cc30e147e7755eace02ee3.jpg"></div>
+                    <div class="layui-col-md10">
+                       <span class="red">纳元液</span><br/>
+                       规格： <span class="red">规格 :默认</span> 数量： <span class="red">1件</span><br/>
+                       小计： <span class="red">998.00元</span><br/>
+                    </div>
+                </div>
+            </td>
+            <td>
+                下单时间：<span class="red">2019-05-15 09:16:00</span><br/>
+                状态：<span class="red">已付款</span> <span class="red">已收货</span><br/>
+                订单号：<span class="red">20190515091600583692</span><br/>
+                用户：<span class="red">心在江湖 </span><br/>
+                订单类型：<span class="red">商城订单</span><br/>
+                实际付款：<span class="red">998.00元</span><br/>
+            </td>
+            <td>
+                快递单号：<span class="red">123123123123</span><br/>
+                快递公司：<span class="red">申通</span><br/>
+                收货人：<span class="red">王五【13211114422】</span> <br/>
+                地址：<span class="red">北京市北京市朝阳区地址不详</span></td>
+            <td>
+                <p>昵称：<span class="red">codeHero</span>姓名：<span class="red">王五</span>一级佣金：<span class="red">50元</span></p>
+                <p>昵称：<span class="red">codeHero</span>姓名：<span class="red">王五</span>二级佣金：<span class="red">50元</span></p>
+        </td></tr>
+        <tr><td colspan="4">备注：asdfkasdklfajsldfaskldfasdklfjaskldfjaskldfjaklsdjfklasjdkl</td></tr>
+    </table>
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script>
+    layui.use('table', function() {
+        var table = layui.table, $ = layui.jquery;
+       
+        //搜索
+        $('#search').on('click', function () {
+            var key = $('#key').val();
+            if ($.trim(key) === '') {
+                layer.msg('{:lang("pleaseEnter")}关键字！', {icon: 0});
+                return;
+            }
+            tableIn.reload({
+                where: {key: key}
+            });
+        });
+        //排序
+        $('body').on('blur','.list_order',function() {
+            var type_id = $(this).attr('data-id');
+            var sort = $(this).val();
+            var loading = layer.load(1, {shade: [0.1, '#fff']});
+            $.post('{:url("typeOrder")}',{type_id:type_id,sort:sort},function(res){
+                layer.close(loading);
+                if(res.code === 1){
+                    layer.msg(res.msg, {time: 1000, icon: 1});
+                    tableIn.reload();
+                }else{
+                    layer.msg(res.msg,{time:1000,icon:2});
+                }
+            })
+        });
+        table.on('tool(list)', function(obj) {
+            var data = obj.data;
+            if(obj.event === 'del'){
+                layer.confirm('您确定要删除该广告分类吗？', function(index){
+                    var loading = layer.load(1, {shade: [0.1, '#fff']});
+                    $.post("{:url('delType')}",{type_id:data.type_id},function(res){
+                        layer.close(loading);
+                        if(res.code===1){
+                            layer.msg(res.msg,{time:1000,icon:1});
+                            tableIn.reload();
+                        }else{
+                            layer.msg('操作失败！',{time:1000,icon:2});
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+    });
+</script>
+{/block}

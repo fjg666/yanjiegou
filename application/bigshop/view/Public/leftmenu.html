@@ -1,0 +1,31 @@
+<div class="left-nav" style="top:0px;padding-top: 0px">
+    <div class="layui-card" style="background:rgba(204, 0, 0, 1);text-align: center">
+        <div class="layui-card-body ">
+        <div class="layui-block">
+         <img style="width: 50%;border-radius: 50%;background:rgb(238, 238, 238)" src="{$Think.session.bsinfo.shlogo}"/>
+         </div>
+        </div>
+        <div class="layui-block" style="line-height: 30px;height:30px;color:#FFF;font-size: 16px">{$Think.session.bsinfo.shname}</div>
+    </div>
+    <div id="side-nav">
+        <ul id="nav">
+            {foreach name = "menus" item = "val"}
+            <li>
+                <a href="javascript:;">
+                    <i class="fa {$val.icon}" lay-tips="{$val.title}"></i>
+                    <cite>{$val.title}</cite>
+                    <i class="iconfont nav_right">&#xe697;</i></a>
+                <ul class="sub-menu">
+                    {foreach name = "val['children']" item = "vals"}
+                    <li>
+                        <a onclick="xadmin.add_tab('{$vals.title}','{$vals.href}')">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>{$vals.title}</cite></a>
+                    </li>
+                    {/foreach}
+                </ul>
+            </li>
+            {/foreach}
+        </ul>
+    </div>
+</div>

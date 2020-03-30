@@ -1,0 +1,104 @@
+{extend name="Public:common" /}
+{block name="content"}<div class="layui-fluid">
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>优惠券管理</legend>
+    </fieldset>
+    <div class="demoTable">
+        <div class="layui-inline">
+            <input class="layui-input" name="key" id="key" placeholder="{:lang('pleaseEnter')}关键字">
+        </div>
+        <button class="layui-btn" id="search" data-type="reload">{:lang('search')}</button>
+        <a href="{:url('index',['catid'=>input('catid')])}" class="layui-btn">显示全部</a>
+        <div style="clear: both;"></div>
+    </div>
+    <table id="coupon" lay-filter="coupon"></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script type="text/javascript">
+    layui.use(['table','util'], function(){
+        var table = layui.table;util = layui.util;
+        //第一个实例
+        var tableIn = table.render({
+            elem: '#coupon'
+            //,height: 312
+            ,url: "{:url('index')}" //数据接口
+            ,where:{type:'{:input("type")}'}
+            ,method: 'post'
+            ,toolbar: '#topBtn'
+            ,page: true
+            ,cols: [[ //表头
+                {field: 'id', title: 'ID', sort: true,width:70}
+                ,{field: 'name', title: '名称'}
+                ,{field: 'type_id', title: '类型',width:80}
+                ,{field: 'shopname', title: '商家名称'}
+                ,{field: 'min_price', title: '最低消费金额'}
+                ,{field: 'sub_price', title: '优惠金额'}
+                ,{field: 'begin_time', title: '有效期开始时间',width: 130,templet:function(d){return util.toDateString(d.begin_time*1000, "yyyy-MM-dd");}}
+                ,{field: 'end_time', title: '有效期结束时间',width: 130,templet:function(d){return util.toDateString(d.end_time*1000, "yyyy-MM-dd");}}
+                ,{field: 'add_time', title: '添加时间',width: 100,templet:function(d){return util.toDateString(d.add_time*1000, "yyyy-MM-dd");}}
+                ,{field: 'total_count', title: '发放总数量'}
+                ,{field: 'sort', align: 'center', title: '{:lang("order")}', width: 120, templet: '#order'}
+                ,{field: 'is_expire', title: '是否有效'}
+                ,{width: 160, align: 'center', toolbar: '#action',title:'操作'}
+            ]]
+        });
+        table.on('tool(coupon)', function(obj) {
+            var data = obj.data;
+            if(obj.event === 'del'){
+                layer.confirm('您确定要删除该内容吗？', function(index){
+                    var loading = layer.load(1, {shade: [0.1, '#fff']});
+                    $.post("{:url('listDel')}",{id:data.id},function(res){
+                        layer.close(loading);
+                        if(res.code===1){
+                            layer.msg(res.msg,{time:1000,icon:1});
+                            tableIn.reload({where:{type:'{:input("type")}'}});
+                        }else{
+                            layer.msg(res.msg,{time:1000,icon:2});
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+        $('body').on('blur','.list_order',function() {
+            var id = $(this).attr('data-id');
+            var sort = $(this).val();
+            var loading = layer.load(1, {shade: [0.1, '#fff']});
+            $.post('{:url("listorder")}',{id:id,sort:sort},function(res){
+                layer.close(loading);
+                if(res.code === 1){
+                    layer.msg(res.msg, {time: 1000, icon: 1}, function () {
+                        location.href = res.url;
+                    });
+                }else{
+                    layer.msg(res.msg,{time:1000,icon:2});
+                }
+            })
+        });
+    });
+</script>
+<script type="text/html" id="topBtn">
+   <a href="{:url('add',array('catid'=>input('catid')))}" class="layui-btn"><i class="layui-icon"></i>{:lang('add')}</a>
+</script>
+<script type="text/html" id="order">
+    <input name="{{d.id}}" data-id="{{d.id}}" class="list_order layui-input" value=" {{d.sort}}" size="10"/>
+</script>
+<script type="text/html" id="action">
+    {{#  if(d.typeid!=2){ }}
+        <a href="{:url('edit')}?id={{d.id}}" class="layui-btn layui-btn-xs">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    {{#  } else { }}
+        {{d.shop_name}}(商家)
+    {{#  } }}
+</script>
+{/block}

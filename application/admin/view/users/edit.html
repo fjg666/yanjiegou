@@ -1,0 +1,104 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>{$title}</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属用户组</label>
+            <div class="layui-input-inline">
+                <select name="level" lay-verify="required" ">
+                    <option value="">请选择会员组</option>
+                    {volist name="user_level" id="vo"}
+                    <option value="{$vo.level_id}" {if ($info['level'] eq $vo['level_id'])}selected{/if}>{$vo.level_name}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('nickname')}</label>
+            <div class="layui-input-inline">
+                <input type="text" name="username"  lay-verify="required" placeholder="{:lang('pleaseEnter')}{:lang('nickname')}" class="layui-input" value="{$info.username}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('email')}</label>
+            <div class="layui-input-inline">
+                <input type="text" name="email"  lay-verify="eamil" placeholder="输入{:lang('email')}" class="layui-input" value="{$info.email}">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                必填：用于找回密码
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('tel')}</label>
+            <div class="layui-input-inline">
+                <input type="text" name="mobile"  lay-verify="mobile" placeholder="输入{:lang('tel')}" class="layui-input" value="{$info.mobile}">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                只能填写数字
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('pwd')}</label>
+            <div class="layui-input-inline">
+                <input type="password" name="password" placeholder="输入{:lang('pwd')}" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                密码必须大于6位，小于15位,不修改请不要填写
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">{:lang('sex')}</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="sex" value="1" {if($info['sex'] eq 1)}checked{/if} title="{:lang('man')}">
+                    <input type="radio" name="sex" value="0" {if($info['sex'] eq 0)}checked{/if} title="{:lang('woman')}">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('qq')}</label>
+            <div class="layui-input-inline">
+                <input type="text" name="qq"  placeholder="输入{:lang('qq')}" class="layui-input" value="{$info.qq}">
+            </div>
+        </div>
+       <input type="hidden" name="id" value="{$info.id}">
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">{:lang('submit')}</button>
+                <a href="{:url('index')}" class="layui-btn layui-btn-primary">{:lang('back')}</a>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script>
+layui.use(['form', 'layer'], function () {
+    var form = layui.form, layer = layui.layer,$= layui.jquery;
+    form.on('submit(submit)', function (data) {
+        var loading = layer.load(1, {shade: [0.1, '#fff']});
+        $.post("", data.field, function (res) {
+            layer.close(loading);
+            if (res.code > 0) {
+                layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                    location.href = res.url;
+                });
+            } else {
+                layer.msg(res.msg, {time: 1800, icon: 2});
+            }
+        });
+    })
+});
+</script>
+{/block}

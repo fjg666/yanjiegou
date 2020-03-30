@@ -1,0 +1,130 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>提现申请</legend>
+                    </fieldset>
+                    <div class="demoTable">
+                        <form class="layui-form">
+                            <div class="layui-inline">
+                                <input class="layui-input" name="key" id="key" placeholder="{:lang('pleaseEnter')}关键字">
+                            </div>
+                            <div class="layui-inline ">
+                                <select name="status" id="" lay-filter="status">
+                                    <option value=" ">状态</option>
+                                    <option value="0">待审核</option>
+                                    <option value="2">审核通过</option>
+                                    <option value="1">未通过</option>
+                                </select>
+                            </div>
+                            <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">搜索</button>
+                            <a href="{:url('nows')}" class="layui-btn">显示全部</a>
+                        </form>
+                    </div>
+                    <table class="layui-table" id="list" lay-filter="list"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script>
+    layui.use(['table', 'form'], function () {
+        var table = layui.table, form = layui.form, $ = layui.jquery;
+        var tableIn = table.render({
+            id: 'user',
+            elem: '#list',
+            url: '{:url("")}',
+            method: 'post',
+            page: true,
+            cols: [[
+                { field: 'shopname', title: '商户', width: 80 },
+                { field: 'shop_category', title: '所属行业', width: 80 },
+                { field: 'brokerage', title: '佣金', width: 80 },
+                { field: 'addtime', title: '申请时间', width: 150 },
+                { field: 'money', title: '金额', width: 80 },
+                { field: 'tmoney', title: '实际到账', width: 80 },
+                { field: 'bank_name', title: '开户行', width: 100 },
+                { field: 'bank_number', title: '银行卡号', width: 100 },
+                { field: 'bank_user_name', title: '持卡人', width: 100 },
+                { field: 'bank_address', title: '开户地址', width: 200 },
+                { field: 'statusname', title: '状态', width: 80 },
+                { field: 'note', title: '申请备注', width: 120 },
+                { field: 'pzimg', title: '凭证', width: 120, templet: '#pzimg' },
+                { field: 'info', title: '处理备注', width: 120 },
+                { field: 'dotime', title: '处理时间', width: 150 },
+                { field: 'dousername', title: '处理人账号', width: 120 },
+                { width: 160, align: 'center', toolbar: '#action', title: '操作' }
+            ]],
+            limit: 10 //每页默认显示的数量
+        });
+        table.on('tool(list)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'agree') {
+                // onclick="xadmin.open('添加申请','{:url('add')}',600,500)"
+                // layer.confirm('您确定同意该请求吗？', function (index) {
+                //     var loading = layer.load(1, { shade: [0.1, '#fff'] });
+                //     $.post("{:url('fundnowdo')}", { id: data.id, status: 2 }, function (res) {
+                //         layer.close(loading);
+                //         if (res.code === 1) {
+                //             layer.msg(res.msg, { time: 1000, icon: 1 });
+                //             tableIn.reload();
+                //         } else {
+                //             layer.msg(res.msg, { time: 1000, icon: 2 });
+                //         }
+                //     });
+                //     layer.close(index);
+                // });
+            }
+            if (obj.event === 'reject') {
+                layer.prompt({ title: '请输入原因', formType: 2 }, function (text, index) {
+                    var loading = layer.load(1, { shade: [0.1, '#fff'] });
+                    $.post("{:url('fundnowdo')}", { id: data.id, status: 1, info: text }, function (res) {
+                        layer.close(loading);
+                        if (res.code === 1) {
+                            layer.msg(res.msg, { time: 1000, icon: 1 });
+                            tableIn.reload();
+                        } else {
+                            layer.msg(res.msg, { time: 1000, icon: 2 });
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+        //搜索
+        // $('#search').on('click', function (data) {
+        //     console.log(data)
+        //     var key = $('#key').val();
+        //     if ($.trim(key) === '') {
+        //         layer.msg('{:lang("pleaseEnter")}关键字！', { icon: 0 });
+        //         return;
+        //     }
+        //     tableIn.reload({ page: { page: 1 }, where: { key: key } });
+        // });
+        form.on('submit(submit)', function (data) {
+           var key =data.field.key;
+           var status=data.field.status;
+           tableIn.reload({page:{page:1},where:{key:key,status:status}});
+        })
+
+    });
+</script>
+<script type="text/html" id="action">
+{{# if(d.status==0){ }}
+    <a class="layui-btn layui-btn-xs" onclick="xadmin.open('提现处理','{:url('shopFunAgree')}?id={{d.id}}',600,500)">同意</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reject">拒绝</a>
+{{# } }}    
+</script>
+<script type="text/html" id="pzimg">
+    {{# if(d.pzimg){ }}<img src="{{d.pzimg}}" onmouseover="layer.tips('<img width=600  src={{d.pzimg}}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();" >{{# } }}
+</script>
+<!-- <script type="text/html" id="topBtn">
+    <a href="javascript:;" onclick="xadmin.open('添加申请','{:url('add')}',500,350)" style="height:30px; width:68px; " class="layui-btn layui-btn-danger layui-btn-sm" id="add" >添加申请</a>
+</script> -->
+{/block}

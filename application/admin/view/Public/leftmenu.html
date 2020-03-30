@@ -1,0 +1,29 @@
+<style>
+.smenu{display: none}
+.fa{width: 20px}
+</style>
+<div class="left-nav">
+    <div id="side-nav">
+        {foreach name = "menus" item = "val"}
+        <ul id="nav" class="smenu son_menu{$val.id}">
+            {foreach name = "val['son']" item = "vals"}
+            <li>
+                <a href="javascript:;">
+                    <i class="fa {$vals.icon}" lay-tips="{$vals.title}"></i>
+                    <cite>{$vals.title}</cite>
+                    <i class="iconfont nav_right">&#xe697;</i></a>
+                <ul class="sub-menu"> 
+                    {foreach name = "vals['son']" item = "valss"}
+                    <li>
+                        <a onclick="xadmin.add_tab('{$valss.title}','{:url($valss.href)}')">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>{$valss.title}</cite></a>
+                    </li>
+                    {/foreach}
+                </ul>
+            </li>
+            {/foreach}
+        </ul>
+        {/foreach} 
+    </div>
+</div>

@@ -1,0 +1,86 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>楼层管理</legend>
+    </fieldset>
+    <table class="layui-table" id="list" lay-filter="list"></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script type="text/html" id="barDemo">
+    {{# if(d.is_lock==1){ }}
+     <a class="layui-btn layui-btn-xs" lay-event="agree">开启</a>
+    {{# }else{  }}
+     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reject">停用</a>
+    {{# } }}
+    <a class="layui-btn layui-btn-xs" onclick="xadmin.open('修改商家楼层','{:url("shop/editfloor")}?sid={{d.id}}',800,600)">{:lang('edit')}楼层</a>
+    <a class="layui-btn layui-btn-xs" onclick="xadmin.open('商家详情','{:url("shop/info/index")}?sid={{d.id}}')">详情</a>
+</script>
+<script type="text/html" id="topBtn">
+   <a href="{:url('FloorAdd')}" class="layui-btn layui-btn-sm">{:lang('add')}</a>
+</script>
+<script>
+    layui.use(['table','form'], function() {
+        var table = layui.table,form = layui.form,$ = layui.jquery;
+        var tableIn = table.render({
+            elem: '#list',
+            url: '{:url("")}',
+            method:'post',
+			//toolbar: '#topBtn',
+			title:'{:lang("admin")}{:lang("list")}',
+            cols: [[
+                {field:'id', title: '编号', width:60,fixed: true}
+                ,{field:'shopname', title: '商家名称', width:200}
+                ,{field:'num', title: '楼层编号', width:20}
+                ,{field:'floorname', title: '楼层名称', width:100}
+                ,{field:'is_lock_name', title: '状态', width:80}
+                ,{field:'lock_time', title: '操作时间', width:150}
+                ,{field:'lock_info', title: '禁用原因', width:200}
+                ,{width:300, title:'操作',align:'center', toolbar: '#barDemo'}
+            ]]
+        });
+       table.on('tool(list)', function(obj) {
+            var data = obj.data;
+            if(obj.event === 'agree'){
+                layer.confirm('您确定开启此商家吗？', function(index){
+                    var loading = layer.load(1, {shade: [0.1, '#fff']});
+                    $.post("{:url('setstatus')}",{id:data.id,status:0},function(res){
+                        layer.close(loading);
+                        if(res.code===1){
+                            layer.msg(res.msg,{time:1000,icon:1});
+                            tableIn.reload();
+                        }else{
+                            layer.msg('操作失败！',{time:1000,icon:2});
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+            if(obj.event === 'reject'){
+                layer.prompt({title: '请输入原因', formType: 2},function(text, index){
+                    var loading = layer.load(1, {shade: [0.1, '#fff']});
+                    $.post("{:url('setstatus')}",{id:data.id,status:1,info:text},function(res){
+                        layer.close(loading);
+                        if(res.code===1){
+                            layer.msg(res.msg,{time:1000,icon:1});
+                            tableIn.reload();
+                        }else{
+                            layer.msg('操作失败！',{time:1000,icon:2});
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+    });
+</script>
+{/block}

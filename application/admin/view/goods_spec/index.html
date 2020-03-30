@@ -1,0 +1,94 @@
+{extend name="Public:common" /}
+{block name="css"}
+<style>
+#con tr{display: none}
+#con .code0{display: table-row}
+</style>
+{/block}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+<form method="post" id="form">
+<div class="admin-main layui-anim layui-anim-upbit">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>{:lang('goodsspec')}{:lang('list')}</legend>
+    </fieldset>
+        <a href="{:url('add')}" class="layui-btn layui-btn-sm">{:lang('add')}{:lang('goodsspec')}</a>
+   
+    <table class="layui-table" lay-filter="list">
+        <thead>
+        <tr>
+            <th width="50px">编号</th>
+            <th>规格名称</th>
+            <th>所属商品分类</th>
+            <th>{:lang('order')}</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="con" >
+        {$categorys}
+        </tbody>
+        <tfoot>
+    </table>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script>
+    var layer;
+    layui.use('table', function(){
+        var $= layui.jquery,layer= layui.layer;
+        $('body').on('blur','.list_order',function() {
+            var id = $(this).attr('data-id');
+            var sort = $(this).val();
+            var loading = layer.load(1, {shade: [0.1, '#fff']});
+            $.post('{:url("cOrder")}',{id:id,sort:sort},function(res){
+                layer.close(loading);
+                if(res.code === 1){
+                    layer.msg(res.msg, {time: 1000, icon: 1}, function () {
+                        location.href = res.url;
+                    });
+                }else{
+                    layer.msg(res.msg,{time:1000,icon:2});
+                }
+            })
+        });
+    });
+    function del(id) {
+        layer.confirm('你确定要删除该规格吗？', {icon: 3}, function (index) {
+            $.post("{:url('del')}", {id: id}, function (data) {
+                if (data.status === 1) {
+                    layer.alert(data.info, {icon: 6}, function(index){
+                        layer.close(index);
+                        window.location.href=data.url;
+                    });
+                }else{
+                    layer.msg(data.info,{icon:5});
+                }
+            });
+            layer.close(index);
+        });
+    }
+    
+    function showson(obj,id) {
+        var dis=$(obj).data('display');
+        if (dis) {
+            $('.code'+id).hide();
+            $(obj).data('display',0);
+        } else {
+            $('.code'+id).show()
+            $(obj).data('display',1);
+        }
+        
+    }
+
+</script>
+{/block}

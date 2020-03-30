@@ -1,0 +1,77 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+    <div class="layui-row">
+        <fieldset class="layui-elem-field layui-field-title">
+
+            <legend>{$msg}</legend>
+        </fieldset>
+        <form class="layui-form" action="">
+            <input type="hidden" name="type_id" value="{$type_id}">
+            <input type="hidden" name="ids" value="{$ids}">
+            <div class="layui-form-item">
+                <label class="layui-form-label">消息标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" required  lay-verify="required" placeholder="请输入消息标题" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">消息内容</label>
+                <div class="layui-input-block">
+                    <textarea name="content" placeholder="请输入消息内容" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">{:lang('submit')}</button>
+                    <a href="{:url('index')}" class="layui-btn layui-btn-primary">{:lang('back')}</a>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{/block}
+
+{block name="js"}
+<script type="text/javascript">
+    layui.use('form', function() {
+            var form = layui.form;
+
+            //自定义验证规则
+            form.verify({});
+
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                // 提交到方法 默认为本身
+                var loading = layer.load(1, {shade: [0.1, '#fff']});
+                $.post("", data.field, function (res) {
+
+                    layer.close(loading);
+
+                    if (res.code > 0) {
+
+                        layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+
+                            location.href = res.url;
+
+                        });
+
+                    } else {
+
+                        layer.msg(res.msg, {time: 1800, icon: 2});
+
+                    }
+
+                });
+
+            });
+        })
+    })
+</script>
+{/block}

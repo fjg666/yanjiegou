@@ -1,0 +1,167 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>{$title}</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <label class="layui-form-label label25">分销层级<b class="red">*</b></label>
+            <div class="layui-input-block">
+                <input type="radio" name="level" value="0" title="不开启" {if ($info['level'] eq 0)}checked="checked"{/if}>
+                <input type="radio" name="level" value="1" title="一级分销" {if ($info['level'] eq 1)}checked="checked"{/if}>
+                <input type="radio" name="level" value="2" title="二级分销" {if ($info['level'] eq 2)}checked="checked"{/if}>
+                <input type="radio" name="level" value="3" title="三级分销" {if ($info['level'] eq 3)}checked="checked"{/if}>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label25">分销内购<b class="red">*</b></label>
+            <div class="layui-input-block beizhu">
+                <input type="radio" name="is_rebate" value="0" title="开启" {if ($info['is_rebate'] eq 0)}checked="checked"{/if}>
+                <input type="radio" name="is_rebate" value="1" title="关闭" {if ($info['is_rebate'] eq 1)}checked="checked"{/if}>
+                <br/><span class="red">开启分销内购，分销商自己购买商品，享受一级佣金，上级享受二级佣金，上上级享受三级佣金</span>
+            </div>
+            
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label25">成为下线条件<b class="red">*</b></label>
+            <div class="layui-input-block">
+                <input type="radio" name="condition" value="0" title="无条件（需要审核）" {if ($info['condition'] eq 0)}checked="checked"{/if}>
+                <input type="radio" name="condition" value="1" title="申请（需要审核）" {if ($info['condition'] eq 1)}checked="checked"{/if}>
+                <input type="radio" name="condition" value="2" title="无需审核" {if ($info['condition'] eq 2)}checked="checked"{/if}>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label25">成为分销商条件<b class="red">*</b></label>
+            <div class="layui-input-block">
+                <input type="radio" name="share_condition" value="0" title="首次点击链接" {if ($info['share_condition'] eq 0 )}checked="checked"{/if}>
+                <input type="radio" name="share_condition" value="1" title="首次下单" {if ($info['share_condition'] eq 1)}checked="checked"{/if}>
+                <input type="radio" name="share_condition" value="2" title="首次付款" {if ($info['share_condition'] eq 2)}checked="checked"{/if}>
+            </div>
+        </div>
+        <!-- <div class="layui-form-item">
+            <label class="layui-form-label label25">提现方式<b class="red">*</b></label>
+            <div class="layui-input-block ">
+                <input type="checkbox" name="wechat" value="1" title="微信支付" checked="checked">
+                <input type="checkbox" name="alipay" value="1" title="支付宝支付" checked="checked">
+                <input type="checkbox" name="bank" value="1" title="银行卡支付" checked="checked">
+                <input type="checkbox" name="remaining_sum" value="1" title="余额支付" checked="checked">
+                <br/><span class="red beizhu">微信自动支付，需要申请微信支付的企业付款到零钱功能</span>
+            </div>
+            
+        </div> -->
+        <!-- <div class="layui-form-item">
+            <label class="layui-form-label label25">最少提现额度<b class="red">*</b></label>
+            <div class="layui-input-block">
+                <input type="text" name="min_money"  lay-verify="required" value="1" class="layui-input"> <span class="red">元</span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label25">每日提现上限<b class="red">*</b></label>
+            <div class="layui-input-block">
+                <input type="text" name="cash_max_day"  lay-verify="required" value="1000" class="layui-input"> <span class="red">元</span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label25">提现手续费<b class="red">*</b></label>
+            <div class="layui-input-block ">
+                <input type="text" name="cash_service_charge"  lay-verify="required" value="0" class="layui-input"> <span class="red">%</span>
+                <br/><span class="red beizhu">0表示不设置提现手续费,提现手续费额外从提现中扣除,例如：10%的提现手续费：
+                提现100元，扣除手续费10元， 实际到手90元</span>
+            </div>
+        </div> -->
+        <div class="layui-form-item">
+            <label class="layui-form-label label25">消费自动成为分销商<b class="red">*</b></label>
+            <div class="layui-input-block ">
+                <input type="text" name="auto_share_val"  lay-verify="required" value="{if ($info['auto_share_val'])}{$info['auto_share_val']}{else/}10000{/if}" class="layui-input"> <span class="red">元</span>
+                <br/><span class="red beizhu">消费满指定金额(付款即生效,无需过售后)自动成为分销商，0元表示不自动</span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label25">购买商品自动成为分销商<b class="red">*</b></label>
+            <div class="layui-input-block ">
+                <input type="radio" name="share_good_status" value="0" title="关闭" {if ($info['share_good_status'] eq 0)}checked="checked"{/if}>
+                <input type="radio" name="share_good_status" value="1" title="任意商品" {if ($info['share_good_status'] eq 1)}checked="checked"{/if}>
+                <input type="radio" name="share_good_status" value="2" title="制定商品" {if ($info['share_good_status'] eq 2)}checked="checked"{/if}><br/>
+                <span class="red">购买商品付款即生效，无需过售后</span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label25">用户须知</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输用户须知" name="content" class="layui-textarea">{$info.content}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label25">申请协议</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输申请协议" name="agree" class="layui-textarea">{$info.agree}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block" >
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">{:lang('submit')}</button>
+                <a href="{:url('index')}" class="layui-btn layui-btn-primary">{:lang('back')}</a>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script>
+    
+        layui.use(['form', 'layer','upload'], function () {
+            var form = layui.form, $ = layui.jquery, upload = layui.upload;
+           
+            form.on('submit(submit)', function (data) {
+                // 提交到方法 默认为本身
+                var loading = layer.load(1, {shade: [0.1, '#fff']});
+                $.post("", data.field, function (res) {
+                    layer.close(loading);
+                    if (res.code > 0) {
+                        layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                            location.href = res.url;
+                        });
+                    } else {
+                        layer.msg(res.msg, {time: 1800, icon: 2});
+                    }
+                });
+            });
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#adBtn'
+                ,url: '{:url("UpFiles/upload")}'
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#adPic').attr('src', result); //图片链接（base64）
+                    });
+                },
+                done: function(res){
+                    if(res.code>0){
+                        $('#pic').val(res.url);
+                    }else{
+                        //如果上传失败
+                        return layer.msg('上传失败');
+                    }
+                }
+                ,error: function(){
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function(){
+                        uploadInst.upload();
+                    });
+                }
+            });
+        });
+</script>
+{/block}

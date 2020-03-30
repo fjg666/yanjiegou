@@ -1,0 +1,62 @@
+123123132
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+<form  class="layui-form" method="post" action="">
+    <div class="layui-form-item" >
+        <label class="layui-form-label">上传excel</label>
+        <div class="layui-input-inline">
+            <div class="layui-upload">
+                <button type="button" name="myfile" class="layui-btn" id="myfile"><i class="layui-icon"></i>上传文件</button>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item" style="padding-left: 35%;">
+        <div class="layui-input-inline"  >
+            <button class="layui-btn" lay-submit lay-filter="formsub">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+
+<script type="text/javascript">
+    layui.use(['form','upload'],function(){
+
+        var form=layui.form;
+        var upload=layui.upload;
+
+        upload.render({ //允许上传的文件后缀
+            elem: '#myfile'
+            ,url: "{:url('do_upload')}"
+            ,accept: 'file' //普通文件
+            ,exts: 'xls|excel|xlsx' //只允许上传压缩文件
+            ,done: function(res){
+                if(res.code==1){
+                    layer.msg('上传成功,已解析数据',{icon:6});
+                }else{
+                    layer.msg('解析失败',{icon:5});
+                }
+            }
+        });
+
+        form.on('submit(formsub)',function(data){
+            layer.msg('导入数据具体详情未协商确认,待确认后处理');
+            return false;
+        })
+        
+
+    })
+
+</script>
+{/block}

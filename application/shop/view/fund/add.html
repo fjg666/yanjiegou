@@ -1,0 +1,86 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+        <form class="layui-form" method="post" enctype="multipart/form-data">
+            <div class="layui-form-item">
+                <label class="layui-form-label">提现账号</label>
+                <div class="layui-input-inline">
+                    <select name="bank_name"  lay-verify="required" lay-filter="bank_name">
+                        <option value="">选择账号</option>
+                        {volist name="banks" id="list"}
+                        <option value="{$list.bank_name}:{$list.bank_number}:{$list.bank_address}:{$list.bank_user_name}" data-id="{$list.bank_number}">{$list.bank_name}</option>
+                        {/volist}
+                    </select>
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    必填
+                </div>
+            </div>
+            <div class="layui-form-item">
+                    <label class="layui-form-label">持卡人</label>
+                    <div class="layui-input-inline">
+                        <input name="bank_user_name" id="bank_user_name" class="layui-input" lay-verify="required">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        必填
+                    </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">提现金额</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="username" name="money" lay-verify="required" placeholder="请输入金额" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    必填<span style="color:red">({$yong}%收取费用)</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">备注说明</label>
+                <div class="layui-input-inline">
+                    <textarea name="note" id="" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">{:lang('submit')}</button>
+                </div>
+            </div>
+        </form>
+ </div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+<script>
+layui.use(['form', 'layer'], function () {
+    var form = layui.form, layer = layui.layer,$= layui.jquery;
+    form.on('submit(submit)', function (data) {
+        loading =layer.load(1, {shade: [0.1,'#fff']});
+        $.post("{:url('')}", data.field, function (res) {
+            var index = parent.layer.getFrameIndex(window.name);
+            layer.close(loading);
+            if (res.code > 0) {
+                layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                    parent.layer.close(index);
+                    window.parent.location.reload();
+                });
+            } else {
+                layer.msg(res.msg, {time: 1800, icon: 2});
+            }
+        });
+    });
+   form.on('select(bank_name)',function(data){      
+      var data=data.value;
+      var bank_user_name=data.split(":").pop();
+      $("#bank_user_name").val(bank_user_name);     
+   });
+});
+</script>
+{/block}
