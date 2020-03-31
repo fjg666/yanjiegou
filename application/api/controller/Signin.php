@@ -102,6 +102,25 @@ class Signin extends Base
         $this->json_success($signlogs);
     }
 
+    //用户抽奖
+    public function draw(){
+
+        //查询今天的签到用户
+        $signlogmodel = new Signlog();
+        $signlogs = $signlogmodel->alias('s')
+            ->join('__USERS__ u','u.id=s.user_id','LEFT')
+            ->order('s.id','desc')
+            ->whereTime('s.sign_time', 'today')
+            ->field('s.*,u.mobile,u.avatar,u.username')
+            ->select();
+
+        dump($signlogs);
+        /*foreach($signlogs as $k=>$v){
+
+
+        }*/
+    }
+
     //获奖用户
     public function prizelist()
     {

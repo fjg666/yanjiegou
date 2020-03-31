@@ -244,6 +244,10 @@ class Shop extends Base
 
                 $this->json_success($brand, '成功');
                 break;
+            case 6:
+                // 折扣
+                $where['iszk'] = 1;
+                break;
             default:
                 $this->json_error('错误！');
                 break;

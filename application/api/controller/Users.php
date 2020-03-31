@@ -1720,6 +1720,8 @@ class Users extends Base
         ];
         $order['goods'] = $orders_goods;
 
+        //返回base64加密数据
+        //$this->encrypt_success($order);
         $this->json_success($order);
     }
 
