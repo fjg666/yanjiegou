@@ -355,7 +355,7 @@ class Coupon extends Base
 
     }
 
-    //清空商家失效优惠卷
+    //清空优惠卷
     public function del_coupon(){
         $user_id = input('post.user_id');
         if(null===$user_id){
@@ -370,11 +370,11 @@ class Coupon extends Base
         }
 
         //清空已失效的优惠卷
-        Db::name('shy_coupon')->where("type_id", $type)->where("is_expire", 1)->delete();
+        Db::name('coupon')->where("type_id", $type)->where("is_expire", 1)->delete();
 
         if($type == 2){
             //清空已使用的优惠卷
-            Db::name("shy_couponlog")->where("user_id", $user_id)->where("is_use", 1)->delete();
+            Db::name("couponlog")->where("user_id", $user_id)->where("is_use", 1)->delete();
         }
 
         $this->json_success('','成功');

@@ -490,6 +490,32 @@ class Users extends Base
         }
     }
 
+    //登录发放优惠卷
+    public function login_coupon(){
+        $user_id = input('post.user_id');
+
+        if(null===$user_id){
+            $this->json_error('请传过来用户编号');
+        }
+
+        /*$coupon_info = Db::name("coupon")
+            ->where("total_count",">","1")
+            ->where("is_expire",0)
+            ->orderRaw('rand()')
+            ->find();*/
+
+        //随机查出一条用户没有的优惠卷
+        $coupon_info = Db::name("couponlog")->alias('l')
+            ->join("shy_coupon as c","l.coupon_id = c.id")
+            ->where("user_id", $user_id)
+            ->orderRaw('rand()')
+            ->find();
+
+        var_dump($coupon_info);
+
+
+    }
+
     //个人中心资料修改
     public function modify()
     {
