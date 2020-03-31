@@ -1,6 +1,7 @@
 <?php
 namespace app\api\controller;
 use app\api\model\Signlog;
+use app\api\model\SignZj;
 use think\Db;
 use think\Request;
 class Signin extends Base
@@ -113,14 +114,33 @@ class Signin extends Base
             ->whereTime('s.sign_time', 'today')
             ->field('s.*,u.mobile,u.avatar,u.username')
             ->select();
-        
+
         $signlogs = json_decode(json_encode($signlogs), true);
 
-        dump($signlogs);
-        /*foreach($signlogs as $k=>$v){
+        //随机抽取一个今天签到的用户
+        $zj_user = array_rand($signlogs);
 
+        //判断该用户今天是否已经中奖
+        $checkZj = Db::name('sign_zj')->where("zj_date = today")->find();
+        var_dump($checkZj);
+        if(!$checkZj){
+            //存入到数据库中
+            $add['qd_id'] = $signlogs[$zj_user]['id'];
+            $add['user_id'] = $signlogs[$zj_user]['user_id'];
+            $add['goods_id'] = $signlogs[$zj_user]['goods_id'];
+            $add['user_name'] = $signlogs[$zj_user]['username'];
+            $add['user_avatar'] = $signlogs[$zj_user]['avatar'];
+            $add['user_mobile'] = $signlogs[$zj_user]['mobile'];
+            $add['user_code'] = $signlogs[$zj_user]['code'];
+            $add['zj_date'] = date('Y-m-d');
+            $check = SignZj::insert($add);
 
-        }*/
+            if($check){
+                $this->json_success($add,'添加成功');
+            }else{
+                $this->json_error('添加失败');
+            }
+        }
     }
 
     //获奖用户
