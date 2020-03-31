@@ -355,5 +355,28 @@ class Coupon extends Base
 
     }
 
+    //清空商家失效优惠卷
+    public function del_coupon(){
+        $user_id = input('post.user_id');
+        if(null===$user_id){
+            $this->json_error('请传过来用户编号');
+            die;
+        }
 
+        $type = input('post.type'); //1=平台优惠卷 2=商家优惠卷
+        if(null===$type){
+            $this->json_error('请传过来优惠卷类型');
+            die;
+        }
+
+        //清空已失效的优惠卷
+        Db::name('shy_coupon')->where("type_id", $type)->where("is_expire", 1)->delete();
+
+        if($type == 2){
+            //清空已使用的优惠卷
+            Db::name("shy_couponlog")->where("user_id", $user_id)->where("is_use", 1)->delete();
+        }
+
+        $this->json_success('','成功');
+    }
 }
