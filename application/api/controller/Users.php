@@ -1663,10 +1663,9 @@ class Users extends Base
         }
         */
 
-        //返回数据加密
 
-        $this->encrypt_success($orders);
-        //$this->json_success($orders);
+        //$this->encrypt_success($orders);
+        $this->json_success($orders);
     }
 
 
