@@ -114,6 +114,7 @@ class Signin extends Base
             ->field('s.*,u.mobile,u.avatar,u.username')
             ->select()
             ->toArray();
+        $signlogs = json_decode(json_encode($signlogs), true);
 
         dump($signlogs);
         /*foreach($signlogs as $k=>$v){
