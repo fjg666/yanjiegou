@@ -1662,7 +1662,12 @@ class Users extends Base
             $shops[$k]['totalprice'] = $totalprice;
         }
         */
-        $this->json_success($orders);
+
+        //返回数据加密
+        $json = json_encode(['code' => 200, 'msg' => '成功', 'data' => $orders], JSON_UNESCAPED_UNICODE);
+        echo base64_encode($json);
+
+        //$this->json_success($orders);
     }
 
 
