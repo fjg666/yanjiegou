@@ -112,8 +112,8 @@ class Signin extends Base
             ->order('s.id','desc')
             ->whereTime('s.sign_time', 'today')
             ->field('s.*,u.mobile,u.avatar,u.username')
-            ->select()
-            ->toArray();
+            ->select();
+        
         $signlogs = json_decode(json_encode($signlogs), true);
 
         dump($signlogs);
