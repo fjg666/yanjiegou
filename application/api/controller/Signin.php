@@ -122,7 +122,6 @@ class Signin extends Base
 
         //判断该用户今天是否已经中奖
         $checkZj = Db::name('sign_zj')->whereTime("zj_date","today")->find();
-        var_dump($checkZj);
         if(!$checkZj){
             //存入到数据库中
             $add['qd_id'] = $signlogs[$zj_user]['id'];
@@ -142,6 +141,16 @@ class Signin extends Base
             }
         }else{
             $this->json_error('今天已有人中奖啦，明天再来吧！');
+        }
+    }
+
+    //已送出奖品用户列表
+    public function give_do(){
+        $data = Db::name('sign_zj')->where("is_give",1)->select();
+        if($data){
+            $this->json_success($data, '已送出列表');
+        }else{
+            $this->json_error('暂无数据');
         }
     }
 
