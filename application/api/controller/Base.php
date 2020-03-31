@@ -43,6 +43,22 @@ class Base extends Controller
         exit(json_encode(['code' => $code, 'msg' => $msg, 'data' => $data], JSON_UNESCAPED_UNICODE));
     }
 
+    /**
+     * json成功加密返回
+     * @param array $data
+     * @param string $msg
+     * @param int $code
+     */
+    public function encrypt_success($data = [], $msg = '成功', $code = 200)
+    {
+        if (is_string($data)) {
+            $msg  = $data;
+            $data = [];
+        }
+        $json = json_encode(['code' => $code, 'msg' => $msg, 'data' => $data]);
+        exit(base64_encode($json));
+    }
+
     //获取当前域名
     function domain()
     {
