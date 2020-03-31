@@ -140,6 +140,8 @@ class Signin extends Base
             }else{
                 $this->json_error('添加失败');
             }
+        }else{
+            $this->json_error('今天已有人中奖啦，明天再来吧！');
         }
     }
 
