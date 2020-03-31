@@ -506,7 +506,7 @@ class Users extends Base
 
         //随机查出一条用户没有的优惠卷
         $coupon_info = Db::name("couponlog")->alias('l')
-            ->join("shy_coupon as c","l.coupon_id = c.id")
+            ->join("shy_coupon c","l.coupon_id = c.id")
             ->where("user_id", $user_id)
             ->orderRaw('rand()')
             ->find();
