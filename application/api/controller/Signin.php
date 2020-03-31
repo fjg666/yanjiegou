@@ -121,7 +121,7 @@ class Signin extends Base
         $zj_user = array_rand($signlogs);
 
         //判断该用户今天是否已经中奖
-        $checkZj = Db::name('sign_zj')->where("zj_date = today")->find();
+        $checkZj = Db::name('sign_zj')->whereTime("zj_date","today")->find();
         var_dump($checkZj);
         if(!$checkZj){
             //存入到数据库中
