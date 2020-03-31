@@ -1664,8 +1664,8 @@ class Users extends Base
         */
 
         //返回数据加密
-        //$json = json_encode(['code' => 200, 'msg' => '成功', 'data' => $orders], JSON_UNESCAPED_UNICODE);
-        //echo base64_encode($json);exit();
+        $json = json_encode(['code' => 200, 'msg' => '成功', 'data' => $orders]);
+        echo base64_encode($json);exit();
 
         $this->json_success($orders);
     }
