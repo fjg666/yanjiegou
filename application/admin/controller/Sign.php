@@ -185,14 +185,14 @@ class Sign extends Common
     public function winner()
     {
         if(Request::instance()->isAjax()) {
-            $page =input('page')?input('page'):1;
-            $pageSize =input('limit')?input('limit'):config('pageSize');
+            $page = input('page') ? input('page') : 1;
+            $pageSize = input('limit') ? input('limit') : config('pageSize');
             $signZjmodel = new SignZj();
             $signlogs = $signZjmodel->alias('slog')
-                ->join('__USERS__ u','u.id = slog.user_id','LEFT')
+                ->join('__USERS__ u', 'u.id = slog.user_id', 'LEFT')
                 ->field('slog.*,u.id as uid,u.mobile')
                 ->order("slog.zj_date desc")
-                ->page($page,$pageSize)
+                ->page($page, $pageSize)
                 ->select();
 
 
@@ -229,6 +229,7 @@ class Sign extends Common
     public function sendout(){
         if(Request::instance()->isPost()){
             $info = input("post.");
+            $data['is_give'] = 0; //修改已送出状态
             $data['express'] = $info['express'];
             $data['expressOrder'] = $info['expressOrder'];
             $data['give_date'] = date("Y-m-d H:i:s");

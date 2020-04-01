@@ -55,7 +55,18 @@
 
 
 <script type="text/html" id="action">
-    <a href="{:url('sendout')}?id={{d.id}}" class="layui-btn layui-btn-xs">奖品送出</a>
+    {{# if(d.is_give==1){ }}
+    <!-- 未送出，可以点击按钮送出   -->
+    <a href="{:url('sendout')}?id={{d.id}}" class="layui-btn layui-btn-danger layui-btn-xs">奖品送出</a>
+
+<!--    <a href="{:url('sendout')}?id={{d.id}}" class="layui-btn layui-btn-xs">奖品送出</a>-->
+<!--    <a href="#" class="layui-btn layui-btn-xs layui-btn-disabled">{:lang('del')}</a>-->
+    {{# }else{  }}
+
+    <!-- 已送出，不可以点击按钮   -->
+    <a href="#" class="layui-btn layui-btn-xs layui-btn-disabled">奖品已送出</a>
+
+    {{# } }}
 </script>
 
 
