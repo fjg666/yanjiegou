@@ -28,11 +28,12 @@
                         </fieldset>
                         <form class="layui-form" method="post" enctype="multipart/form-data">
                             <div class="layui-form-item">
-                                <label class="layui-form-label">版本号</label>
+                                <label class="layui-form-label">用户手机号</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="version" lay-verify="required" autocomplete="off" placeholder="版本号" class="layui-input" value="{$data.version}">
+                                    <input type="text" name="mobile" lay-verify="required" autocomplete="off" placeholder="手机号" class="layui-input" value="{$data.user_mobile}">
                                 </div>
                             </div>
+                            <input type="hidden" name="id" value="{$data.id}">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">快递公司</label>
                                 <div class="layui-input-inline">
