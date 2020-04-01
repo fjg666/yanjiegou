@@ -197,7 +197,7 @@ class Sign extends Common
 
 
             foreach($signlogs as $k=>$v){
-                $signgoods[$k]['add_time'] = $v['add_time'];
+                //$signgoods[$k]['add_time'] = $v['add_time'];
                 //winstatus 是否获奖 0否  1是
                 if($v['is_give']==1){
                     $signlogs[$k]['is_give'] = '未送出';
