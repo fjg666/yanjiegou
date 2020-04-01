@@ -194,7 +194,7 @@ class Sign extends Common
                 ->where('slog.winstatus',1)
                 ->page($page,$pageSize)
                 ->select();
-
+            echo $signlogmodel->getLastSql();
             var_dump($signlogs);die;
 
             foreach($signlogs as $k=>$v){
