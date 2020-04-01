@@ -413,6 +413,7 @@ class Shop extends Base
         $shopInfo['shop_address']=$shopInfo['province'].$shopInfo['city'].$shopInfo['street'].$shopInfo['address'];
         //店铺服务标签
         $tag = json_decode($shopInfo['tag'], true);
+        var_dump($tag);
         $shopInfo['shop_tag'] = $tag;
         if($shopInfo['yyzz']){
             $yyzz=explode(',',$shopInfo['yyzz']);
