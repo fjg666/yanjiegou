@@ -135,6 +135,9 @@ class Signin extends Base
             $check = SignZj::insert($add);
 
             if($check){
+                //推送给用户
+
+
                 $this->json_success($add,'添加成功');
             }else{
                 $this->json_error('添加失败');

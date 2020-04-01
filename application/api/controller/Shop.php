@@ -452,8 +452,8 @@ class Shop extends Base
             );
         }
         if($service==0){
-            $shopInfo['quality']=array(
-                'quality'=>0,
+            $shopInfo['service']=array(
+                'service'=>0,
                 'rate'=>0
             );
         }else{
