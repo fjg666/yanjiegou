@@ -195,6 +195,7 @@ class Sign extends Common
                 ->page($page,$pageSize)
                 ->select();
 
+            var_dump($signlogs);die;
 
             foreach($signlogs as $k=>$v){
                 $signgoods[$k]['add_time'] = $v['add_time'];
