@@ -369,6 +369,15 @@ class Coupon extends Base
             die;
         }
 
+        $res = Db::name('coupon')->where("type_id", $type)->where("is_expire", 1)->select();
+        if(!$res){
+            $this->json_error('清空失败！');
+        }
+        foreach($res as $key => $val){
+            //删除用户已领取并且失效的的优惠卷
+            Db::name('couponlog')->where("user_id", $user_id)->where("coupon_id",$val['id'])->delete();
+        }
+
         //清空已失效的优惠卷
         Db::name('coupon')->where("type_id", $type)->where("is_expire", 1)->delete();
 

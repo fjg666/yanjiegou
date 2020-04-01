@@ -4,6 +4,7 @@ use app\admin\model\Signlog;
 use app\api\model\Collectiongoods;
 use app\api\model\Collectionshop;
 use app\api\model\Couponlog;
+use app\api\model\Coupon;
 use app\api\model\Goods;
 use app\api\model\Order;
 use app\api\model\Recvaddr;
@@ -193,6 +194,23 @@ class Users extends Base
                         'reg_time'=>date('Y-m-d H:i:s',$res->reg_time),
                         'avatar'=>$this->domain().'/'.'static/home/images/default.png'
                     ];
+
+                    //发放优惠卷 (平台优惠卷)
+                    //先随机查询一条给用户发放的优惠卷
+                    $coupon = Coupon::where("type_id", 1)->where("is_expire", 0)->orderRaw('rand()')->find();
+                    if(!empty($coupon)){
+                        $CheckCoupon = Couponlog::where(['user_id'=>$res->id,'coupon_id'=>$coupon->id])->find();
+                        if(empty($CheckCoupon)){
+                            $data = [
+                                'user_id'=>$res->id,
+                                'coupon_id'=>$coupon->id,
+                                'add_time'=>time(),
+                                'receive_time'=>time()
+                            ];
+                            Couponlog::insertGetId($data);
+                        }
+                    }
+
                     $this->json_success($info,'注册成功');
                 }else{
                     $this->json_error('注册失败');
@@ -489,6 +507,24 @@ class Users extends Base
             $this->json_error('请求方式有问题');
         }
     }
+
+    //登录发放优惠卷
+    /*public function login_coupon(){
+        $user_id = input('post.user_id');
+
+        if(null===$user_id){
+            $this->json_error('请传过来用户编号');
+        }
+
+        //随机查出一条用户没有的优惠卷
+        $coupon_info = Db::name("couponlog")->alias('l')
+            ->join("shy_coupon c","l.coupon_id = c.id")
+            ->where("user_id", $user_id)
+            ->orderRaw('rand()')
+            ->find();
+
+        var_dump($coupon_info);
+    }*/
 
     //个人中心资料修改
     public function modify()
