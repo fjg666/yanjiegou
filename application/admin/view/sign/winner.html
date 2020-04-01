@@ -55,7 +55,7 @@
 
 
 <script type="text/html" id="action">
-    {{# if(d.is_give==1){ }}
+    {{# if(d.is_give=="未送出"){ }}
     <!-- 未送出，可以点击按钮送出   -->
     <a href="{:url('sendout')}?id={{d.id}}" class="layui-btn layui-btn-danger layui-btn-xs">奖品送出</a>
 
