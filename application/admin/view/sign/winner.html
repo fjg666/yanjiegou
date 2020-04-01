@@ -39,7 +39,7 @@
                 {field: 'zj_date', title: '签到时间'},
                 {field: 'user_code', title: '签到码'},
                 {field: 'is_give', title: '是否送出'},
-                {align: 'center', toolbar: '#action'}
+                {align: 'center', toolbar: '#action',title:'操作'}
                 // {field: 'code_source', title: '签到码来源'}
 
             ]],
@@ -47,32 +47,6 @@
             limit: 10
 
         });
-
-        $('body').on('click','#delAll',function() {
-            layer.confirm('确认要删除选中的内容吗？', {icon: 3}, function(index) {
-                layer.close(index);
-                var checkStatus = table.checkStatus('content'); //content即为参数id设定的值
-                var ids = [];
-                $(checkStatus.data).each(function (i, o) {
-                    ids.push(o.id);
-                });
-                var loading = layer.load(1, {shade: [0.1, '#fff']});
-                $.post("{:url('delAll')}", {ids: ids,catid:'{:input("catid")}'}, function (data) {
-                    layer.close(loading);
-                    if(data.code===1) {
-                        layer.msg(data.msg, {time: 1000, icon: 1});
-                        tableIn.reload();
-                    } else {
-                        layer.msg(data.msg, {time: 1000, icon: 2});
-                    }
-                });
-            });
-        })
-
-
-
-
-
     });
 
 
@@ -81,7 +55,7 @@
 
 
 <script type="text/html" id="action">
-    <a href="{:url('sendout')}?id={{id}}" class="layui-btn layui-btn-xs">奖品送出</a>
+    <a href="{:url('sendout')}?id={{d.id}}" class="layui-btn layui-btn-xs">奖品送出</a>
 </script>
 
 
