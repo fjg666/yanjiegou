@@ -225,6 +225,30 @@ class Sign extends Common
         }
     }
 
+    //奖品送出
+    public function sendout(){
+        if(Request::instance()->isPost()){
+            $info = input("post.");
+            $data['express'] = $info['express'];
+            $data['expressOrder'] = $info['expressOrder'];
+            $data['give_date'] = date("Y-m-d H:i:s");
 
+            $results = Db::name("sign_zj")->where("id",$info['id'])->update($data);
+            if ($results) {
+                $result['msg'] = '送出成功!';
+                $result['code'] = 1;
+                return $result;
+            } else {
+                $result['msg'] = '送出失败!';
+                $result['code'] = 0;
+                return $result;
+            }
+        }else{
+            $id = input("id");
+            $data=Db::name("sign_zj")->where(["id"=>$id])->find();
+            $this->assign("data",$data);
+            return $this->fetch();
+        }
+    }
 
 }
