@@ -403,7 +403,7 @@ class Shop extends Base
         }
         
         $shopInfo=Db::name("shop")
-                        ->field("shoplogo,name,intro,content,longitude,latitude,addtime,star,province,city,area,street,quality,service,address,yyzz,headimg,description,quality,service")
+                        ->field("name,bshopname,shoplogo,intro,content,longitude,latitude,addtime,star,province,city,area,street,quality,service,address,yyzz,tag,headimg,description,quality,service")
                         ->where(['id'=>$shop_id])
                         ->find();
         $shopInfo['shop_fans']=ShopModel::get($shop_id)->shopFans()->count();
@@ -411,6 +411,9 @@ class Shop extends Base
         $shopInfo['shoplogo'] = $this->domain().$shopInfo['shoplogo'];       
         $shopInfo['sale_num']=ShopModel::shopOrderNum($shop_id);
         $shopInfo['shop_address']=$shopInfo['province'].$shopInfo['city'].$shopInfo['street'].$shopInfo['address'];
+        //店铺服务标签
+        $tag = json_decode($shopInfo['tag'], true);
+        $shopInfo['shop_tag'] = $tag;
         if($shopInfo['yyzz']){
             $yyzz=explode(',',$shopInfo['yyzz']);
             for($i=0; $i<count($yyzz); $i++){
