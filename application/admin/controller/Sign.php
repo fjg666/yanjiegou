@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 use app\admin\model\Signgoods;
 use app\admin\model\Signlog;
+use app\admin\model\SignZj;
 use think\Db;
 use think\request;
 use app\admin\controller\Common;
@@ -186,31 +187,29 @@ class Sign extends Common
         if(Request::instance()->isAjax()) {
             $page =input('page')?input('page'):1;
             $pageSize =input('limit')?input('limit'):config('pageSize');
-            $signlogmodel = new Signlog();
-            $signlogs = $signlogmodel->alias('slog')
+            $signZjmodel = new SignZj();
+            $signlogs = $signZjmodel->alias('slog')
                 ->join('__USERS__ u','u.id = slog.user_id','LEFT')
                 ->field('slog.*,u.id as uid,u.mobile')
-                ->order("slog.id desc")
-                ->where('slog.winstatus',1)
+                ->order("slog.zj_date desc")
                 ->page($page,$pageSize)
                 ->select();
-            echo $signlogmodel->getLastSql();
-            var_dump($signlogs);die;
+
 
             foreach($signlogs as $k=>$v){
                 $signgoods[$k]['add_time'] = $v['add_time'];
                 //winstatus 是否获奖 0否  1是
-                if($v['winstatus']==0){
-                    $signlogs[$k]['winstatus'] = '未中奖';
+                if($v['is_give']==1){
+                    $signlogs[$k]['is_give'] = '未送出';
                 }else{
-                    $signlogs[$k]['winstatus'] = '<strong style="color: red">已中奖</strong>';
+                    $signlogs[$k]['is_give'] = '<strong style="color: red">已送出</strong>';
                 }
-                //code_source签到码来源  1 签到  2 分享获取的
+                /*//code_source签到码来源  1 签到  2 分享获取的
                 if($v['code_source']==1){
                     $signlogs[$k]['code_source'] = '签到';
                 }else{
                     $signlogs[$k]['code_source'] = '分享获取';
-                }
+                }*/
             }
 
             $count = count($signlogs);
