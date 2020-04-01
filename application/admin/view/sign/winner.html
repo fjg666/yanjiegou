@@ -39,6 +39,7 @@
                 {field: 'zj_date', title: '签到时间'},
                 {field: 'user_code', title: '签到码'},
                 {field: 'is_give', title: '是否送出'},
+                {align: 'center', toolbar: '#action'}
                 // {field: 'code_source', title: '签到码来源'}
 
             ]],
@@ -78,6 +79,10 @@
 
 </script>
 
+
+<script type="text/html" id="action">
+    <a href="{:url('sendout')}?id={{id}}" class="layui-btn layui-btn-xs">奖品送出</a>
+</script>
 
 
 {/block}
