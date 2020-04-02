@@ -115,12 +115,12 @@ class Shop extends Common
                 $where['o.order_sn|u.mobile|s.name'] = ['like','%'.$keyword.'%'];
             }
 
-            $list = $this->model->alias('o')
+            $list = $this->order->alias('o')
                 ->join('users u','u.id = o.user_id','LEFT')
                 ->join('shop s','s.id = o.shop_id','LEFT')
                 ->field('o.*,u.id as uid,u.mobile as umobile,s.id as sid,s.name as sname')
                 ->order("o.id desc")
-                ->where("shop_id", $shop_id)
+                ->where("o.shop_id", $shop_id)
                 ->paginate(array('list_rows'=>$pageSize,'page'=>$page))
                 ->each(function($row){
                     $row['statusname']=get_status($row['status'],'order_status');
