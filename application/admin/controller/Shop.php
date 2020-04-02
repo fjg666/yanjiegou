@@ -107,8 +107,8 @@ class Shop extends Common
     {
         $shop_id    = input('id');
         var_dump($shop_id);
-        if(Request::instance()->isAjax()){
-            echo $shop_id;die;
+        //if(Request::instance()->isAjax()){
+            
             $page       = input('page')?input('page'):1;
             $pageSize   = input('limit')?input('limit'):config('pageSize');
             $keyword    = input('key');
@@ -133,7 +133,7 @@ class Shop extends Common
             var_dump($list);die;
             return ['code'=>0,'msg'=>"获取成功",'data'=>$list['data'],'count'=>$list['total'],'rel'=>1];
             return $result;
-        }
+        //}
         return $this->fetch();
     }
 
