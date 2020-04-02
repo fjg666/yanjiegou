@@ -127,8 +127,8 @@ class Shop extends Common
                     $row['pay_type']=get_status($row['pay_type'],'pay_type');
                     $row['add_time']=date('Y-m-d H:i:s',$row['add_time']);
                 })->toArray();
-
-            var_dump($list);
+            echo $this->model->getLastSql();
+            var_dump($list);die;
             return ['code'=>0,'msg'=>"获取成功",'data'=>$list['data'],'count'=>$list['total'],'rel'=>1];
             return $result;
         }
