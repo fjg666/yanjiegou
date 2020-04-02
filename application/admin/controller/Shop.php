@@ -105,10 +105,12 @@ class Shop extends Common
      */
     public function shopOrder()
     {
+
         $shop_id    = input('id');
-        var_dump($shop_id);
-        //if(Request::instance()->isAjax()){
-            
+        Session::set('shop_id',$shop_id);
+        if(Request::instance()->isAjax()){
+
+
             $page       = input('page')?input('page'):1;
             $pageSize   = input('limit')?input('limit'):config('pageSize');
             $keyword    = input('key');
@@ -122,7 +124,7 @@ class Shop extends Common
                 ->join('shop s','s.id = o.shop_id','LEFT')
                 ->field('o.*,u.id as uid,u.mobile as umobile,s.id as sid,s.name as sname')
                 ->order("o.id desc")
-                ->where("o.shop_id", $shop_id)
+                ->where("o.shop_id", Session::get('shop_id'))
                 ->paginate(array('list_rows'=>$pageSize,'page'=>$page))
                 ->each(function($row){
                     $row['statusname']=get_status($row['status'],'order_status');
@@ -133,7 +135,7 @@ class Shop extends Common
             var_dump($list);die;
             return ['code'=>0,'msg'=>"获取成功",'data'=>$list['data'],'count'=>$list['total'],'rel'=>1];
             return $result;
-        //}
+        }
         return $this->fetch();
     }
 
