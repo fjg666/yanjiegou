@@ -57,7 +57,10 @@ class Order extends Common{
                     $row['statusname']=get_status($row['status'],'order_status');
                     $row['pay_type']=get_status($row['pay_type'],'pay_type');
                     $row['add_time']=date('Y-m-d H:i:s',$row['add_time']);
-                })->toArray();    
+                })->toArray();
+
+            echo $this->model->getLastSql();die;
+            
             return ['code'=>0,'msg'=>"获取成功",'data'=>$list['data'],'count'=>$list['total'],'rel'=>1];
             return $result;
         }

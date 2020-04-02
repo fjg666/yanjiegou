@@ -159,6 +159,7 @@
     {{# if(d.is_show==1){ }}
     <a href="{{d.url}}" target="_blank" class="layui-btn layui-btn-xs layui-btn-normal">预览</a>
     {{# } }}
+    <a href="{:url('admin/shop/shopOrder')}?id={{d.id}}" class="layui-btn layui-btn-xs">查看订单</a>
     <a href="{:url('admin/shop/edit')}?id={{d.id}}" class="layui-btn layui-btn-xs">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     <a href="{:url('admin/shop/admin')}?id={{d.id}}" class="layui-btn layui-btn-xs">商家管理员</a>

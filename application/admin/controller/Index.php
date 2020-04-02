@@ -29,10 +29,13 @@ class Index extends Common
         $data=[];
         $t = time();
 
+        //查询平台店铺
+        $shopid = Db::name("shop")->where("shop_type", 2)->value("id");
+
         $start = mktime(0,0,0,date("m",$t),date("d",$t),date("Y",$t));
         $end = mktime(23,59,59,date("m",$t),date("d",$t),date("Y",$t));
         $data['tody']['users'] = Db::name('users')->where('reg_time','between',[$start,$end])->count();
-        $data['tody']['order'] = Db::name('order')->where('add_time','between',[$start,$end])->count();
+        $data['tody']['order'] = Db::name('order')->where("shop_id", $shopid)->where('add_time','between',[$start,$end])->count();
         $data['tody']['shop2']  = Db::name('shop')->where(['addtime'=>['between',[$start,$end]],'status'=>2])->count();
         $data['tody']['bshop']  = Db::name('bigshop')->where(['addtime'=>['between',[$start,$end]]])->count();
         $data['tody']['shop1']  = Db::name('shop')->where(['addtime'=>['between',[$start,$end]],'status'=>1])->count();

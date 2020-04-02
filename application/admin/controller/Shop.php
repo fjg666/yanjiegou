@@ -16,6 +16,7 @@ class Shop extends Common
     {
         parent::_initialize();
         $this->model = model('shop');
+        $this->order = model('order');
         $this->assign('logomoduleid', 111);
         $this->assign('albummoduleid', 112);
     }
@@ -98,6 +99,42 @@ class Shop extends Common
             return $this->fetch();
         }
     }
+
+    /*
+     * 查看商家订单
+     */
+    public function shopOrder()
+    {
+        $status=input('status/d');
+        if(Request::instance()->isAjax()){
+            $page       = input('page')?input('page'):1;
+            $pageSize   = input('limit')?input('limit'):config('pageSize');
+            $keyword    = input('key');
+            $where = [];
+            if(!empty($keyword)){
+                $where['o.order_sn|u.mobile|s.name'] = ['like','%'.$keyword.'%'];
+            }
+            if(!empty($status)){
+                $where['o.status']=$status;
+            }
+            $list = $this->model->alias('o')
+                ->join('users u','u.id = o.user_id','LEFT')
+                ->join('shop s','s.id = o.shop_id','LEFT')
+                ->field('o.*,u.id as uid,u.mobile as umobile,s.id as sid,s.name as sname')
+                ->order("o.id desc")
+                ->where($where)
+                ->paginate(array('list_rows'=>$pageSize,'page'=>$page))
+                ->each(function($row){
+                    $row['statusname']=get_status($row['status'],'order_status');
+                    $row['pay_type']=get_status($row['pay_type'],'pay_type');
+                    $row['add_time']=date('Y-m-d H:i:s',$row['add_time']);
+                })->toArray();
+            return ['code'=>0,'msg'=>"获取成功",'data'=>$list['data'],'count'=>$list['total'],'rel'=>1];
+            return $result;
+        }
+        return $this->fetch();
+    }
+
     //获取子地区
     public function getchildarea()
     {
