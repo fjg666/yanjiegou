@@ -4,6 +4,7 @@ namespace app\admin\Controller;
 
 use think\Db;
 use think\Request;
+use think\Session;
 use ensh\Leftnav;
 use app\api\controller\Base;
 use app\admin\controller\Common;
