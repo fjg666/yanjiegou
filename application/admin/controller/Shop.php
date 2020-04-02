@@ -105,10 +105,10 @@ class Shop extends Common
      */
     public function shopOrder()
     {
-
+        $shop_id    = input('id');
+        var_dump($shop_id);
         if(Request::instance()->isAjax()){
-            $shop_id    = input('get.id/d');
-            var_dump($shop_id);die;
+            echo $shop_id;die;
             $page       = input('page')?input('page'):1;
             $pageSize   = input('limit')?input('limit'):config('pageSize');
             $keyword    = input('key');
