@@ -107,16 +107,12 @@ class Shop extends Common
     public function shopOrder()
     {
 
-        $shop_id    = input('id');
-        
-        echo $shop_id."----";
-        Session::set('shop_id',$shop_id);
-        $a = Session::get('shop_id');
+        var_dump($_POST)."---";
 
         if(Request::instance()->isAjax()){
 
 
-            var_dump($_SESSION);die;
+            var_dump($_POST);die;
             $page       = input('page')?input('page'):1;
             $pageSize   = input('limit')?input('limit'):config('pageSize');
             $keyword    = input('key');
