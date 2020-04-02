@@ -1849,8 +1849,24 @@ class Users extends Base
         }
 
     }
-    
-    
+
+    //分享次数累加
+    public function shareNum(){
+        $type = input('post.type'); //分享类型 1=店铺 2=商品
+        $id = input('post.id'); //店铺id或商品id
+        if(empty($area_name) || empty($city_name)){
+            $this->json_error('参数为空!');
+        }
+
+        if($type == 1){
+            Db::name("shop")->where("id",$id)->setInc('share');
+        }elseif($type == 2){
+            Db::name("goods")->where("id",$id)->setInc('share');
+        }
+        $this->json_success('','成功');
+    }
+
+
      //版本更新 
     
    public function getVersion(){
