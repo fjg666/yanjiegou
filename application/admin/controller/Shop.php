@@ -114,7 +114,7 @@ class Shop extends Common
         if(Request::instance()->isAjax()){
 
 
-            echo $a;
+            var_dump($_SESSION);die;
             $page       = input('page')?input('page'):1;
             $pageSize   = input('limit')?input('limit'):config('pageSize');
             $keyword    = input('key');
