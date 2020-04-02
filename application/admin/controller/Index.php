@@ -28,6 +28,7 @@ class Index extends Common
     public function main(){
         $data=[];
         $t = time();
+
         $start = mktime(0,0,0,date("m",$t),date("d",$t),date("Y",$t));
         $end = mktime(23,59,59,date("m",$t),date("d",$t),date("Y",$t));
         $data['tody']['users'] = Db::name('users')->where('reg_time','between',[$start,$end])->count();

@@ -55,12 +55,23 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label">店铺类型</label>
+                <div class="layui-input-inline">
+                    <select name="bshopid" id="shop_type"  lay-verify="required">
+                        <option value="" title="0">请选择店铺类型</option>
+                        <option value="1">个体店铺</option>
+                        <option value="2">平台店铺</option>
+                        <option value="3">商超店铺</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">商家类型</label>
                 <div class="layui-input-inline">
                     <select name="type" id="type"  lay-verify="required"  >
                         <option value="" title="0">请选择所属类型</option>
                         {volist name="shopcategory" id="vo"}
-                        <option value="{$vo.id}"  >{$vo.shop_category}</option>
+                        <option value="{$vo.id}">{$vo.shop_category}</option>
                         {/volist}
                     </select>
                 </div>

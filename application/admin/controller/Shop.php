@@ -68,6 +68,13 @@ class Shop extends Common
             if ($msg != 'true') {
                 return $result = ['code' => 0, 'msg' => $msg];
             }
+
+            //平台店铺只可以注册一个
+            $check_shop = Db::name("shop")->where("shop_type" , 2)->find();
+            if($check_shop){
+                return $result = ['code' => 0, 'msg' => "平台店铺已被注册！"];
+            }
+
             $data['shortname'] = GetShortName($data['name']);
             $res = model('shop')::creatadmin($data);
             if ($res) {
@@ -168,6 +175,14 @@ class Shop extends Common
             if ($msg != 'true') {
                 return $result = ['code' => 0, 'msg' => $msg];
             }
+
+            //平台店铺只可以注册一个
+            $check_shop = Db::name("shop")->where("shop_type" , 2)->find();
+            if($check_shop){
+                return $result = ['code' => 0, 'msg' => "平台店铺已被注册！"];
+            }
+
+
             $res = $this->model->save($data, ['id' => input('post.id')]);
             if ($res) {
                  if($data['status']==2){
@@ -203,7 +218,7 @@ class Shop extends Common
             $this->assign('arealist', $arealist);
             $bshop = model('bigshop')->field('id,name')->select();
             $this->assign('bshop', $bshop);
-             $shopcategory=Db::name('shop_category')->select();
+            $shopcategory=Db::name('shop_category')->select();
             $this->assign('shopcategory',$shopcategory);
             return $this->fetch();
         }
