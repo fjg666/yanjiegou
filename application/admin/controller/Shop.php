@@ -105,7 +105,7 @@ class Shop extends Common
      */
     public function shopOrder()
     {
-        $status=input('status/d');
+        $shop_id = input('post.id');
         if(Request::instance()->isAjax()){
             $page       = input('page')?input('page'):1;
             $pageSize   = input('limit')?input('limit'):config('pageSize');
@@ -114,21 +114,21 @@ class Shop extends Common
             if(!empty($keyword)){
                 $where['o.order_sn|u.mobile|s.name'] = ['like','%'.$keyword.'%'];
             }
-            if(!empty($status)){
-                $where['o.status']=$status;
-            }
+
             $list = $this->model->alias('o')
                 ->join('users u','u.id = o.user_id','LEFT')
                 ->join('shop s','s.id = o.shop_id','LEFT')
                 ->field('o.*,u.id as uid,u.mobile as umobile,s.id as sid,s.name as sname')
                 ->order("o.id desc")
-                ->where($where)
+                ->where("shop_id", $shop_id)
                 ->paginate(array('list_rows'=>$pageSize,'page'=>$page))
                 ->each(function($row){
                     $row['statusname']=get_status($row['status'],'order_status');
                     $row['pay_type']=get_status($row['pay_type'],'pay_type');
                     $row['add_time']=date('Y-m-d H:i:s',$row['add_time']);
                 })->toArray();
+
+            var_dump($list);
             return ['code'=>0,'msg'=>"获取成功",'data'=>$list['data'],'count'=>$list['total'],'rel'=>1];
             return $result;
         }

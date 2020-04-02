@@ -59,8 +59,6 @@ class Order extends Common{
                     $row['add_time']=date('Y-m-d H:i:s',$row['add_time']);
                 })->toArray();
 
-            echo $this->model->getLastSql();die;
-            
             return ['code'=>0,'msg'=>"获取成功",'data'=>$list['data'],'count'=>$list['total'],'rel'=>1];
             return $result;
         }
