@@ -107,7 +107,7 @@ class Shop extends Common
     {
 
         if(Request::instance()->isAjax()){
-            $shop_id    = input('post.id');
+            $shop_id    = input('id');
             $page       = input('page')?input('page'):1;
             $pageSize   = input('limit')?input('limit'):config('pageSize');
             $keyword    = input('key');
