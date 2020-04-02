@@ -108,16 +108,15 @@ class Shop extends Common
     {
 
         $shop_id    = input('id');
-        $data = input('post.');
-        var_dump($data);
+        
         echo $shop_id."----";
         Session::set('shop_id',$shop_id);
         $a = Session::get('shop_id');
-        var_dump($_SESSION);die;
-        /*if(Request::instance()->isAjax()){
+
+        if(Request::instance()->isAjax()){
 
 
-
+            var_dump($_SESSION);die;
             $page       = input('page')?input('page'):1;
             $pageSize   = input('limit')?input('limit'):config('pageSize');
             $keyword    = input('key');
@@ -142,7 +141,7 @@ class Shop extends Common
             var_dump($list);die;
             return ['code'=>0,'msg'=>"获取成功",'data'=>$list['data'],'count'=>$list['total'],'rel'=>1];
             return $result;
-        }*/
+        }
         return $this->fetch();
     }
 
