@@ -110,11 +110,11 @@ class Shop extends Common
         $shop_id    = input('id');
         echo $shop_id."----";
         Session::set('shop_id',$shop_id);
-
+        $a = Session::get('shop_id');
         if(Request::instance()->isAjax()){
 
-            $a = Session::get('shop_id');
-            echo $a;die;
+
+            echo $a;
             $page       = input('page')?input('page'):1;
             $pageSize   = input('limit')?input('limit'):config('pageSize');
             $keyword    = input('key');
@@ -128,7 +128,7 @@ class Shop extends Common
                 ->join('shop s','s.id = o.shop_id','LEFT')
                 ->field('o.*,u.id as uid,u.mobile as umobile,s.id as sid,s.name as sname')
                 ->order("o.id desc")
-                ->where("o.shop_id", Session::get('shop_id'))
+                ->where("o.shop_id", 4)
                 ->paginate(array('list_rows'=>$pageSize,'page'=>$page))
                 ->each(function($row){
                     $row['statusname']=get_status($row['status'],'order_status');
