@@ -111,10 +111,11 @@ class Shop extends Common
         echo $shop_id."----";
         Session::set('shop_id',$shop_id);
         $a = Session::get('shop_id');
+        var_dump($_SESSION);die;
         if(Request::instance()->isAjax()){
 
 
-            var_dump($_SESSION);die;
+
             $page       = input('page')?input('page'):1;
             $pageSize   = input('limit')?input('limit'):config('pageSize');
             $keyword    = input('key');
