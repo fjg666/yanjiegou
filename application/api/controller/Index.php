@@ -153,6 +153,34 @@ class Index extends Base
             die;
         }
     }
+
+    //统计用户日活量
+    public function UserBrisk(){
+        if (Request::instance()->isPost()) {
+            $ip = input('post.ip');//用户ip地址
+            if(empty($ip)){
+                $this->json_error("参数为空！");
+            }
+
+            //判断当天这个ip是否访问
+            $checkIp = Db::name("dailyactivity")
+                ->where("date_format(from_unixtime(login_time), '%Y-%m-%d') = date_format(now(), '%Y-%m-%d')")
+                ->where("ip",$ip)
+                ->find();
+
+            if(empty($checkIp)){
+                //如果没有访问 则记录
+                $add['login_time'] = time();
+                $add['ip'] = $ip;
+                $checkAdd = Db::name("dailyactivity")->insert($add);
+                if($checkAdd){
+                    echo 1;
+                }else{
+                    echo 2;
+                }
+            }
+        }
+    }
     
    
     
