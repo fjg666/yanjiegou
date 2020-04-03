@@ -167,3 +167,57 @@ Stack trace:
 2020-03-30 15:02:16 pid:18651 Workerman[start.php] stopping ...
 2020-03-30 15:02:17 pid:18651 Workerman[start.php] has been stopped
 2020-03-30 15:02:30 pid:18658 Workerman[start.php] start in DEBUG mode
+2020-03-31 18:44:55 pid:30401 Workerman[start.php] start in DEBUG mode
+2020-04-01 09:56:17 pid:10658 Workerman[start.php] status 
+2020-04-01 09:56:17 pid:10658 Workerman[start.php] not run
+2020-04-01 10:21:41 pid:11969 Workerman[/www/wwwroot/git.yanjiegou/vendor/GatewayWorker/start.php] start in DEBUG mode
+2020-04-01 10:22:11 pid:11969 Workerman[start.php] stopping ...
+2020-04-01 10:22:11 pid:11969 Workerman[start.php] has been stopped
+2020-04-01 10:28:54 pid:12361 Workerman[start.php] status 
+2020-04-01 10:28:54 pid:12361 Workerman[start.php] not run
+2020-04-01 10:28:58 pid:12365 Workerman[start.php] status 
+2020-04-01 10:28:58 pid:12365 Workerman[start.php] not run
+2020-04-01 10:28:59 pid:12367 Workerman[start.php] status 
+2020-04-01 10:28:59 pid:12367 Workerman[start.php] not run
+2020-04-01 10:29:00 pid:12368 Workerman[start.php] status 
+2020-04-01 10:29:00 pid:12368 Workerman[start.php] not run
+2020-04-01 10:29:00 pid:12370 Workerman[start.php] status 
+2020-04-01 10:29:00 pid:12370 Workerman[start.php] not run
+2020-04-01 10:29:01 pid:12390 Workerman[start.php] status 
+2020-04-01 10:29:01 pid:12390 Workerman[start.php] not run
+2020-04-01 10:29:01 pid:12392 Workerman[start.php] status 
+2020-04-01 10:29:01 pid:12392 Workerman[start.php] not run
+2020-04-01 10:29:02 pid:12393 Workerman[start.php] status 
+2020-04-01 10:29:02 pid:12393 Workerman[start.php] not run
+2020-04-01 10:29:02 pid:12394 Workerman[start.php] status 
+2020-04-01 10:29:02 pid:12394 Workerman[start.php] not run
+2020-04-01 10:30:52 pid:12543 Workerman[start.php] status 
+2020-04-01 10:30:52 pid:12543 Workerman[start.php] not run
+2020-04-01 10:30:53 pid:12545 Workerman[start.php] status 
+2020-04-01 10:30:53 pid:12545 Workerman[start.php] not run
+2020-04-01 10:30:54 pid:12547 Workerman[start.php] status 
+2020-04-01 10:30:54 pid:12547 Workerman[start.php] not run
+2020-04-01 10:30:54 pid:12548 Workerman[start.php] status 
+2020-04-01 10:30:54 pid:12548 Workerman[start.php] not run
+2020-04-01 10:30:55 pid:12550 Workerman[start.php] status 
+2020-04-01 10:30:55 pid:12550 Workerman[start.php] not run
+2020-04-01 10:30:56 pid:12552 Workerman[start.php] status 
+2020-04-01 10:30:56 pid:12552 Workerman[start.php] not run
+2020-04-01 10:30:57 pid:12553 Workerman[start.php] status 
+2020-04-01 10:30:57 pid:12553 Workerman[start.php] not run
+2020-04-01 10:30:59 pid:12556 Workerman[start.php] status 
+2020-04-01 10:30:59 pid:12556 Workerman[start.php] not run
+2020-04-01 10:31:01 pid:12558 Workerman[start.php] status 
+2020-04-01 10:31:01 pid:12558 Workerman[start.php] not run
+2020-04-01 10:31:02 pid:12579 Workerman[start.php] status 
+2020-04-01 10:31:02 pid:12579 Workerman[start.php] not run
+2020-04-01 10:31:03 pid:12581 Workerman[start.php] status 
+2020-04-01 10:31:03 pid:12581 Workerman[start.php] not run
+2020-04-01 10:33:14 pid:12809 Workerman[start.php] status 
+2020-04-01 10:33:14 pid:12809 Workerman[start.php] not run
+2020-04-01 10:33:15 pid:12811 Workerman[start.php] status 
+2020-04-01 10:33:15 pid:12811 Workerman[start.php] not run
+2020-04-01 10:34:11 pid:12949 Workerman[/www/wwwroot/git.yanjiegou/vendor/GatewayWorker/start.php] start in DAEMON mode
+2020-04-01 10:34:46 pid:13016 Workerman[start.php] status 
+2020-04-01 11:07:13 pid:17122 Workerman[start.php] status 
+2020-04-02 09:39:03 pid:25340 Workerman[start.php] status 
