@@ -522,7 +522,7 @@ class Order extends Base
         $myshop = $this->checkoutSubParam($user_id, $myshop, $pay_type, $coupon_id); //参数检测，顺带[]myshop
 		
         //$recvaddr = $this->infoDefaultAddr($user_id); //默认收货地址
-        $recvaddr = $this->infoDefaultAddr($address_id); //查询用户收货地址
+        $recvaddr = $this->infoDefaultAddr($address_id,$user_id); //查询用户收货地址
         
         $coupons = $this->infoAllCoupon($myshop, $coupon_id); //所有优惠券
 		
