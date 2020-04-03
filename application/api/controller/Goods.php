@@ -26,6 +26,11 @@ class Goods extends Base
             ->find();
         if ($goods['parameter'] != '') {
             $parameter[] = json_decode($goods['parameter'],true);
+            $res = array();
+            foreach($parameter as $key => $val){
+                $res['name'][] = $key;
+                $res['val'][] = $val;
+            }
             $goods['parameter'] = $parameter;
         }
         if (!empty($goods['tag'])) {
