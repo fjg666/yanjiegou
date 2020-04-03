@@ -153,5 +153,33 @@ class Statistic extends Common{
         $this->assign('bottom',implode(',',$bottom));
         return $this->fetch();
     }
-
+	
+	//日活量统计
+	public function DailyActivity(){
+        $date=input('date/s','');
+        if (empty($date)) {
+           $startDate=date('Y-m-d',strtotime("-1month"));
+           $endDate=date('Y-m-d');
+        }else{
+           $date=explode('~',$date);
+           $startDate=trim($date[0]); 
+           $endDate=trim($date[1]); 
+        }
+        $start = date('Y-m-d 00:00:00',strtotime($startDate));
+        $end = date('Y-m-d 23:59:59',strtotime($endDate));
+        $rs = Db::name('dailyactivity')->field('login_time,count(id) total')
+                ->whereTime('login_time','between',[$start,$end])
+                //->where()
+                ->order('login_time asc')
+                ->group("date_format(from_unixtime(login_time),'%Y-%m-%d')")->select();
+        $top=$bottom=[];        
+        foreach ($rs as $k => $v) {
+            $top[]=date('Ymd',$v['login_time']);
+            $bottom[]=$v['total'];
+        }
+        $this->assign('date',$startDate.' ~ '.$endDate);
+        $this->assign('top',implode(',',$top));
+        $this->assign('bottom',implode(',',$bottom));
+        return $this->fetch();
+    }
 }
