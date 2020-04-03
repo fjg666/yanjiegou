@@ -16,10 +16,7 @@ class Order extends Base
         if(null===$cart_id){
             $this->json_error('请传过来购物车编号');
         }
-        $address_id = input('post.address_id');
-        if(null===$address_id){
-            $this->json_error('请传过来地址编号');
-        }
+
         $carts = Db::name('shopcart')->alias('c')
             ->join('goods g','g.id=c.goods_id','LEFT')
             ->whereIn('c.id',$cart_id)
@@ -206,14 +203,7 @@ class Order extends Base
         }
         
         //查看当前用户是否有默认的收货地址
-        /*$recvaddr = Db::name('recvaddr')->where(['user_id'=>$user_id,'is_delete'=>0])->field('consignee,phone,province,city,area,address')->find();
-        if(null===$recvaddr){
-            $myinfo['shop'] = $shops;
-            $this->json_success($myinfo,'您还没有设置收货地址',-1);
-            die;
-        }*/
-        //查询用户收货地址
-        $recvaddr = Db::name('recvaddr')->where(['user_id'=>$user_id,'id'=>$address_id,'is_delete'=>0])->field('consignee,phone,province,city,area,address')->find();
+        $recvaddr = Db::name('recvaddr')->where(['user_id'=>$user_id,'is_delete'=>0])->field('consignee,phone,province,city,area,address')->find();
         if(null===$recvaddr){
             $myinfo['shop'] = $shops;
             $this->json_success($myinfo,'您还没有设置收货地址',-1);
@@ -524,13 +514,15 @@ class Order extends Base
         $myshop = input('post.myshop');
         $pay_type = input('post.pay_type');
         $coupon_id = input('post.coupon_id');
+        $address_id = input('post.address_id');
         $qtjs_money = input('post.money');
         $takes_time = input('post.takes_time'); // 到店自取时间
         $takes_mobile = input('post.takes_mobile'); // 自取手机号
         
         $myshop = $this->checkoutSubParam($user_id, $myshop, $pay_type, $coupon_id); //参数检测，顺带[]myshop
 		
-        $recvaddr = $this->infoDefaultAddr($user_id); //默认收货地址
+        //$recvaddr = $this->infoDefaultAddr($user_id); //默认收货地址
+        $recvaddr = $this->infoDefaultAddr($address_id); //查询用户收货地址
         
         $coupons = $this->infoAllCoupon($myshop, $coupon_id); //所有优惠券
 		
@@ -673,11 +665,12 @@ class Order extends Base
 
         return $myshop;
     }
-    public function infoDefaultAddr($user_id)
+    public function infoDefaultAddr($address_id,$user_id)
     {
         $re_where = [
+            'id' => $address_id,
             'user_id'=>$user_id,
-            'is_default'=>1,
+            //'is_default'=>1,
             'is_delete'=>0
         ];
         $recvaddr = Db::name('recvaddr')->where($re_where)->field('consignee,phone,province,city,area,address')->find();
