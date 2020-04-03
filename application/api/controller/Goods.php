@@ -25,7 +25,8 @@ class Goods extends Base
             ->field('g.id,g.headimg,g.title,g.price,g.original_price,g.cost_price,g.content,g.sold,g.parameter,s.tag,s.id as sid,s.name,s.shoplogo,s.star,s.description,s.quality,s.service,s.province,s.city,s.area,s.street,s.address,g.issendfree')
             ->find();
         if ($goods['parameter'] != '') {
-            $goods['parameter'] = json_decode($goods['parameter'],true);
+            $parameter[] = json_decode($goods['parameter'],true);
+            $goods['parameter'] = $parameter;
         }
         if (!empty($goods['tag'])) {
             $goods['tag'] = json_decode($goods['tag'],true);

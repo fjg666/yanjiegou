@@ -91,6 +91,9 @@ class Brand extends Base
             ->select();
 
         foreach ($goods as $k => $v) {
+            //$sttrval = Db::name("goods_sttrval")->where("goods_id", $v['id'])->where("sttr_id", 1)->select();
+            //Db::name("goods_sttrxsku")->where("goods_id", $v['id'])->where("")->select();
+
             $headimg = explode(',', $v['headimg']);
             $goods[$k]['headimg'] = $this->domain() . $headimg[0];
         }

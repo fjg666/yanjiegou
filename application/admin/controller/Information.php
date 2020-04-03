@@ -198,6 +198,14 @@ class Information extends Common
                         'type_id'=>$type_id
                     ];
                     break;
+                case 8:
+                    $info = [
+                        'title'=>$data['title'],
+                        'content'=>$data['content'],
+                        'add_time'=>time(),
+                        'type_id'=>$type_id
+                    ];
+                    break;
             }
 
             $res = db('information')->insertAll($info);
