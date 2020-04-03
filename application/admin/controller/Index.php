@@ -39,8 +39,8 @@ class Index extends Common
         $data['tody']['shop2']  = Db::name('shop')->where(['addtime'=>['between',[$start,$end]],'status'=>2])->count();
         $data['tody']['bshop']  = Db::name('bigshop')->where(['addtime'=>['between',[$start,$end]]])->count();
         $data['tody']['shop1']  = Db::name('shop')->where(['addtime'=>['between',[$start,$end]],'status'=>1])->count();
-        $data['tody']['goods1']  = Db::name('goods')->where("shopid", $shopid)->where(['createtime'=>['between',[$start,$end]],'check_status'=>1,'status'=>1])->count();
-        $data['tody']['goods0']  = Db::name('goods')->where("shopid", $shopid)->where(['createtime'=>['between',[$start,$end]],'check_status'=>0])->count();
+        $data['tody']['goods1']  = Db::name('goods')->where(['createtime'=>['between',[$start,$end]],'check_status'=>1,'status'=>1])->count();
+        $data['tody']['goods0']  = Db::name('goods')->where(['createtime'=>['between',[$start,$end]],'check_status'=>0])->count();
         
         $data['count']['users'] = Db::name('users')->count();
         $data['count']['order'] = Db::name('order')->count();
