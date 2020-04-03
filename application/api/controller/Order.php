@@ -16,6 +16,10 @@ class Order extends Base
         if(null===$cart_id){
             $this->json_error('请传过来购物车编号');
         }
+        $address_id = input('post.address_id');
+        if(null===$address_id){
+            $this->json_error('请传过来地址编号');
+        }
         $carts = Db::name('shopcart')->alias('c')
             ->join('goods g','g.id=c.goods_id','LEFT')
             ->whereIn('c.id',$cart_id)
@@ -202,12 +206,20 @@ class Order extends Base
         }
         
         //查看当前用户是否有默认的收货地址
-        $recvaddr = Db::name('recvaddr')->where(['user_id'=>$user_id,'is_delete'=>0])->field('consignee,phone,province,city,area,address')->find();
+        /*$recvaddr = Db::name('recvaddr')->where(['user_id'=>$user_id,'is_delete'=>0])->field('consignee,phone,province,city,area,address')->find();
+        if(null===$recvaddr){
+            $myinfo['shop'] = $shops;
+            $this->json_success($myinfo,'您还没有设置收货地址',-1);
+            die;
+        }*/
+        //查询用户收货地址
+        $recvaddr = Db::name('recvaddr')->where(['user_id'=>$user_id,'id'=>$address_id,'is_delete'=>0])->field('consignee,phone,province,city,area,address')->find();
         if(null===$recvaddr){
             $myinfo['shop'] = $shops;
             $this->json_success($myinfo,'您还没有设置收货地址',-1);
             die;
         }
+
        if (!empty($shops) && count($shops) == 1) {
             $shopaddr = Db::name('shop')->where(['id'=>$shops[0]['id']])->field('id,province,city,area,address,phone')->find();
         }else{
