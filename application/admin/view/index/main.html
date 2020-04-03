@@ -28,13 +28,13 @@
         <div class="layui-card-header">今日统计</div>
         <div class="layui-card-body ">
           <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog">
-            <li class="layui-col-md2 layui-col-xs6 " >
-              <a href="javascript:;" class="x-admin-backlog-body bkcolor_orange">
-                <h3>上架商品 / 待审核</h3>
-                <p>
-                  <cite><a href="{:url('admin/Goods/index')}?id={{d.id}}" class="layui-btn layui-btn-xs">{$data.tody.goods1} / {$data.tody.goods0}</a></cite></p>
-              </a>
-            </li>
+              <li class="layui-col-md2 layui-col-xs6 " >
+                <a href="{:url('admin/Goods/index')}" class="x-admin-backlog-body bkcolor_orange">
+                  <h3>上架商品 / 待审核</h3>
+                  <p>
+                    <cite>{$data.tody.goods1} / {$data.tody.goods0}</cite></p>
+                </a>
+              </li>
             <li class="layui-col-md2 layui-col-xs6">
               <a href="javascript:;" class="x-admin-backlog-body bkcolor_qing">
                 <h3>今日新增订单</h3>
