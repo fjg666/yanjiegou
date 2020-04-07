@@ -970,6 +970,12 @@ class Users extends Base
             $this->json_error('请传过来收货地址编号');
         }
 
+        //查询是否删除的默认地址
+        $check = Db::name("recvaddr")->where("user_id",$user_id)->where("is_default",1)->value('id');
+        if($check == $addrid){
+            $this->json_error('不能删除默认地址！');
+        }
+
         $where = [
             'user_id'=>$user_id,
             'id'=>$addrid
