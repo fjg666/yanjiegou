@@ -72,7 +72,7 @@ class Shop extends Common
             }
 
             //平台店铺只可以注册一个
-            if($data['shopType'] == 2){
+            if($data['shop_type'] == 2){
                 $check_shop = Db::name("shop")->where("shop_type" , 2)->find();
                 if($check_shop){
                     return $result = ['code' => 0, 'msg' => "平台店铺已被注册！"];
