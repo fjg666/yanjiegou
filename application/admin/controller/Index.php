@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 use think\Db;
 use think\Env;
+use think\Cache;
 use app\admin\controller\Common;
 class Index extends Common
 {
