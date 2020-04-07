@@ -120,9 +120,13 @@ class Order extends Common{
         if($info){
             $add['uid'] = "user".$info["user_id"];
             $add['infouid'] = "shop".$info["shop_id"];
-
-            $check = Db::name("chat")->insert($add);
-            if($check){
+            $chat = Db::name("chat")->where($add)->find();
+            if(empty($chat)){ //如果已有记录 则不添加
+                $check = Db::name("chat")->insert($add);
+                if($check){
+                    echo 1;
+                }
+            }else{
                 echo 1;
             }
         }else{
