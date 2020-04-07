@@ -12,7 +12,6 @@ class Index extends Common
     public function index(){
         $map=[];
         //导航
-        Cache::rm('authRule');
         // 获取缓存数据
         $authRule = cache('authRule');
         if(!$authRule){
