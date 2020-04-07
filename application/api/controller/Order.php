@@ -1546,6 +1546,7 @@ class Order extends Base
         $dispatchprice=0;//邮费
         //获取用户的地址
         $address=DB::name('recvaddr')->where(['user_id'=>$user_id,'is_default'=>1])->find();
+        echo DB::name('recvaddr')->getLastSql();
         var_dump($address);die;
 	if($address == null){
 	   $this->json_error('请先设置收获地址！');
