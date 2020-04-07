@@ -121,7 +121,12 @@ class Order extends Common{
             $add['uid'] = "user".$info["user_id"];
             $add['infouid'] = "shop".$info["shop_id"];
 
-            Db::name("chat")->insert($add);
+            $check = Db::name("chat")->insert($add);
+            if($check){
+                echo 1;
+            }
+        }else{
+            echo "未查询到该订单！";
         }
     }
 
