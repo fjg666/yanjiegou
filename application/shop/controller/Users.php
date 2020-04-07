@@ -50,7 +50,7 @@ class Users extends Common{
                 ->select();
         foreach ($sel as $key => $value) {
             $uid = str_replace('user','',$value['uid']);
-            $users = Db::name('users')->field('username,avatar')->where('id',$uid)->find();
+            $users = Db::name('users')->field('username,mobile,avatar')->where('id',$uid)->find();
             $sel[$key]['mobile'] = $users['mobile'];
             $sel[$key]['username'] = $users['username'];
             $sel[$key]['avatar'] = $users['avatar'];
