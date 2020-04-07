@@ -22,7 +22,7 @@ class Index extends Common
             $authRule = Db::name('authRule')->where($map)->order('sort asc')->column('*','id');
             cache('authRule', $authRule, 3600);
         }
-        var_dump(genTree9($authRule));die;
+        var_dump($authRule);die;
         $this->assign('menus',genTree9($authRule));
         return $this->fetch();
     }
