@@ -112,6 +112,20 @@ class Order extends Common{
     }
 
     /**
+     * 联系客户
+     **/
+    function contactUser(){
+        $id=input('id/d');
+        $info=$this->model->where(['id'=>$id])->find();
+        if($info){
+            $add['uid'] = "user".$info["user_id"];
+            $add['infouid'] = "shop".$info["shop_id"];
+
+            Db::name("chat")->insert($add);
+        }
+    }
+
+    /**
      * 售后订单
      **/
     public function refund(){
