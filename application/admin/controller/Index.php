@@ -13,7 +13,6 @@ class Index extends Common
         //导航
         // 获取缓存数据
         $authRule = cache('authRule');
-        var_dump($authRule);die;
         if(!$authRule){
             if(ADID!=1){
               
