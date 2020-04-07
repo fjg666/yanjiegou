@@ -11,6 +11,7 @@ class Index extends Common
     public function index(){
         $map=[];
         //导航
+        Cache::rm('authRule');
         // 获取缓存数据
         $authRule = cache('authRule');
         if(!$authRule){
@@ -22,7 +23,6 @@ class Index extends Common
             $authRule = Db::name('authRule')->where($map)->order('sort asc')->column('*','id');
             cache('authRule', $authRule, 3600);
         }
-        var_dump($authRule);die;
         $this->assign('menus',genTree9($authRule));
         return $this->fetch();
     }
