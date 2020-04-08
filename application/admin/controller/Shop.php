@@ -391,6 +391,22 @@ class Shop extends Common
         $result['msg'] = '删除成功！';
         return $result;
     }
+
+    /*
+     * 多个审批
+     */
+    public function CheckAll()
+    {
+        $id = input('post.ids/a');
+        $id = implode(",", $id);
+        $model = db('shop');
+
+        $model->where("id in ($id)")->update(['status'=>2,'verify_reason'=>'后台管理员批量审核！']);
+
+        $result['code'] = 1;
+        $result['msg'] = '操作成功！';
+        return $result;
+    }
     //申请列表
     public function nows()
     {
