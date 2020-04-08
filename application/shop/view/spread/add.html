@@ -53,8 +53,17 @@
         </div>
 
         <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">总计金额</label>
+                <div class="layui-input-inline">
+                    <span type="text" class="layui-badge" id="price" name="price">100.00</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
             <div class="layui-input-block">
-                <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">提交支付</button>
                 <a href="{:url('lists')}" class="layui-btn layui-btn-primary">返回列表</a>
             </div>
         </div>
