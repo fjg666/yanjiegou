@@ -25,10 +25,9 @@ class Spread extends Common {
                 ->order("add_date desc")
                 ->paginate(array('list_rows'=>$pageSize,'page'=>$page))
                 ->toArray();
-            echo $this->model->getLastSql();
-            var_dump($list);die;
+
             $str = '';
-            foreach($list as $key => $val){
+            foreach($list['data'] as $key => $val){
                 $page = explode(",",$val['page']);
                 var_dump($page);die;
                 if($page[0] == 'index'){
