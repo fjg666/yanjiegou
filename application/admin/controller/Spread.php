@@ -29,6 +29,7 @@ class Spread extends Common {
             $str = '';
             foreach($list as $key => $val){
                 $page = explode(",",$val['page']);
+                var_dump($page);die;
                 if($page[0] == 'index'){
                     $str .= "首页";
                 }
