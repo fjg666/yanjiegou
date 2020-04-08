@@ -39,7 +39,7 @@ label{font-weight: bold;color:#009688;}
             
       </div>
     </div>
-
+    <input type="hidden" name="orderSn" id="orderSn" value="{$info.order_sn}">
      <div class="layui-card-header">处理信息</div>
     <div class="layui-card-body">
         <div class="layui-row" style="padding-left: 30px">
@@ -100,7 +100,7 @@ label{font-weight: bold;color:#009688;}
 {block name="js"}
 <script>
 var id={$info.id};
-var orderSn = {$info.order_sn};
+var orderSn = $("#orderSn").val();
 alert(orderSn);
 layui.use('layer', function () {
     var layer = layui.layer,$= layui.jquery;
