@@ -130,6 +130,10 @@ class Order extends Common{
         foreach($sel as $key=>$val){
             $uid = str_replace('user','',$val['uid']);
             $users = Db::name('users')->field('username,mobile,avatar')->where('id',$uid)->find();
+            if(empty($users)){
+                return $this->resultmsg('未找到该用户！',0);
+            }
+
             $sel[$key]['mobile'] = $users['mobile'];
             $sel[$key]['username'] = $users['username'];
             $sel[$key]['avatar'] = $users['avatar'];
