@@ -29,15 +29,15 @@ class Spread extends Common {
             $str = '';
             foreach($list as $key => $val){
                 $page = explode(",",$val['page']);
-                if($page[1] == 'index'){
+                if($page[0] == 'index'){
                     $str .= "首页";
                 }
 
-                if(!empty($page[2]) && $page[2] == 'car'){
+                if(!empty($page[1]) && $page[1] == 'car'){
                     $str .= ",购物车";
                 }
 
-                if(!empty($page[3]) && $page[3] == 'info'){
+                if(!empty($page[2]) && $page[2] == 'info'){
                     $str .= ",我的页面";
                 }
                 $list[$key]['page'] = $str;
