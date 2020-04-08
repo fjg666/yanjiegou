@@ -36,8 +36,6 @@ class Char extends Base
     			->select();
         // input('num')?(!is_int(input('num'))?'':exit()):'';
         // input('page')?(!is_int(input('page'))?'':exit()):'';
-        echo Db::name('chatLog')->getLastSql();die;
-        var_dump($data);die;
 
         if (empty($data)) {
             $arr = ['code'=>0,'data'=>''];
@@ -268,7 +266,6 @@ class Char extends Base
                 //最后一条
                 $msg = Db::name('chatLog')
                 ->where("(`uid` = '$uids' AND `infouid` = '$infouids') OR (`uid` = '$infouids' AND `infouid` = '$uids')")
-                ->where('type',0)
                 ->order('id desc')
                 ->find();
 
@@ -277,6 +274,7 @@ class Char extends Base
                     $sel[$key]['name'] = $shop?$shop['name']:'';
                     $sel[$key]['msg'] = $msg?$msg['content']:'';
                     $sel[$key]['add_time'] = $msg?date("Y-m-d H:i", $msg['add_time']):'';
+                    $sel[$key]['type'] = $msg?$msg['type']:'';
                 }
 
                 
