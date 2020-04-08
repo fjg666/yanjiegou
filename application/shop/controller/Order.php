@@ -127,7 +127,7 @@ class Order extends Common{
             ->where('infouid',$shopid)
             ->where("uid",'user'.$info['user_id'])
             ->find();
-        var_dump($sel);die;
+       echo Db::name('chat')->getLastSql();die;
         $uid = str_replace('user','',$sel['uid']);
         $users = Db::name('users')->field('username,mobile,avatar')->where('id',$uid)->find();
         $sel['mobile'] = $users['mobile'];
