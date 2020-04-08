@@ -36,7 +36,7 @@ class Char extends Base
     			->select();
         // input('num')?(!is_int(input('num'))?'':exit()):'';
         // input('page')?(!is_int(input('page'))?'':exit()):'';
-
+        echo Db::name('chatLog')->getLastSql();die;
         var_dump($data);die;
 
         if (empty($data)) {
