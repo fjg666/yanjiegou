@@ -1597,7 +1597,7 @@ class Users extends Base
             ->where($where)
             ->where(['o.user_id'=>$user_id,'is_del'=>0])
             ->order('o.id','desc')
-            ->field('o.id as oid,o.order_sn,o.money,o.oldmoney,o.freight,o.total_num,o.pay_type,o.status,o.is_refund,o.getusername,o.mobile as recmobile,o.shop_id,o.send_type,s.id as sid,s.name,s.shoplogo,o.expresscom,o.expresssn')
+            ->field('o.id as oid,o.order_sn,o.money,o.oldmoney,o.freight,o.total_num,o.pay_type,o.status,o.getusername,o.mobile as recmobile,o.shop_id,o.send_type,s.id as sid,s.name,s.shoplogo,o.expresscom,o.expresssn')
             ->select();
 
         //订单编号，去查找订单商品
@@ -1621,6 +1621,15 @@ class Users extends Base
 
         $data = [];
         foreach($orders as $k=>$v) {
+            //查询该订单是否申请退款
+            $refund = Db::name("orderrefund")->where("order_sn",$order_sn)->find();
+            if($refund){
+                //0待审核  1 审核失败  2审核通过
+                $orders[$k]['is_refund'] = $refund['status'];
+            }else{ //未申请退款
+                $orders[$k]['is_refund'] = 3;
+            }
+
             $orders[$k]['shoplogo'] = $this->domain(). $v['shoplogo'];
             $totalnum = 0;
             $totalprice = 0;

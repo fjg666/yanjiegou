@@ -1388,7 +1388,7 @@ class Order extends Base
                 if(null!=$remark){
                     $data['remark'] = $remark;
                 }
-                Db::name('order')->where('id',$order_id)->update(['is_refund'=>1]);
+                //Db::name('order')->where('id',$order_id)->update(['is_refund'=>1]);
                 $id = Db::name('orderrefund')->insertGetId($data);
                 if($id){
                     $this->json_success([],'申请成功，请耐心等待结果');
