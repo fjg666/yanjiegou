@@ -22,7 +22,6 @@ class Spread extends Common {
             $pageSize =input('limit')?input('limit'):config('pageSize');
 
             $list = $this->model
-                ->field('shop_id,shop_name,click_number,page,start_date,end_date,add_date')
                 ->order("add_date desc")
                 ->paginate(array('list_rows'=>$pageSize,'page'=>$page))
                 ->toArray();
