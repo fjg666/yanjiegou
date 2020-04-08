@@ -134,7 +134,7 @@ class Order extends Common{
             $sel[$key]['username'] = $users['username'];
             $sel[$key]['avatar'] = $users['avatar'];
             $sel[$key]['log'] = Db::name('chatLog')
-                ->where("(`uid` = '".$val['user_id']."' AND `infouid` = '".$val['infouid']."') OR (`uid` = '".$val['infouid']."' AND `infouid` = '".$val['user_id']."')")
+                ->where("(`uid` = '".$val['uid']."' AND `infouid` = '".$val['infouid']."') OR (`uid` = '".$val['infouid']."' AND `infouid` = '".$val['uid']."')")
                 ->whereTime('add_time','-3 month')
                 ->select();
         }
