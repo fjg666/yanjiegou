@@ -100,14 +100,14 @@ label{font-weight: bold;color:#009688;}
 {block name="js"}
 <script>
 var id={$info.id};
-var order_sn = {$info.order_sn};
+
 layui.use('layer', function () {
     var layer = layui.layer,$= layui.jquery;
     $('#check').click(function() {
       layer.prompt({formType: 2,title: '请输入通过处理说明'}, 
         function(value, index){
             var loading = layer.load(1, {shade: [0.1, '#fff']});
-            $.post("{:url('setrefundstatus')}",{id:id,order_sn:order_sn,text:value,status:2},function(res){
+            $.post("{:url('setrefundstatus')}",{id:id,text:value,status:2},function(res){
                 layer.close(loading);
                 if(res.code===1){
                     layer.msg(res.msg,{time:1000,icon:1},function(){
