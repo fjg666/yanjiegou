@@ -184,9 +184,9 @@ class Order extends Common{
             if(!empty($keyword)){
                $where['o.order_sn|a.mobile|u.username'] = ['like','%'.$keyword.'%'];
             }
-            if(!empty($status)){
+            /*if(!empty($status)){
                 $where['o.status']=7;
-            }
+            }*/
             $where['o.shop_id']=SHID;
             $list = $model->alias('a')
                 ->join('order o','o.id = a.order_id','LEFT')
