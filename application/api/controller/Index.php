@@ -156,36 +156,33 @@ class Index extends Base
 
     //商家推广
     public function SpreadGoods(){
-        if (Request::instance()->isPost()) {
-            $goodsmodel = new Goods();
-            $shop = Db::name('spread')->field("shop_id,shop_name")->where("is_failed", 2)->orderRaw('rand()')->limit(1)->select();
-            if ($shop) {
-                $goods = $goodsmodel->alias('g')
-                    ->join('__SHOP__ s', 's.id=g.shopid', 'LEFT')
-                    ->order('g.readpoint desc,g.id asc')
-                    ->where("id", $shop[0]['shop_id'])
-                    ->field('g.id,g.headimg,g.title,g.price,g.label,s.id as sid,s.name,s.shoplogo')
-                    ->select();
+        $goodsmodel = new Goods();
+        $shop = Db::name('spread')->field("shop_id,shop_name")->where("is_failed", 2)->orderRaw('rand()')->limit(1)->select();
+        if ($shop) {
+            $goods = $goodsmodel->alias('g')
+                ->join('__SHOP__ s', 's.id=g.shopid', 'LEFT')
+                ->order('g.readpoint desc,g.id asc')
+                ->where("id", $shop[0]['shop_id'])
+                ->field('g.id,g.headimg,g.title,g.price,g.label,s.id as sid,s.name,s.shoplogo')
+                ->select();
 
-            }else{
+        }else{
 
-                $where = [
-                    'g.status'=>1,
-                    'g.check_status'=>1,
-                    'g.isrecommand'=>1,
-                    's.is_lock'=>0 //商家锁定
+            $where = [
+                'g.status'=>1,
+                'g.check_status'=>1,
+                'g.isrecommand'=>1,
+                's.is_lock'=>0 //商家锁定
 
-                ];
-                $goods = $goodsmodel->alias('g')
-                    ->join('__SHOP__ s','s.id=g.shopid','LEFT')
-                    ->order('g.readpoint desc,g.id asc')
-                    ->where($where)
-                    ->field('g.id,g.headimg,g.title,g.price,g.label,s.id as sid,s.name,s.shoplogo')
-                    ->select();
-            }
-
-            $this->json_success($goods,'查询成功');
+            ];
+            $goods = $goodsmodel->alias('g')
+                ->join('__SHOP__ s','s.id=g.shopid','LEFT')
+                ->order('g.readpoint desc,g.id asc')
+                ->where($where)
+                ->field('g.id,g.headimg,g.title,g.price,g.label,s.id as sid,s.name,s.shoplogo')
+                ->select();
         }
+        $this->json_success($goods,'查询成功');
     }
 
     //统计用户日活量
