@@ -141,6 +141,7 @@ class Order extends Common{
 
         // print_r($sel);exit;
         $shop = Db::name('shop')->field('id,shoplogo')->where("id",$info['shop_id'])->find();
+        $shop['user_id'] = $info['user_id'];
         $this->assign('shop',$shop);
 
         $this->assign('sel',$sel);

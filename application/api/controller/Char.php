@@ -198,6 +198,37 @@ class Char extends Base
         }
         return $sel;
     }
+
+    //单独联系用户
+    public function contact_log()
+    {
+        $id = input('shopid');
+        $userid = input('userid');
+        $shopid = 'shop'.$id;
+        $userid = 'user'.$userid;
+        $sel = Db::name('chat')
+            ->where('infouid',$shopid)
+            ->where('uid',$userid)
+            ->select();
+        foreach ($sel as $key => $value) {
+            $uid = str_replace('user','',$value['uid']);
+            $users = Db::name('users')->field('username,avatar,mobile')->where('id',$uid)->find();
+            if(!$users){
+                unset($sel[$key]);
+                continue;
+            }
+            if ($users['username'] == '') {
+                $users['username'] = $users['mobile'];
+            }
+            $sel[$key]['username'] = $users['username'];
+            $sel[$key]['avatar'] = $users['avatar'];
+            $sel[$key]['log'] = Db::name('chatLog')
+                ->where("(`uid` = '".$value['uid']."' AND `infouid` = '".$value['infouid']."') OR (`uid` = '".$value['infouid']."' AND `infouid` = '".$value['uid']."')")
+                ->whereTime('add_time','-3 month')
+                ->select();
+        }
+        return $sel;
+    }
     
     
     public function user_log(){

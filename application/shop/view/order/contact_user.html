@@ -475,14 +475,15 @@
         $(".class_"+class_id).find('.center').scrollTop($(".class_"+class_id).find('.center ul').height());
     })
     var shopid = '{$shop.id}';
+    var userid = '{$shop.user_id}';
     var headerimg = '{$shop.shoplogo}';
 
 // 请求历史记录
 $(function(){
     $.ajax({
         type: "post",
-        url: '{:url("api/char/shop_log")}',
-        data: {shopid:shopid},
+        url: '{:url("api/char/contact_log")}',
+        data: {shopid:shopid,userid:userid},
         dataType: "json",
         success: function(e){
             var msgleft = '';
