@@ -118,24 +118,26 @@ class Order extends Common{
 
         $id=input('id/d');
         $info=$this->model->where(['id'=>$id])->find();
-        echo $this->model->getLastSql();
-
 
         $shopid = 'shop'.$info['shop_id'];
         $sel = Db::name('chat')
             ->where('infouid',$shopid)
             ->where("uid",'user'.$info['user_id'])
-            ->find();
-       echo Db::name('chat')->getLastSql();die;
-        $uid = str_replace('user','',$sel['uid']);
-        $users = Db::name('users')->field('username,mobile,avatar')->where('id',$uid)->find();
-        $sel['mobile'] = $users['mobile'];
-        $sel['username'] = $users['username'];
-        $sel['avatar'] = $users['avatar'];
-        $sel['log'] = Db::name('chatLog')
-            ->where("(`uid` = '".$info['user_id']."' AND `infouid` = '".$shopid."') OR (`uid` = '".$shopid."' AND `infouid` = '".$info['user_id']."')")
-            ->whereTime('add_time','-3 month')
+            ->limit(1)
             ->select();
+
+
+        foreach($sel as $key=>$val){
+            $uid = str_replace('user','',$val['uid']);
+            $users = Db::name('users')->field('username,mobile,avatar')->where('id',$uid)->find();
+            $sel[$key]['mobile'] = $users['mobile'];
+            $sel[$key]['username'] = $users['username'];
+            $sel[$key]['avatar'] = $users['avatar'];
+            $sel[$key]['log'] = Db::name('chatLog')
+                ->where("(`uid` = '".$val['user_id']."' AND `infouid` = '".$val['infouid']."') OR (`uid` = '".$val['infouid']."' AND `infouid` = '".$val['user_id']."')")
+                ->whereTime('add_time','-3 month')
+                ->select();
+        }
 
         // print_r($sel);exit;
         $shop = Db::name('shop')->field('id,shoplogo')->where("id",$shopid)->find();
