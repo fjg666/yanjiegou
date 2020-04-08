@@ -162,9 +162,14 @@
             });
 
             $('body').on('click','#delAll',function() {
+                var checkStatus = table.checkStatus('content'); //content即为参数id设定的值
+                if(checkStatus.data.length == 0){
+                    layer.msg('请先选中！',{time:1000,icon:2});
+                    return false;
+                }
                 layer.confirm('确认要删除选中的内容吗？', {icon: 3}, function(index) {
                     layer.close(index);
-                    var checkStatus = table.checkStatus('content'); //content即为参数id设定的值
+                    //var checkStatus = table.checkStatus('content'); //content即为参数id设定的值
                     var ids = [];
                     $(checkStatus.data).each(function (i, o) {
                         ids.push(o.id);
