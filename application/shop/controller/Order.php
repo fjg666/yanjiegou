@@ -213,10 +213,17 @@ class Order extends Common{
     //设置商品审核状态
     public function setrefundstatus(){
         $map['id'] =array('in',input('post.id/a'));
+        $order_sn = input('post.order_sn/s');
         $data['status']=input('post.status/d');
         $data['shop_remark']=input('post.text/s');
         $data['do_time']=time();
         if(model('orderrefund')->where($map)->update($data)!==false){
+
+            //修改订单状态为已完成
+            if($data['status'] == 2){
+                Db::name("order")->where("order_sn", $order_sn)->update(['status'=>5]);
+            }
+
             return $this->resultmsg('设置成功！',1);
         }
         return $this->resultmsg('设置失败！',0);
