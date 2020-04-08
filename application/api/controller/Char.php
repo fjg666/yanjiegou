@@ -213,7 +213,7 @@ class Char extends Base
         foreach ($sel as $key => $value) {
             $uid = str_replace('user','',$value['uid']);
             $users = Db::name('users')->field('username,avatar,mobile')->where('id',$uid)->find();
-            echo $users;die;
+            echo '123123';die;
             if(!$users){
                 unset($sel[$key]);
                 continue;
