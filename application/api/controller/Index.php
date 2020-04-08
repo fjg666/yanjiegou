@@ -156,28 +156,35 @@ class Index extends Base
 
     //商家推广
     public function SpreadGoods(){
-        $shop = Db::name('spread')->field("shop_id,shop_name")->where("is_failed", 2)->orderRaw('rand()')->limit(1)->select();
-        if($shop){
-            $goods = Db::name("goods")->alias('g')
-                ->join('__SHOP__ s','s.id=g.shopid','LEFT')
-                ->order('g.readpoint desc,g.id asc')
-                ->where("id", $shop[0]['shop_id'])
-                ->field('g.id,g.headimg,g.title,g.price,g.label,s.id as sid,s.name,s.shoplogo,s.longitude,s.latitude,GETDISTANCE(s.latitude,s.longitude,'.$lat.','.$lng.') as distance')
-                ->order('distance ASC')
-                ->select();
+        if (Request::instance()->isPost()) {
+            $goodsmodel = new Goods();
+            $shop = Db::name('spread')->field("shop_id,shop_name")->where("is_failed", 2)->orderRaw('rand()')->limit(1)->select();
+            if ($shop) {
+                $goods = $goodsmodel->alias('g')
+                    ->join('__SHOP__ s', 's.id=g.shopid', 'LEFT')
+                    ->order('g.readpoint desc,g.id asc')
+                    ->where("id", $shop[0]['shop_id'])
+                    ->field('g.id,g.headimg,g.title,g.price,g.label,s.id as sid,s.name,s.shoplogo')
+                    ->select();
 
-            foreach($goods as $key => $val){
-                $headimg = explode(',',$val['headimg']);
-                $goods[$key]['headimg']  = $this->domain().$headimg[0];
-                $goods[$key]['shoplogo'] = $this->domain().$val['shoplogo'];
-                //$goods[$k]['collection_num']=$goodsmodel::get($v['id'])->collectiongoods()->count();
-                if($val['distance']>1000){
-                    $goods[$key]['distance']=round($val['distance']/1000,2)."km";
-                }else{
-                    $goods[$key]['distance']=round($val['distance'])."m";
-                }
-                $goods[$key]['label'] = explode(',', $val['label']);
+            }else{
+
+                $where = [
+                    'g.status'=>1,
+                    'g.check_status'=>1,
+                    'g.isrecommand'=>1,
+                    's.is_lock'=>0 //商家锁定
+
+                ];
+                $goods = $goodsmodel->alias('g')
+                    ->join('__SHOP__ s','s.id=g.shopid','LEFT')
+                    ->order('g.readpoint desc,g.id asc')
+                    ->where($where)
+                    ->field('g.id,g.headimg,g.title,g.price,g.label,s.id as sid,s.name,s.shoplogo')
+                    ->select();
             }
+
+            $this->json_success($goods,'查询成功');
         }
     }
 
