@@ -29,7 +29,6 @@ class Spread extends Common {
             $str = '';
             foreach($list['data'] as $key => $val){
                 $page = explode(",",$val['page']);
-                var_dump($page);die;
                 if($page[0] == 'index'){
                     $str .= "首页";
                 }
@@ -41,7 +40,7 @@ class Spread extends Common {
                 if(!empty($page[2]) && $page[2] == 'info'){
                     $str .= ",我的页面";
                 }
-                $list[$key]['page'] = $str;
+                $list['data'][$key]['page'] = $str;
             }
             var_dump($list);die;
             return ['code'=>0,'msg'=>"获取成功",'data'=>$list['data'],'count'=>$list['total'],'rel'=>1];
