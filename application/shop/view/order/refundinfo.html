@@ -100,8 +100,45 @@ label{font-weight: bold;color:#009688;}
 {block name="js"}
 <script>
 var id={$info.id};
-var orderSn = {$info.order_sn};
+var orderSn = {$info.rid};
 alert(orderSn);
-
+layui.use('layer', function () {
+    var layer = layui.layer,$= layui.jquery;
+    $('#check').click(function() {
+      layer.prompt({formType: 2,title: '请输入通过处理说明'},
+        function(value, index){
+            var loading = layer.load(1, {shade: [0.1, '#fff']});
+            $.post("{:url('setrefundstatus')}",{id:id,order_sn:orderSn,text:value,status:2},function(res){
+                layer.close(loading);
+                if(res.code===1){
+                    layer.msg(res.msg,{time:1000,icon:1},function(){
+                        location.reload();
+                    });
+                    tableIn.reload({where:{way:'{:input("way")}'}});
+                }else{
+                    layer.msg('操作失败！',{time:1000,icon:2});
+                }
+            });
+            layer.close(index);
+      })
+    })
+    $('#nocheck').click(function() {
+        layer.prompt({formType: 2,title: '请输入不通过原因'},
+        function(value, index){
+            var loading = layer.load(1, {shade: [0.1, '#fff']});
+            $.post("{:url('setrefundstatus')}",{id:id,text:value,status:1},function(res){
+                layer.close(loading);
+                if(res.code===1){
+                    layer.msg(res.msg,{time:1000,icon:1},function(){
+                        location.reload();
+                    });
+                }else{
+                    layer.msg('操作失败！',{time:1000,icon:2});
+                }
+            });
+            layer.close(index);
+        });
+    })
+});
 </script>
 {/block}
