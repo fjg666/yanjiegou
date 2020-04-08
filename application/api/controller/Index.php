@@ -165,7 +165,10 @@ class Index extends Base
                 ->where("s.id", $shop[0]['shop_id'])
                 ->field('g.id,g.headimg,g.title,g.price,g.label,s.id as sid,s.name,s.shoplogo')
                 ->select();
-
+            foreach($goods as $key=>$val){
+                $headimg = explode(',',$val['headimg']);
+                $goods[$key]['headimg'] = $headimg[0];
+            }
         }else{
 
             $where = [
@@ -181,6 +184,10 @@ class Index extends Base
                 ->where($where)
                 ->field('g.id,g.headimg,g.title,g.price,g.label,s.id as sid,s.name,s.shoplogo')
                 ->select();
+            foreach($goods as $key=>$val){
+                $headimg = explode(',',$val['headimg']);
+                $goods[$key]['headimg'] = $headimg[0];
+            }
         }
         $this->json_success($goods,'查询成功');
     }
