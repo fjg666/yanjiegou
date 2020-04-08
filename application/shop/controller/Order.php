@@ -234,13 +234,13 @@ class Order extends Common{
      **/
     function refundinfo(){
         $id=input('id/d');
-        $info=model('orderrefund')->where(['id'=>$id])->find();
+        $info =Db::name('orderrefund')->where(['id'=>$id])->find();
         $goods=Db::name('orderGoods')->alias('og')
               ->join('goods g','g.id = og.goodsid','left')
               ->field('og.*,g.title,g.headimg')
               ->where(['og.id'=>$info['og_id']])
               ->select();
-        var_dump($info);die;
+        
         $counts=0; 
         $info['imgs']=explode(',',$info['imgs']);
         $info['counts']=$goods[0]['num']*$goods[0]['price'];
