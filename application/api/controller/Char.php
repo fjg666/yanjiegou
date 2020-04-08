@@ -36,7 +36,8 @@ class Char extends Base
     			->select();
         // input('num')?(!is_int(input('num'))?'':exit()):'';
         // input('page')?(!is_int(input('page'))?'':exit()):'';
-        
+
+        var_dump($data);die;
 
         if (empty($data)) {
             $arr = ['code'=>0,'data'=>''];

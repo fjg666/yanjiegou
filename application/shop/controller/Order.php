@@ -121,7 +121,7 @@ class Order extends Common{
         echo $this->model->getLastSql();
         var_dump($info);die;
 
-        
+
         $shopid = 'shop'.$info['shop_id'];
         $sel = Db::name('chat')
             ->where('infouid',$shopid)
