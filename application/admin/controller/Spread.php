@@ -42,7 +42,7 @@ class Spread extends Common {
                 }
                 $list['data'][$key]['page'] = $str;
             }
-            
+
             return ['code'=>0,'msg'=>"获取成功",'data'=>$list['data'],'count'=>$list['total'],'rel'=>1];
             return $result;
         }
