@@ -10,26 +10,39 @@
     </fieldset>
     <form class="layui-form" method="post">
         <div class="layui-form-item">
-            <label class="layui-form-label">标签</label>
-            <div class="layui-input-inline" id="box_tags">
-                <input type="text" data-required="1" min="0" max="0" errormsg="" title="标签" placeholder="请输入标签" lay-verify="defaul" class="tags layui-input" name="title" value="" />
+            <label class="layui-form-label">点击率</label>
+            <div class="layui-input-inline">
+                <select name="click_number" id="click_number"  lay-verify="required">
+                    <option value="1000">1000次</option>
+                    <option value="5000">5000次</option>
+                    <option value="10000">10000次</option>
+                </select>
             </div>
-            <div class="layui-form-mid layui-word-aux red">*必填</div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">颜色</label>
-            <div class="layui-input-inline" style="width: 120px;">
-              <input type="text" value="" name="color" placeholder="请选择颜色" class="layui-input" id="test-colorpicker-form-input">
+            <label class="layui-form-label">显示位置</label>
+            <div class="layui-input-block">
+                {foreach name=":config('module.page')" item="ext"}
+                <div class="item-checkbox">
+                    <input type="checkbox" name="uploadallowfiles[]" value="{$ext.name}" title="{$ext.value}" lay-skin="primary">
+                </div>
+                {/foreach}
             </div>
-            <div class="layui-inline" style="left: -11px;">
-              <div id="test-colorpicker-dome3"></div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">时间段</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="test9" placeholder="    -   " readonly name="between_time">
+                </div>
             </div>
         </div>
 
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
-                <a href="{:url('index')}" class="layui-btn layui-btn-primary">返回列表</a>
+                <a href="{:url('lists')}" class="layui-btn layui-btn-primary">返回列表</a>
             </div>
         </div>
     </form>
@@ -45,13 +58,13 @@
         var form = layui.form,$ = layui.jquery,colorpicker = layui.colorpicker;
 
         //表单赋值
-        colorpicker.render({
+        /*colorpicker.render({
           elem: '#test-colorpicker-dome3'
           ,color: '#1c97f5'
           ,done: function(color){
             $('#test-colorpicker-form-input').val(color);
           }
-        });
+        });*/
 
         form.on('submit(submit)', function (data) {
             $.post("{:url('add')}", data.field, function (res) {
@@ -63,6 +76,13 @@
                     layer.msg(res.msg, {time: 1800, icon: 2});
                 }
             });
+        });
+
+        //时间范围
+        laydate.render({
+            elem: '#test9'
+            ,type: 'time'
+            ,range: true
         });
     });
 </script>{/block}

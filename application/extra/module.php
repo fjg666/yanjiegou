@@ -30,6 +30,12 @@ return [
 					'rar', 'zip', 'tar', 'gz', '7z', 'bz2', 'cab', 'iso', 
 					'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'txt', 'md', 'xml', 'qsv'
 					],
+
+    'page'	=> [
+        0		=> ['name'=>'index','value'=>'首页页面'],
+        1		=> ['name'=>'car'  ,'value'=>'购物车页面'],
+        2		=> ['name'=>'info' ,'value'=>'我的页面'],
+    ],
 	
 ];
 
