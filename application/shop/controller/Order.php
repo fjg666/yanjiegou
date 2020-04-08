@@ -131,12 +131,12 @@ class Order extends Common{
         $sel['username'] = $users['username'];
         $sel['avatar'] = $users['avatar'];
         $sel['log'] = Db::name('chatLog')
-            ->where("(`uid` = '".$sel['uid']."' AND `infouid` = '".$sel['infouid']."') OR (`uid` = '".$sel['infouid']."' AND `infouid` = '".$sel['uid']."')")
+            ->where("(`uid` = '".$info['user_id']."' AND `infouid` = '".$shopid."') OR (`uid` = '".$shopid."' AND `infouid` = '".$info['user_id']."')")
             ->whereTime('add_time','-3 month')
             ->select();
 
         // print_r($sel);exit;
-        $shop = Db::name('shop')->field('id,shoplogo')->where("id",SHID)->find();
+        $shop = Db::name('shop')->field('id,shoplogo')->where("id",$shopid)->find();
         $this->assign('shop',$shop);
 
         $this->assign('sel',$sel);
