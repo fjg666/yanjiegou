@@ -48,4 +48,17 @@ class Spread extends Common {
         }
         return $this->fetch();
     }
+
+    //添加推广
+    public function add(){
+        if (Request::instance()->isAjax()) {
+            $data=input('post.');
+            if($this->model->insert($data)){
+                $result['msg'] = '添加成功!';
+                $result['code'] = 1;
+                return $result;
+            }
+        }
+        return $this->fetch();
+    }
 }
