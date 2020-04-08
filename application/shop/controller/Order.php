@@ -131,7 +131,7 @@ class Order extends Common{
             $uid = str_replace('user','',$val['uid']);
             $users = Db::name('users')->field('username,mobile,avatar')->where('id',$uid)->find();
             if(empty($users)){
-                echo "<script>alert('未找到该用户！')</script>";
+                echo "<script>alert('未找到该用户！')</script>";exit;
             }
 
             $sel[$key]['mobile'] = $users['mobile'];
