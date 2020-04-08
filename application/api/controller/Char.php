@@ -206,14 +206,24 @@ class Char extends Base
         $userid = input('userid');
         $shopid = 'shop'.$id;
         $userid = 'user'.$userid;
+
         $sel = Db::name('chat')
             ->where('infouid',$shopid)
             ->where('uid',$userid)
             ->select();
+        if(!$sel){
+            $add['uid']     = $userid;
+            $add['infouid'] = $shopid;
+            Db::name("chat")->insert($add);
+        }else{
+            $sel = Db::name('chat')
+                ->where('infouid',$shopid)
+                ->where('uid',$userid)
+                ->select();
+        }
         foreach ($sel as $key => $value) {
             $uid = str_replace('user','',$value['uid']);
             $users = Db::name('users')->field('username,avatar,mobile')->where('id',$uid)->find();
-            echo '123123';die;
             if(!$users){
                 unset($sel[$key]);
                 continue;
