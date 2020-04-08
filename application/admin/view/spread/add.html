@@ -9,6 +9,19 @@
         <legend>添加标签</legend>
     </fieldset>
     <form class="layui-form" method="post">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择商家</label>
+            <div class="layui-input-inline">
+                <select name="shop_id" id="bshopname"  lay-verify="required">
+                    <option value="" title="0">请选择商家</option>
+                    {volist name="shopList" id="vo"}
+                    <option value="{$vo.id}">{$vo.name}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+
         <div class="layui-form-item">
             <label class="layui-form-label">点击率</label>
             <div class="layui-input-inline">

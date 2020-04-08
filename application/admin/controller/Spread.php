@@ -11,6 +11,7 @@ class Spread extends Common {
     public function _initialize() {
         parent::_initialize();
         $this->model = model('spread');
+        $this->shop = model('shop');
     }
 
     //推广列表
@@ -57,8 +58,13 @@ class Spread extends Common {
                 $result['msg'] = '添加成功!';
                 $result['code'] = 1;
                 return $result;
+
             }
+        }else{
+            //查询商家列表
+            $shopList = $this->shop->field('id,name')->where("status", 2)->select();
+            $this->assign('shopList', $shopList);
+            return $this->fetch();
         }
-        return $this->fetch();
     }
 }
