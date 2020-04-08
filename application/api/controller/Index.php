@@ -162,7 +162,7 @@ class Index extends Base
             $goods = $goodsmodel->alias('g')
                 ->join('__SHOP__ s', 's.id=g.shopid', 'LEFT')
                 ->order('g.readpoint desc,g.id asc')
-                ->where("id", $shop[0]['shop_id'])
+                ->where("s.id", $shop[0]['shop_id'])
                 ->field('g.id,g.headimg,g.title,g.price,g.label,s.id as sid,s.name,s.shoplogo')
                 ->select();
 
