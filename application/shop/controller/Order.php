@@ -118,7 +118,10 @@ class Order extends Common{
 
         $id=input('id/d');
         $info=$this->model->where(['id'=>$id])->find();
+        echo $this->model->getLastSql();
+        var_dump($info);die;
 
+        
         $shopid = 'shop'.$info['shop_id'];
         $sel = Db::name('chat')
             ->where('infouid',$shopid)
