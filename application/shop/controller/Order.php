@@ -114,8 +114,36 @@ class Order extends Common{
     /**
      * 联系客户
      **/
-    function contactUser(){
+   public function contactUser(){
+
         $id=input('id/d');
+        $info=$this->model->where(['id'=>$id])->find();
+
+        $shopid = 'shop'.$info['shop_id'];
+        $sel = Db::name('chat')
+            ->where('infouid',$shopid)
+            ->where("uid",'user'.$info['user_id'])
+            ->find();
+
+        $uid = str_replace('user','',$sel['uid']);
+        $users = Db::name('users')->field('username,mobile,avatar')->where('id',$uid)->find();
+        $sel['mobile'] = $users['mobile'];
+        $sel['username'] = $users['username'];
+        $sel['avatar'] = $users['avatar'];
+        $sel['log'] = Db::name('chatLog')
+            ->where("(`uid` = '".$sel['uid']."' AND `infouid` = '".$sel['infouid']."') OR (`uid` = '".$sel['infouid']."' AND `infouid` = '".$sel['uid']."')")
+            ->whereTime('add_time','-3 month')
+            ->select();
+
+        // print_r($sel);exit;
+        $shop = Db::name('shop')->field('id,shoplogo')->where("id",SHID)->find();
+        $this->assign('shop',$shop);
+
+        $this->assign('sel',$sel);
+        return $this->fetch();
+
+
+        /*$id=input('id/d');
         $info=$this->model->where(['id'=>$id])->find();
         if($info){
             $add['uid'] = "user".$info["user_id"];
@@ -131,7 +159,7 @@ class Order extends Common{
             }
         }else{
             echo "未查询到该订单！";
-        }
+        }*/
     }
 
     /**

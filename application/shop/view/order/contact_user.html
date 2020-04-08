@@ -1,0 +1,840 @@
+{extend name="Public:common" /}
+{block name="content"}
+<div class="layui-fluid">
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+<div class="layui-card">
+<div class="layui-card-body">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>{:lang('chat')}{:lang('list')}</legend>
+    </fieldset>
+    <blockquote class="layui-elem-quote"><span class="red">***************</span></blockquote>
+    <link rel="stylesheet" href="__STATIC__/admin/css/font/iconfont.css">
+    <script src="__STATIC__/dist/HZRecorder.js" type="text/javascript"></script>
+    <style type="text/css">
+        .containers {
+            margin-top: 20px;
+            height: 100%;
+            padding-bottom: 100px;
+        }
+        .containers .chatleft{
+            width: 15%;
+            height: 550px;
+            box-shadow: 0 0 0 1px #e2e0e0;
+            float: left;
+            overflow: hidden;
+        }
+        .containers .chatright{
+            display: none;
+            width: 500px;
+            box-shadow: 0 0 0 1px #e2e0e0;
+            height: 550px;
+            float: left;
+            overflow: hidden;
+        }
+        .containers .chatleft .center ul li{
+            margin-top: 10px;
+            padding: 5px 5px;
+            border-radius: 5px;
+            cursor:pointer;
+        }
+        .containers .chatleft .center ul li:hover{
+            background: #f2f2f2;
+        }
+        .containers .chatleft .center ul .active{
+            background: #f2f2f2;
+        }
+        .containers .chatleft .center ul li >img{
+            width: 40px;
+            height: 40px;
+            border-radius: 20px; 
+            vertical-align: middle;
+        }
+        .containers .chatright > ul li >img{
+            width: 40px;
+            height: 40px;
+            border-radius: 20px; 
+            vertical-align: middle;
+        }
+
+        
+        
+        .containers .chatleft .center{
+            height: 100%;
+            overflow-y: scroll;
+        }
+        .containers .chatleft .center .read-num{
+            color: red;
+        }
+        .containers .chatright .center{
+            height: 70%;
+            background-color: white;
+            overflow-y: scroll;
+        }
+        .containers .chatright .center ul li{
+            width: 100%;
+        }
+        .chatright .center >ul >li >img{
+            width: 40px;
+            height: 40px;
+            border-radius: 20px; 
+            vertical-align: top;
+
+            display: inline-block;
+            margin: 5px;
+        }
+        .chatright .msgcard {
+            margin-top: 4px;
+            background-color: #f2f2f2;
+            border-radius: 10px;
+            padding: 10px;
+            max-width: 60%;
+            display: inline-block;
+        }
+        .chatright .center > ul li{
+            float: left;
+        }
+        .chatright .msgright img, .chatright .msgright p{
+            float: right;
+            vertical-align: middle;
+        }
+        .chatright .footer{
+            position: relative;
+            width: 98%;
+            padding-bottom: 10px;
+        }
+        .chatright .footer textarea{
+            height: 72px;
+            padding: 10px;
+            font-size:15px;
+        }
+        .chatright .footer button{
+            float: right;
+            margin-bottom: 5px;
+        }
+        .chat-menu{
+            width: 100%;
+            
+            padding-right: 20px;
+            background: #f2f2f2;
+            border-top: 1px scroll #000;
+        }
+        .chat-menu > ul li{
+            display: inline-block;
+        }
+        .chat-menu > ul{
+            margin-left: 10px;
+        }
+        .chat-menu .iconfont {
+            display: inline-block;
+            font-size: 20px;
+            padding: 5px;
+            color: #666;
+            cursor:pointer;
+        }
+        .chat-menu .iconfont:hover{
+            color: red;
+        }
+
+
+        .footer .emojis{
+            position: absolute;
+            top: -168px;
+            left: 5px;
+            border: 1px solid #d2d2d2;
+            background: #fff;
+            width: 435px;
+            border-radius: 5px;
+        }
+        .footer .emojis table{
+            padding-top: 2px;
+        }
+        .footer .emojis table tr td{
+            margin: auto;
+            cursor:pointer;
+            line-height: 30px;
+        }
+        .footer .emojis table tr td span{
+            font-size: 19px;
+
+            display: inline-block;
+        }
+        .msg-picture{
+            max-width: 100%;
+        }
+
+
+        .footer .videos{
+            position: absolute;
+            top: -94px;
+            left: 5px;
+            border: 1px solid #d2d2d2;
+            background: #fff;
+            border-radius: 5px;
+        }
+        .footer .videos ul{
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+        .footer .videos ul li{
+            display: inline-block;
+            margin: 5px 8px 5px 8px;
+            overflow: hidden;
+        }
+        .footer .videos ul li .plan-box{
+            width: 10px;
+            height: 66px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #017cc2;
+            overflow: hidden;
+        }
+        .footer .videos ul li .water-in{
+            display: block;
+            height: 100%;
+            background-color: #fff;
+        }
+        .footer .videos ul li .video-but-in{
+            padding: 2px 20px 2px 20px;
+        }
+        
+    </style>
+    
+    <div class="containers">
+        <div class="chatbox">
+            <div class="chatleft">
+                <div class="center">
+                    <ul>
+                        <!-- <li class-id="1" class="noread_7">
+                            <img src="shop">
+                            <span style="margin-left: 10px;"></span>
+                            <span class="read-num">12</span>
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+            <!-- 1 -->
+            <!-- <div class="chatright class_1" style="display: block;" class-uid="1" class-avatar="username">
+                <div class="center">
+                    <ul style="overflow:hidden;">
+                        <li class="msgright">
+                            <img src="">
+                            <p class="msgcard"><span style="padding: 25px;" class="iconfont iconxingzhuang video-show" videoUrl="12546498748546"></span></p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer">
+                    <div class="chat-menu">
+                        <ul>
+                            <li><span class="iconfont iconbiaoqing biaoqing-show"></span></li>
+                            <li><span class="iconfont icontupian tupian-show" onclick="upfileClick('class_1')"></span></li>
+                            <li><span class="iconfont iconyuyin yuyin-show"></span></li>
+                        </ul>
+                    </div>
+                    <div style="display: none;" class="emojis">
+                        <table>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="display: none;" class="videos">
+                        <ul>
+                            <li><div class="plan-box"><div id="water-in" class="water-in"></div></div></li>
+                            <li><input type="button" name="" class="video-but-in" value="按住 说话"></li>
+                            <li style="display: none"><input type="button" name="" value="录音" onclick="startRecording()"></li>
+                            <li style="display: none"><input type="button" name="" value="停止" onclick="stopRecording()"></li>
+                            <li style="display: none"><input type="button" name="" value="上传发送" onclick="uploadRecording()"></li>
+                        </ul>
+                    </div>
+                    <textarea maxlength="800" rows="5" cols="40" style="width: 100%; resize: none; border: none; " placeholder="请在此输入要发送的内容..."></textarea>
+                    <button type="button" onclick="sendmsg(this)" class="layui-btn" lay-submit="" lay-filter="submit">发送</button>
+                </div>
+            </div> -->
+        </div>
+        <input type="file" name="file" id="upfile" style="display: none;" onchange="uploadbase64()">
+
+        <div style="clear: both;"></div>
+    </div>
+    
+</div>
+</div>
+</div>
+</div>
+</div>
+{/block}
+{block name="js"}
+
+<script type="text/javascript"> 
+    // 播放录音
+        var audio = '';
+        $('.chatbox').on('click', '.video-show', function(){
+            var videoUrl = $(this).attr('videoUrl');
+            if (audio != '') {
+                audio.pause();
+            }
+
+            audio = document.createElement("audio");
+            audio.src = videoUrl;
+            audio.play();
+        })
+        /**
+         * 点下，录音
+         * 松开，结束
+         *
+         **/
+        var recorder;
+        var timelongtime = 0;
+        $('.chatbox').on('mousedown','.video-but-in',function(){
+            timelongtime = Date.now();
+            HZRecorder.get(function (rec) {
+                recorder = rec;
+            	recorder.start();
+            });
+            $(this).val('松开 结束');
+        })
+        
+        
+        
+        $('.chatbox').on('mouseup','.video-but-in',function(){
+            var box = $(this).parents('.chatright');
+            var time = Date.now() - timelongtime;
+            if (time < 700) {
+                console.log('录音时间太短'+time);
+            }else{
+                console.log('录音发送'+time);
+            }
+            $(this).val('按住 说话');
+            
+
+            recorder.stop();
+            recorder.upload("{:url('api/base/videoUpload')}", videoCall, box);
+            var parent = $(this).parents('.chatright');
+            menu_hide(parent);
+        })
+
+        function videoCall(title, msg, box){
+        	// console.log(msg);
+            if (title == 'ok') {
+                // console.log(msg.data.filepath);
+                audioMsg(box, msg.data.filepath);
+            }else{
+                console.log('发送失败!');
+            }
+        }
+
+
+    // var recorder;
+    //     // var audio = document.querySelector('audio');
+ 
+    //    function startRecording() {
+    //         HZRecorder.get(function (rec) {
+    //             recorder = rec;
+    //             recorder.start('water-in');
+    //         });
+    //         // recorder.start('water-in');
+    //     }
+ 
+    //     function stopRecording() {
+    //         recorder.stop();
+    //     }
+        
+    //     function playRecording() {
+    //         recorder.play(audio);
+    //     }
+
+    //     function uploadRecording(){
+    //         recorder.upload("{:url('api/base/base64video')}", 'logs');
+    //     }
+
+    //     function logs(title, msg){
+    //         console.log(title+':'+msg);
+    //     }
+
+
+    // 点击出现表情包。
+    var emojis = {};
+    $('.chatbox').on('click',".biaoqing-show",function(){
+        var parent = $(this).parents('.chatright');
+        if (parent.find('.emojis').is(':hidden')) {
+            $.get("/static/admin/js/emojis.json",function(data){
+                emojis = data;
+                var emojis_html = '';
+                i = 0;
+                hang = 16;
+                for (var index in emojis) {
+                    i++;
+                    if (i > hang) {
+                        var j = i%hang;
+                        if (j==1) {
+                            emojis_html += '</tr><tr>';
+                        }
+                    }
+                    emojis_html += '<td><span>'+emojis[index].char+'</span></td>'
+                }
+                parent.find('.emojis').find('table tbody').html("<tr>"+emojis_html+"</tr>");
+                menu_hide(parent);
+                parent.find('.emojis').show();
+            })
+        }else{
+            menu_hide(parent);
+        }    
+    })
+
+    $('.chatbox').on('click',".yuyin-show",function(){
+
+        var parent = $(this).parents('.chatright');
+
+        if (parent.find('.videos').is(':hidden')) {
+
+            // parent.find('.videos').find('table tbody').html("<tr>"+emojis_html+"</tr>");
+            menu_hide(parent);
+            HZRecorder.get(function (rec) {
+                recorder = rec;
+            });
+            parent.find('.videos').show();
+        }else{
+            menu_hide(parent);
+        }  
+    })
+
+    function menu_hide(parent){
+        parent.find('.emojis').hide();
+        parent.find('.videos').hide();
+    }
+
+
+
+    function upfileClick(str){
+        var file = $("#upfile");
+        file.after(file.clone().val(""));
+        file.remove();  
+
+        $('#upfile').click();
+        $('#upfile').attr('class-box',str);
+    }
+    function uploadbase64(){
+        var box = $('#upfile').attr('class-box');
+
+        var reader = new FileReader();
+        var AllowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
+        var file = $("#upfile")[0].files[0];
+        var imgUrlBase64;
+        if (file) {
+            //将文件以Data URL形式读入页面  
+            imgUrlBase64 = reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                //var ImgFileSize = reader.result.substring(reader.result.indexOf(",") + 1).length;//截取base64码部分（可选可不选，需要与后台沟通）
+                if (AllowImgFileSize != 0 && AllowImgFileSize < reader.result.length) {
+                    layer.msg( '上传失败，请上传不大于2M的图片！');
+                    return;
+                }else{
+                    //执行上传操作
+                    $.post('{:url("api/base/base64imgupload")}',{file:reader.result}, function(e){
+                        // console.log(e);
+                        if (e.code == 200) {
+                            imgMsg(box, e.data.filepath);
+                        }else{
+                            layer.msg("上传失败！");
+                        }
+                    })
+                }
+            }
+        }
+    }
+    
+
+
+
+    
+// 点击每个表情赋予textarea
+    $('.chatbox').on('click','.emojis tr td',function(){
+        // var emojis_text = utf16toEntities($(this).find('span').text());
+        var emojis_text = $(this).find('span').text();
+        var parent = $(this).parents('.chatright');
+        var ele = parent.find('textarea');
+        ele.val(ele.val() + emojis_text);
+        parent.find('.emojis').hide();
+    })
+
+
+
+
+
+
+
+
+// 左侧框列表点击事件--根据class_id显示对应的内容
+    $(".containers").on('click' ,'.chatleft li', function(){
+        $(this).addClass('active').siblings().removeClass('active');
+        var class_id = $(this).attr('class-id');
+        $(".class_"+class_id).show().siblings('.chatright').hide();
+
+        // 已读
+        $.post('{:url("api/char/yesread")}',{id:class_id});
+        $(this).find('.read-num').hide();
+        $(".class_"+class_id).find('.center').scrollTop($(".class_"+class_id).find('.center ul').height());
+    })
+    var shopid = '{$shop.id}';
+    var headerimg = '{$shop.shoplogo}';
+
+// 请求历史记录
+$(function(){
+    $.ajax({
+        type: "post",
+        url: '{:url("api/char/shop_log")}',
+        data: {shopid:shopid},
+        dataType: "json",
+        success: function(e){
+            var msgleft = '';
+            var msgright = '';
+            // console.log(e);
+            for (var index in e) {
+                // 列表菜单栏
+                var reads = '';
+                if (e[index].no_read <= 0) {
+                    reads = '<span style="display: none;" class="read-num">'+e[index].no_read+'</span>';
+                }else{
+                    reads = '<span class="read-num">'+e[index].no_read+'</span>';
+                }
+                msgleft += '<li class-id="'+e[index].id+'" class="noread_'+e[index].id+'"><img src="'+e[index].avatar+'"><span style="margin-left: 10px;">'+e[index].username+'</span>'+reads+'</li>';
+                
+                // 内容栏
+                
+                var log = e[index].log;
+                var msg = '';
+                for (var j in log) {
+                    if (log[j].type == 0) {
+                        log[j].content = uncodeUtf16(log[j].content);
+                        if ('shop'+shopid == log[j].uid) {
+                            msg += '<li class="msgright"><img src="'+headerimg+'"><p class="msgcard">'+log[j].content+'</p></li>';
+                        }else{
+                            msg += '<li class="msgleft"><img src="'+e[index].avatar+'"><p class="msgcard">'+log[j].content+'</p></li>';
+                        }
+                    }else if(log[j].type == 1) {
+                        // var onmouseover = 'onmouseover="layer.tips(\'<img width=300  src='+log[j].content+'>\',this,{tips: [1, \'#fff\']});"';
+                        var onmouseover = '';
+                        if ('shop'+shopid == log[j].uid) {
+                            msg += '<li class="msgright"><img src="'+headerimg+'"><p class="msgcard">\
+                                    <img class="msg-picture" src="'+log[j].content+'" '+onmouseover+'>\
+                                    </p></li>';
+                        }else{
+                            msg += '<li class="msgleft"><img src="'+e[index].avatar+'">\
+                                    <p class="msgcard">\
+                                    <img class="msg-picture" src="'+log[j].content+'" '+onmouseover+'>\
+                                    </p></li>';
+                        }
+                    }else if(log[j].type == 2){
+                        var onmouseover = '';
+                        if ('shop'+shopid == log[j].uid) {
+                            msg += '<li class="msgright"><img src="'+headerimg+'"><p class="msgcard">\
+                                    <span style="padding: 25px;" class="iconfont iconxingzhuang video-show" videoUrl="'+log[j].content+'"></span>\
+                                    </p></li>';
+                        }else{
+                            msg += '<li class="msgleft"><img src="'+e[index].avatar+'">\
+                                    <p class="msgcard">\
+                                    <span style="padding: 25px;" class="iconfont iconxingzhuang video-show" videoUrl="'+log[j].content+'"></span>\
+                                    </p></li>';
+                        }
+                    }
+                }
+
+                // 获取模板
+                var models = head_footer(e[index].id, e[index].uid, e[index].avatar);
+                var head = models.head;
+                var foot = models.foot;
+
+                msgright += head+msg+foot;
+            }
+
+            $('.chatbox').find('.chatleft .center ul').append(msgleft);
+            $('.chatbox').append(msgright);
+
+        
+
+
+
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown){
+            // console.log(XMLHttpRequest);
+            // console.log(textStatus);
+            // console.log(errorThrown);
+            layer.msg('发送失败,服务器错误'); 
+        }
+    });
+})
+// 语音消息
+    function audioMsg(box, msg){
+        var content = box.find('.center').find('ul');
+        var infouid = box.attr('class-uid'); // 接收人
+        var msg = msg;        
+        if (msg=='') {
+            layer.msg('先输入内容');
+            return false; 
+        }
+        content.append('<li class="msgright"><img src="'+headerimg+'"><p class="msgcard">\
+                        <span style="padding: 25px;" class="iconfont iconxingzhuang video-show" videoUrl="'+msg+'"></span>\
+                        </p></li>');
+
+         setTimeout(function(){
+            box.find('.center').scrollTop(content.height());
+        },100);
+
+        $.ajax({
+             type: "post",
+             url: '{:url("api/char/sendmsg")}',
+             data: {'uid':'shop'+shopid, 'infouid':infouid, 'msg':msg, 'type':2},
+             dataType: "json",
+             success: function(e){
+                if (e.code == 0) {
+                    // layer.msg(e.msg);
+                   
+                }else{
+                    layer.msg('发送失败');
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                // console.log(XMLHttpRequest);
+                // console.log(textStatus);
+                // console.log(errorThrown);
+                layer.msg('发送失败,服务器错误'); 
+            }
+        });
+    }
+
+
+// 图片消息
+    function imgMsg(obj, msg){
+        var box = $('.chatbox').find('.'+obj);
+        var content = box.find('.center').find('ul');
+        var infouid = box.attr('class-uid'); // 接收人
+        var msg = msg;        
+        if (msg=='') {
+            layer.msg('先输入内容');
+            return false; 
+        }
+        content.append('<li class="msgright"><img src="'+headerimg+'"><p class="msgcard"><img class="msg-picture" src="'+msg+'"></p></li>');
+
+         setTimeout(function(){
+            box.find('.center').scrollTop(content.height());
+        },100);
+
+        $.ajax({
+             type: "post",
+             url: '{:url("api/char/sendmsg")}',
+             data: {'uid':'shop'+shopid, 'infouid':infouid, 'msg':msg, 'type':1},
+             dataType: "json",
+             success: function(e){
+                if (e.code == 0) {
+                    // layer.msg(e.msg);
+                   
+                }else{
+                    layer.msg('发送失败');
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                // console.log(XMLHttpRequest);
+                // console.log(textStatus);
+                // console.log(errorThrown);
+                layer.msg('发送失败,服务器错误'); 
+            }
+        });
+    }
+// 发送消息
+    function sendmsg(obj){
+
+        var box = $(obj).parents('.chatright');
+        var content = box.find('.center').find('ul');
+        var infouid = box.attr('class-uid'); // 接收人
+
+        var msg = box.find('.footer textarea').val();
+        msg = utf16toEntities(msg);
+        
+        if (msg=='') {
+            layer.msg('先输入内容');
+            return false; 
+        }
+        content.append('<li class="msgright"><img src="'+headerimg+'"><p class="msgcard">'+msg+'</p></li>');
+        box.find('.center').scrollTop(content.height());
+        box.find('.footer textarea').val('');
+        // content.append('<li class="msgright"><img style="border-radius: 20px; vertical-align: top;" src="'+headerimg+'"><p class="msgcard">'+msg+'</p></li>');
+        // msg = encodeURI(msg); // 转换
+        // 向后台发送消息
+        $.ajax({
+             type: "post",
+             url: '{:url("api/char/sendmsg")}',
+             data: {'uid':'shop'+shopid, 'infouid':infouid, 'msg':msg},
+             dataType: "json",
+             success: function(e){
+                if (e.code == 0) {
+                    // layer.msg(e.msg);
+                   
+                }else{
+                    layer.msg('发送失败');
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                // console.log(XMLHttpRequest);
+                // console.log(textStatus);
+                // console.log(errorThrown);
+                layer.msg('发送失败,服务器错误'); 
+            }
+        });
+    }
+
+
+
+
+    /*连接本地服务器*/
+    ws = new WebSocket("wss://svn.yanjiegou.com/wss:8282");
+    // 服务端主动推送消息时会触发这里的onmessage
+    ws.onmessage = function(e){
+        var data = eval("("+e.data+")");
+        var type = data.type || '';
+        switch(type){
+            case 'init':
+                // client_id给后端进行uid绑定
+                $.post("{:url('api/char/bind')}", {client_id: data.data.client_id, uid: 'shop'+shopid}, function(data){}, 'json');
+                break;
+            case 'message':
+                data.msg = uncodeUtf16(data.msg);
+                // console.log(data.msg);
+                var is = true;
+                $('.chatbox').find('.chatright').each(function(){
+                    var userid = $(this).attr('class-uid');
+                    if (userid == data.data.uid && data.data.shopid == 'shop'+shopid) {
+                        var avatar = $(this).attr('class-avatar');
+                        var content = $(this).find('.center').find('ul');
+
+                        if (data.msg_type == 1) {
+                            var text = '<li class="msgleft"><img src="'+avatar+'">\
+                                    <p class="msgcard">\
+                                    <img class="msg-picture" src="'+data.msg+'">\
+                                    </p></li>';
+                        }else{
+                            var text = '<li class="msgleft"><img src="'+avatar+'"><p class="msgcard">'+data.msg+'</p></li>';
+                        }
+
+                        content.append(text);
+                        is = false;
+                        //未读
+                        var libefore = $('.chatleft').find(".noread_"+data.data.chat_id);
+                        libefore.find('.read-num').text(data.data.chat_noread).show();
+                        var beforefirst = libefore.parents('ul').find('li').eq(0);
+                        $('.chatleft').find(".noread_"+data.data.chat_id).insertBefore(beforefirst);
+                        $(this).find('.center').scrollTop(content.height());
+                        
+                    }
+                })
+                if (is) {
+                    $('.chatleft').find('ul').append('<li class-id="'+data.data.chat_id+'"><img src="'+data.data.headimg+'"><span style="margin-left: 10px;">'+data.data.name+'</span><span class="read-num">0</span></li>');
+
+
+                    // 获取模板
+                    var models = head_footer(data.data.chat_id, data.data.uid, data.data.headimg);
+                    var head = models.head;
+                    var foot = models.foot;
+
+                    var msg = '';
+                    if (data.msg_type == 0) {
+                        msg += '<li class="msgleft"><img src="'+data.data.headimg+'"><p class="msgcard">'+uncodeUtf16(data.msg)+'</p></li>';
+                    }else if(data.msg_type == 1) {
+                        var onmouseover = '';
+                        msg += '<li class="msgleft"><img src="'+data.data.headimg+'">\
+                                    <p class="msgcard">\
+                                    <img class="msg-picture" src="'+data.msg+'" '+onmouseover+'>\
+                                    </p></li>';
+                    }
+                    $('.chatbox').append(head+msg+foot);
+                }
+                break;
+            default :
+                console.log(data);
+        }
+    };
+
+
+    function head_footer(id, uid, avatar){
+        var head = '<div class="chatright class_'+id+'" class-uid="'+uid+'" class-avatar="'+avatar+'">\
+                        <div class="center">\
+                            <ul style="overflow:hidden;">';
+
+        var foot = '</ul>\
+                        </div>\
+                        <div class="footer">\
+                            <div class="chat-menu">\
+                                <ul>\
+                                    <li><span class="iconfont iconbiaoqing biaoqing-show"></span></li>\
+                                    <li><span class="iconfont icontupian tupian-show" onclick="upfileClick(\'class_'+id+'\')"></span></li>\
+                                    <li><span class="iconfont iconyuyin yuyin-show"></span></li>\
+                                </ul>\
+                            </div>\
+                            <div style="display: none;" class="emojis">\
+                                <table>\
+                                    <tbody>\
+                                    </tbody>\
+                                </table>\
+                            </div>\
+                            <div style="display: none;" class="videos">\
+                                <ul>\
+                                    <li><div class="plan-box"><div id="water-in" class="water-in"></div></div></li>\
+                                    <li><input type="button" name="" class="video-but-in" value="按住 说话"></li>\
+                                    <li style="display: none"><input type="button" name="" value="录音" onclick="startRecording()"></li>\
+                                    <li style="display: none"><input type="button" name="" value="停止" onclick="stopRecording()"></li>\
+                                    <li style="display: none"><input type="button" name="" value="上传发送" onclick="uploadRecording()"></li>\
+                                </ul>\
+                            </div>\
+                            <textarea maxlength="800" rows="5" cols="40" style="width: 100%; resize: none; border: none; " placeholder="请在此输入要发送的内容..."></textarea>\
+                            <button type="button" onclick="sendmsg(this)" class="layui-btn" lay-submit="" lay-filter="submit">发送</button>\
+                        </div>\
+                    </div>';
+        var models = {'head':head,'foot':foot};
+        return models;
+    }
+
+
+// 转码
+    function utf16toEntities (str) 
+    {
+        var patt=/[\ud800-\udbff][\udc00-\udfff]/g // 检测utf16字符正则 
+        str = str.replace(patt, function(char){ 
+            var H, L, code
+            if (char.length===2) 
+            {
+                H = char.charCodeAt(0) // 取出高位 
+                L = char.charCodeAt(1) // 取出低位 
+                code = (H - 0xD800) * 0x400 + 0x10000 + L - 0xDC00 // 转换算法 
+                return "&#" + code + ";"
+            } else {
+                return char
+            }
+        })
+        return str
+    }
+
+// 解码
+    function uncodeUtf16 (str) 
+    {
+        var str = str.replaceAll('&amp;','&');
+        var reg = /\&#.*?;/g
+        var result = str.replace(reg,function(char)
+        {
+            var H,L,code
+            if(char.length == 9 )
+            {
+                code = parseInt(char.match(/[0-9]+/g))
+                H = Math.floor((code-0x10000) / 0x400)+0xD800
+                L = (code - 0x10000) % 0x400 + 0xDC00
+                return unescape("%u"+H.toString(16)+"%u"+L.toString(16))
+            }else{
+                return char
+            }
+        })
+        return result
+    }
+        String.prototype.replaceAll = function (FindText, RepText) {
+          return this.replace(new RegExp(FindText, "g"), RepText);
+        }
+
+
+</script>
+{/block}
