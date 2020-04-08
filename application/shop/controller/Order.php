@@ -240,7 +240,7 @@ class Order extends Common{
               ->field('og.*,g.title,g.headimg')
               ->where(['og.id'=>$info['og_id']])
               ->select();
-        var_dump($goods);die;
+        var_dump($info);die;
         $counts=0; 
         $info['imgs']=explode(',',$info['imgs']);
         $info['counts']=$goods[0]['num']*$goods[0]['price'];
