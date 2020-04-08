@@ -1622,7 +1622,7 @@ class Users extends Base
         $data = [];
         foreach($orders as $k=>$v) {
             //查询该订单是否申请退款
-            $refund = Db::name("orderrefund")->where("order_sn",$order_sn)->find();
+            $refund = Db::name("orderrefund")->where("order_sn",$v['order_sn'])->find();
             if($refund){
                 //0待审核  1 审核失败  2审核通过
                 $orders[$k]['is_refund'] = $refund['status'];
