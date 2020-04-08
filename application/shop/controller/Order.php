@@ -193,6 +193,7 @@ class Order extends Common{
                 ->join('users u','u.id = o.user_id','LEFT')
                 ->join('shop s','s.id = o.shop_id','LEFT')
                 ->join('goods g','g.id = a.goods_id','LEFT')
+                ->join('orderrefund f', 'f.order = o.id', 'LEFT')
                 ->field('a.*,o.pay_type,o.add_time oadd_time,o.status as ostatus,u.username,s.id as sid,s.name as sname,g.title,g.headimg')
                 ->order("o.id desc")
                 ->where($where)
