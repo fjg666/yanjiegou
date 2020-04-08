@@ -1,10 +1,10 @@
 <?php
 
-namespace app\admin\controller;
+namespace app\shop\controller;
 
 use think\Db;
 use think\Request;
-use app\admin\controller\Common;
+use app\shop\controller\Common;
 
 class Spread extends Common {
 
@@ -63,7 +63,7 @@ class Spread extends Common {
             $add['type'] = 2;
 
             if($this->model->insert($add)){
-                $result['msg']  = '添加成功!';
+                $result['msg'] = '添加成功!';
                 $result['code'] = 1;
                 return $result;
             }
