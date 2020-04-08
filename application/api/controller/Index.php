@@ -138,7 +138,7 @@ class Index extends Base
                 $headimg = explode(',',$v['headimg']);
                 $goods[$k]['headimg'] = $this->domain().$headimg[0];
                 $goods[$k]['shoplogo'] = $this->domain().$v['shoplogo'];
-                $goods[$k]['collection_num']=$goodsmodel::get($v['id'])->collectiongoods()->count();
+                //$goods[$k]['collection_num']=$goodsmodel::get($v['id'])->collectiongoods()->count();
                 if($v['distance']>1000){
                     $goods[$k]['distance']=round($v['distance']/1000,2)."km";
                 }else{
@@ -151,6 +151,33 @@ class Index extends Base
         }else{
             $this->json_error('请求方式有问题');
             die;
+        }
+    }
+
+    //商家推广
+    public function SpreadGoods(){
+        $shop = Db::name('spread')->field("shop_id,shop_name")->where("is_failed", 2)->orderRaw('rand()')->limit(1)->select();
+        if($shop){
+            $goods = Db::name("goods")->alias('g')
+                ->join('__SHOP__ s','s.id=g.shopid','LEFT')
+                ->order('g.readpoint desc,g.id asc')
+                ->where("id", $shop[0]['shop_id'])
+                ->field('g.id,g.headimg,g.title,g.price,g.label,s.id as sid,s.name,s.shoplogo,s.longitude,s.latitude,GETDISTANCE(s.latitude,s.longitude,'.$lat.','.$lng.') as distance')
+                ->order('distance ASC')
+                ->select();
+
+            foreach($goods as $key => $val){
+                $headimg = explode(',',$val['headimg']);
+                $goods[$key]['headimg']  = $this->domain().$headimg[0];
+                $goods[$key]['shoplogo'] = $this->domain().$val['shoplogo'];
+                //$goods[$k]['collection_num']=$goodsmodel::get($v['id'])->collectiongoods()->count();
+                if($val['distance']>1000){
+                    $goods[$key]['distance']=round($val['distance']/1000,2)."km";
+                }else{
+                    $goods[$key]['distance']=round($val['distance'])."m";
+                }
+                $goods[$key]['label'] = explode(',', $val['label']);
+            }
         }
     }
 

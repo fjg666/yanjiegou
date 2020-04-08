@@ -1114,7 +1114,7 @@ class Users extends Base
 
             $data['user_id'] = $user_id;
             $data['id'] = $addrid;
-            if ($res) {
+            if ($res !== false) {
                 $this->json_success($data, '修改收货地址成功');
             } else {
                 $this->json_error('修改收货地址失败');
