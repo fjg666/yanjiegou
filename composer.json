@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "topthink/framework": "5.0.*",
+        "topthink/framework": "6.0.*",
         "alibabacloud/client": "^1.5",
         "zoujingli/pay-php-sdk": "^1.0",
         "yansongda/pay": "^2.8",
